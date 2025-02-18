@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+  <title>ระบาย</title>
+  <!-- <link rel="stylesheet" href="common/common.css"> -->
+  <style>
+    @font-face {
+      font-family: 'TorsilpChillChill';
+      src: url('https://example.com/fonts/TorsilpChillChill.ttf') format('truetype');
+    }
+    /* สำหรับ Desktop: ใช้ฐาน 1000px => 1px ≈ 0.1vw */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: url('assets/img/Garden.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 1.2vw; /* ลดลงจาก 1.5vw */
+    }
+    .header h1 {
+      font-size: 2vw;    /* ลดลงจาก 2.4vw */
+      color: #fff;
+      background: #f39eb6;
+      width: 18vw;       /* ลดลงจาก 20vw */
+      height: 4.5vw;     /* ลดลงจาก 5vw */
+      padding-top: 0.7vw;/* ลดลงจาก 0.8vw */
+      border-radius: 0.7vw; /* ลดลงจาก 0.8vw */
+      display: inline-block;
+      font-family: 'TorsilpChillChill';
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* margin: 1vw auto;  ลดลงจาก 2vw */
+      width: 90%;
+      max-width: 1000px;
+      gap: 3vw;         /* ลดลงจาก 2vw */
+    }
+    .vase-area {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background: url('assets/img/bg_vase.png') no-repeat center center;
+      background-size: contain;
+      border-radius: 0.8vw; /* ลดลงจาก 1vw */
+      padding: 0.8vw;      /* ลดลงจาก 1vw */
+      width: 22vw;         /* ลดลงจาก 35vw */
+      height: 27vw;        /* ลดลงจาก 38vw */
+    }
+    .vase {
+      width: 25vw;         /* ลดลงจาก 30vw */
+      height: 20vw;        /* ลดลงจาก 25vw */
+      top: 4vw;            /* ลดลงจาก 5vw */
+      background: url('assets/img/vase2.PNG') no-repeat center center;
+      background-size: contain;
+      position: relative;
+      overflow: hidden;
+    }
+    .flower-container {
+      position: absolute;
+      top: 8vw;            /* ลดลงจาก 9vw */
+      left: 40%;
+      transform: translateX(-50%);
+      width: 7vw;          /* ลดลงจาก 8vw */
+      height: 9vw;         /* ลดลงจาก 10vw */
+      pointer-events: auto;
+    }
+    .flower-selection {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2vw;          /* ลดลงจาก 1.5vw */
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0.1vw 0.3vw rgba(0, 0, 0, 0.4);
+      border: 0;
+      border-radius: 0.8vw; /* ลดลงจาก 1vw */
+      padding: 1.2vw;      /* ลดลงจาก 1.5vw */
+      width: 36vw;         /* ลดลงจาก 35vw */
+      height: 35vw;        /* ลดลงจาก 50vw */
+      position: relative;
+    }
+    .flower-selection::before,
+    .flower-selection::after {
+      content: "";
+      position: absolute;
+      left: 0.8vw;   /* ลดลงจาก 1vw */
+      right: 0.8vw;  /* ลดลงจาก 1vw */
+      height: 0.35vw; /* ลดลงจาก 0.4vw */
+      background-color: #a58778;
+      box-shadow: 0 0.2vw 0.3vw rgba(0, 0, 0, 0.3);
+    }
+    .flower-selection::before {
+      top: 33%;
+    }
+    .flower-selection::after {
+      top: 66%;
+    }
+    .flower-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .flower {
+      width: 8vw;      /* ลดลงจาก 12vw */
+      cursor: grab;
+    }
+    .flower-name {
+      margin-top: 0.5vw; /* ยังคง 0.5vw */
+      font-size: 1.2vw;  /* ลดลงจาก 1.4vw */
+      color: #714937;
+      font-family: 'TorsilpChillChill';
+    }
+    /* สำหรับจัดตำแหน่งดอกไม้บางชิ้น (ปรับตำแหน่งเฉพาะใน Flower Selection) */
+    .flower-selection .flower-item:nth-child(n+4):nth-child(-n+6) {
+      transform: translateY(-3.5vw);
+    }
+    /* ปุ่ม "ต่อไป" ที่อยู่ในแจกัน */
+    .next-button {
+      position: absolute;
+      bottom: -4vw;     /* ลดลงจาก -5vw */
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2vw;       /* ลดลงจาก 1.5vw */
+      width: 9vw;       /* ลดลงจาก 11vw */
+      height: 3.5vw;    /* ลดลงจาก 4vw */
+      padding: 0.8vw;   /* ลดลงจาก 1vw */
+      font-size: 1vw;   /* ลดลงจาก 1.3vw */
+      font-weight: bold;
+      border: none;
+      background: #ffffff;
+      color: rgb(0, 0, 0);
+      border-radius: 0.4vw; /* ลดลงจาก 0.5vw */
+      box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
+    .next-button:hover {
+      background: #f39eb6;
+      color: #fff;
+    }
+    .next-button svg {
+      width: 1.8vw;  /* ลดลงจาก 2vw */
+      height: 1.8vw; /* ลดลงจาก 2vw */
+      fill: currentColor;
+    }
+    /* ปุ่ม Go Back (ใช้ไอคอน SVG แบบใหม่) */
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      border: 1px solid grey;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    .back-btn svg {
+      width: 30px;  /* ขนาดไอคอนเล็กลง */
+      height: 30px;
+      fill: #555;
+      transform: scaleX(-1); /* พลิกให้ชี้ซ้าย */
+      transition: fill 0.2s ease-in-out;
+    }
+    .back-btn:hover {
+      background-color: #f39eb6;
+    }
+    .back-btn:hover svg {
+      fill: white;
+    }
+    /* Media Query สำหรับอุปกรณ์มือถือ (ใช้ฐาน 600px => 1px ≈ 0.1667vw) */
+    @media (max-width: 600px) {
+      .container {
+        flex-direction: column;
+        gap: 1.25vw;
+      }
+      .vase-area,
+      .flower-selection {
+        width: 90%;
+        max-width: 50vw;
+      }
+      .vase-area {
+        height: 42vw;
+        padding: 0.83vw;
+      }
+      .vase {
+        width: 90%;
+        height: 35vw;
+        margin: 0 auto;
+        top: 3vw;
+      }
+      .flower-container {
+        width: 7vw;
+        height: 9vw;
+        top: 8vw;
+        left: 50%;
+      }
+      .flower {
+        width: 10vw;
+      }
+      .flower-selection {
+        height: auto;
+        padding: 1vw;
+        grid-gap: 1vw;
+      }
+      .flower-name {
+        font-size: 2vw;
+      }
+      .header h1 {
+        font-size: 3vw;
+        width: 28vw;
+        height: 7vw;
+      }
+      .next-button {
+        bottom: -4.5vw;
+        width: 13vw;
+        height: 4.5vw;
+        font-size: 1.5vw;
+      }
+      .next-button svg {
+        width: 2.5vw;
+        height: 2.5vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- <div id="common-content"></div> -->
+  
+  <!-- ปุ่ม Go Back แบบใหม่ -->
+  <button class="back-btn" onclick="goBack()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+    </svg>
+  </button>
+  
+  <div class="header">
+    <h1>จัดสวน</h1>
+  </div>
+  <div class="container">
+    <!-- พื้นที่แจกัน -->
+    <div class="vase-area">
+      <div class="vase"></div>
+      <div class="flower-container" id="flower-container"></div>
+      <!-- ปุ่ม "ต่อไป" ย้ายเข้ามาในส่วนของแจกัน -->
+      <a href="flower3.html">
+        <button class="next-button" onclick="nextStage()">
+          <span>ต่อไป</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+          </svg>
+        </button>
+      </a>
+    </div>
+    <!-- พื้นที่แสดงดอกไม้ (ครบทั้ง 9 ชนิด) -->
+    <div class="flower-selection">
+      <div class="flower-item">
+        <img src="assets/img/rose.png" alt="กุหลาบ" class="flower" draggable="true" id="flower1" />
+        <div class="flower-name">กุหลาบ</div>
+      </div>
+      <div class="flower-item">
+        <img src="assets/img/sunflower.png" alt="ทานตะวัน" class="flower" draggable="true" id="flower2" />
+        <div class="flower-name">ทานตะวัน</div>
+      </div>
+      <div class="flower-item">
+        <img src="assets/img/tulip.png" alt="ทิวลิป" class="flower" draggable="true" id="flower3" />
+        <div class="flower-name">ทิวลิป</div>
+      </div>
+      <div class="flower-item">
+        <img src="assets/img/daffodil.png" alt="ดารารัตน์" class="flower" draggable="true" id="flower4" />
+        <div class="flower-name">ดารารัตน์</div>
+      </div>
+      <div class="flower-item">
+        <img src="assets/img/lilac.png" alt="ไลแลค" class="flower" draggable="true" id="flower5" />
+        <div class="flower-name">ไลแลค</div>
+      </div>
+      <div class="flower-item">
+        <img src="assets/img/lily.png" alt="ลิลลี่" class="flower" draggable="true" id="flower6" />
+        <div class="flower-name">ลิลลี่</div>
+      </div>
+      <div class="flower-item">
+        <!-- สามารถเพิ่มดอกไม้เพิ่มเติมได้ -->
+      </div>
+      <div class="flower-item">
+        <!-- สามารถเพิ่มดอกไม้เพิ่มเติมได้ -->
+      </div>
+      <div class="flower-item">
+        <!-- สามารถเพิ่มดอกไม้เพิ่มเติมได้ -->
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    // ฟังก์ชัน include HTML สำหรับ common-content
+    // function includeHTML() {
+    //   fetch('common/common.html')
+    //     .then(response => response.text())
+    //     .then(data => {
+    //       document.getElementById('common-content').innerHTML = data;
+    //     });
+    // }
+    // window.onload = includeHTML;
+
+    const flowerContainer = document.getElementById('flower-container');
+    const flowerSelection = document.querySelector('.flower-selection');
+    let draggedFlower = null;
+    let touchClone = null;
+    let isTouchDragging = false;
+    
+    // กำหนด event ให้กับดอกไม้ทั้งหมด
+    document.querySelectorAll('.flower').forEach(setupFlowerEvents);
+    
+    function setupFlowerEvents(flower) {
+      // การลากด้วยเมาส์
+      flower.addEventListener('dragstart', event => {
+        draggedFlower = event.target;
+        event.dataTransfer.setData('text', event.target.id);
+      });
+    
+      // การลากด้วยสัมผัส
+      flower.addEventListener('touchstart', event => {
+        event.preventDefault();
+        draggedFlower = event.target;
+        isTouchDragging = true;
+        startTouchDrag(event.touches[0], flower);
+      });
+    
+      // สิ้นสุดการลากด้วยสัมผัส
+      flower.addEventListener('touchend', event => {
+        if (isTouchDragging) {
+          isTouchDragging = false;
+          completeTouchDrag(event.changedTouches[0]);
+        }
+      });
+    }
+    
+    // ฟังก์ชันเริ่มการลากด้วยสัมผัส
+    function startTouchDrag(touch, flower) {
+      touchClone = flower.cloneNode(true);
+      touchClone.style.position = 'absolute';
+      touchClone.style.zIndex = 1000;
+      touchClone.style.pointerEvents = 'none';
+      document.body.appendChild(touchClone);
+      updateTouchClonePosition(touch);
+    }
+    
+    // อัปเดตตำแหน่งโคลนในระหว่างลาก
+    document.addEventListener('touchmove', event => {
+      if (isTouchDragging && touchClone) {
+        event.preventDefault();
+        updateTouchClonePosition(event.touches[0]);
+      }
+    });
+    
+    function updateTouchClonePosition(touch) {
+      touchClone.style.left = `${touch.clientX - touchClone.offsetWidth / 2}px`;
+      touchClone.style.top = `${touch.clientY - touchClone.offsetHeight / 2}px`;
+    }
+    
+    // สิ้นสุดการลากด้วยสัมผัส
+    function completeTouchDrag(touch) {
+      const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+      if (dropTarget && flowerContainer.contains(dropTarget)) {
+        // วางดอกไม้ในแจกัน
+        createFlowerClone(draggedFlower, touch);
+      } else if (dropTarget && flowerSelection.contains(dropTarget)) {
+        // ลบดอกไม้เมื่อกลับไปยังพื้นที่เลือก
+        if (draggedFlower.parentNode === flowerContainer) {
+          flowerContainer.removeChild(draggedFlower);
+        }
+      }
+    
+      if (touchClone) {
+        touchClone.remove();
+        touchClone = null;
+      }
+      draggedFlower = null;
+    }
+    
+    // สร้างโคลนของดอกไม้ในแจกัน
+    function createFlowerClone(flower, touch) {
+      const clone = flower.cloneNode(true);
+      clone.style.position = 'absolute';
+      clone.style.zIndex = 10;
+    
+      const rect = flowerContainer.getBoundingClientRect();
+      const left = Math.max(0, Math.min(rect.width - 40, touch.clientX - rect.left - 20));
+      const top = Math.max(0, Math.min(rect.height - 40, touch.clientY - rect.top - 20));
+    
+      clone.style.left = `${left}px`;
+      clone.style.top = `${top}px`;
+    
+      clone.id = `${flower.id}-${Date.now()}`;
+      clone.setAttribute('draggable', true);
+    
+      setupFlowerEvents(clone);
+    
+      flowerContainer.appendChild(clone);
+    }
+    
+    // รองรับการวางด้วยเมาส์ในพื้นที่แจกัน
+    flowerContainer.addEventListener('dragover', event => {
+      event.preventDefault();
+    });
+    
+    flowerContainer.addEventListener('drop', event => {
+      event.preventDefault();
+      const flowerId = event.dataTransfer.getData('text');
+      const flower = document.getElementById(flowerId);
+      if (flowerSelection.contains(flower)) {
+        createFlowerClone(flower, event);
+      }
+    });
+    
+    // รองรับการลากกลับไปยังพื้นที่เลือกด้วยเมาส์
+    flowerSelection.addEventListener('dragover', event => {
+      event.preventDefault();
+    });
+    
+    flowerSelection.addEventListener('drop', event => {
+      event.preventDefault();
+      const flowerId = event.dataTransfer.getData('text');
+      const flowerClone = document.getElementById(flowerId);
+    
+      if (flowerContainer.contains(flowerClone)) {
+        flowerContainer.removeChild(flowerClone);
+      }
+    });
+    
+    // รองรับการลากกลับไปยังพื้นที่เลือกด้วยสัมผัส
+    flowerContainer.addEventListener('touchend', event => {
+      if (draggedFlower) {
+        const dropTarget = document.elementFromPoint(
+          event.changedTouches[0].clientX,
+          event.changedTouches[0].clientY
+        );
+    
+        if (dropTarget && flowerSelection.contains(dropTarget)) {
+          if (draggedFlower.parentNode === flowerContainer) {
+            flowerContainer.removeChild(draggedFlower);
+          }
+        }
+    
+        if (touchClone) {
+          touchClone.remove();
+          touchClone = null;
+        }
+        draggedFlower = null;
+      }
+    });
+    
+    // ฟังก์ชันสำหรับปุ่ม Go Back
+    function goBack() {
+      window.location.href = "flower1.html";
+    }
+  </script>
+  <!-- <script src="common/common.js"></script> -->
+</body>
+</html>

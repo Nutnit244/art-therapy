@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+  <title>Drawing Board</title>
+  <style>
+    @font-face {
+      font-family: 'TorsilpChillChill';
+      src: url('https://example.com/fonts/TorsilpChillChill.ttf') format('truetype');
+    }
+    /* ทุกค่าถูกแปลงเป็น vw โดยอ้างอิงจาก design base 1440px (1vw ≈ 14.4px) */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url(assets/img/bg.PNG) no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      display: flex;
+      gap: 2vw;
+      align-items: flex-start;
+    }
+    #drawing-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5vw;
+    }
+    /* กำหนดขนาดของ canvas ด้วย CSS โดยใช้ vw: 62.5vw ≈ 900px, 36.5vw ≈ 525px */
+    #drawing-board {
+      width: 62.5vw;
+      height: 36.5vw;
+      border: 0.1vw solid black;
+      background-color: white;
+      border-radius: 1vw;
+      box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.1);
+      touch-action: none; /* ป้องกัน gesture ของเบราว์เซอร์ */
+    }
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(3);
+      gap: 1vw;
+      background-color: white;
+      padding: 1vw;
+      border-radius: 1vw;
+      box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.1);
+    }
+    .color {
+      width: 4vw;
+      height: 4vw;
+      cursor: pointer;
+      border: 0.1vw solid black;
+      border-radius: 0.5vw;
+    }
+    .color.active {
+      border: 0.2vw solid black;
+    }
+    #custom-color {
+      grid-column: span 3;
+      height: 5vw;
+      width: 15vw;
+      border: 0.1vw solid black;
+      border-radius: 0.3vw;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1vw;
+      background-color: white;
+      padding: 1vw;
+      border-radius: 1vw;
+      box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.1);
+      margin-top: 1vw;
+    }
+    .brush-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    select, button {
+      padding: 1vw;
+      border: 0.1vw solid black;
+      border-radius: 0.5vw;
+      background-color: white;
+      cursor: pointer;
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 1vw;
+    }
+    button:hover, select:hover {
+      background-color: #ddd;
+    }
+    .eraser-icon {
+      width: 3vw;
+      height: 3vw;
+      background: url('https://img.icons8.com/ios/50/eraser.png') no-repeat center center;
+      background-size: contain;
+      cursor: pointer;
+    }
+    .eraser-icon.active {
+      border: 0.2vw solid black;
+      border-radius: 0.5vw;
+      box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.5);
+    }
+    .brush-size {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 1vw;
+    }
+    .size-dot {
+      cursor: pointer;
+      border: 0.1vw solid black;
+      border-radius: 50%;
+    }
+    .size-dot[data-size="5"] {
+      width: 1vw;
+      height: 1vw;
+    }
+    .size-dot[data-size="10"] {
+      width: 1.5vw;
+      height: 1.5vw;
+    }
+    .size-dot[data-size="15"] {
+      width: 2vw;
+      height: 2vw;
+    }
+    .size-dot[data-size="20"] {
+      width: 2.5vw;
+      height: 2.5vw;
+    }
+    .size-dot.active {
+      background-color: gray;
+    }
+    #save-btn {
+      padding: 1vw 2.5vw;
+      font-size: 1.5vw;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 0.5vw;
+      cursor: pointer;
+      box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
+    #save-btn:hover {
+      background-color: #45a049;
+    }
+    /* ปุ่ม Go Back ด้วยไอคอน SVG */
+    .back-btn {
+      position: absolute;
+      top: 1.4vw;    
+      left: 1.4vw;   
+      width: 4.2vw;  
+      height: 4.2vw; 
+      border: 0.07vw solid grey; 
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0.14vw 0.35vw rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      z-index: 1000;
+    }
+    .back-btn svg {
+      width: 2.1vw;
+      height: 2.1vw;
+      fill: #555;
+      transform: scaleX(-1);
+      transition: fill 0.2s ease-in-out;
+    }
+    .back-btn:hover {
+      background-color: #f187b5;
+    }
+    .back-btn:hover svg {
+      fill: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- ปุ่ม Go Back -->
+  <button class="back-btn" onclick="goBack()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+    </svg>
+  </button>
+  <div class="container">
+    <div id="drawing-area">
+      <!-- ใช้ CSS เพื่อกำหนดขนาด canvas ด้วย vw -->
+      <canvas id="drawing-board"></canvas>
+      <button id="save-btn">
+        บันทึก
+      </button>
+    </div>
+    <div>
+      <div class="palette">
+        <div class="color" style="background-color: white;"></div>
+        <div class="color" style="background-color: black;"></div>
+        <div class="color" style="background-color: #F195BC;"></div>
+        <div class="color" style="background-color: #328D61;"></div>
+        <div class="color" style="background-color: #5AA2CA;"></div>
+        <div class="color" style="background-color: #F5793B;"></div>
+        <input type="color" id="custom-color" />
+      </div>
+      <div class="controls">
+        <div class="brush-controls">
+          <select id="brush-select">
+            <option value="solid">ปกติ</option>
+            <option value="dashed">เส้นประ</option>
+            <option value="watercolor">สีน้ำ</option>
+          </select>
+          <div id="eraser" class="eraser-icon"></div>
+        </div>
+        <div class="brush-size">
+          <div class="size-dot" data-size="5"></div>
+          <div class="size-dot" data-size="10"></div>
+          <div class="size-dot" data-size="15"></div>
+          <div class="size-dot" data-size="20"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.addEventListener('load', function() {
+      const canvas = document.getElementById('drawing-board');
+      const ctx = canvas.getContext('2d');
+
+      // คำนวณขนาดและปรับ scale ตาม devicePixelRatio
+      function setupCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const scale = window.devicePixelRatio || 1;
+        canvas.width = rect.width * scale;
+        canvas.height = rect.height * scale;
+        ctx.scale(scale, scale);
+        // เตรียมพื้นหลังสีขาว
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, rect.width, rect.height);
+      }
+      setupCanvas();
+
+      const colors = document.querySelectorAll('.color');
+      const customColor = document.getElementById('custom-color');
+      const brushSelect = document.getElementById('brush-select');
+      const eraserButton = document.getElementById('eraser');
+      const sizeDots = document.querySelectorAll('.size-dot');
+      const saveButton = document.getElementById('save-btn');
+
+      let brushColor = 'black';
+      let brushSize = 5;
+      let brushType = 'solid';
+      let drawing = false;
+
+      // ฟังก์ชันคำนวณตำแหน่งสัมผัสโดย recalc bounding rect ทุกครั้ง
+      function getTouchPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0] || e.changedTouches[0];
+        return {
+          x: touch.clientX - rect.left,
+          y: touch.clientY - rect.top
+        };
+      }
+
+      // ฟังก์ชันคำนวณตำแหน่งเมาส์ (recalc rect ทุกครั้ง)
+      function getMousePos(e) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+      }
+
+      // Event สำหรับ mouse events
+      canvas.addEventListener('mousedown', (e) => {
+        drawing = true;
+        const pos = getMousePos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+      });
+
+      canvas.addEventListener('mousemove', (e) => {
+        if (!drawing) return;
+        const pos = getMousePos(e);
+        ctx.lineWidth = brushSize;
+        ctx.strokeStyle = brushColor;
+        if (brushType === 'dashed') {
+          ctx.setLineDash([10, 5]);
+        } else if (brushType === 'watercolor') {
+          ctx.globalAlpha = 0.3;
+          ctx.lineCap = 'round';
+          ctx.setLineDash([]);
+          const gradient = ctx.createRadialGradient(pos.x, pos.y, brushSize / 4, pos.x, pos.y, brushSize);
+          gradient.addColorStop(0, brushColor);
+          gradient.addColorStop(1, 'rgba(255,255,255,0)');
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, brushSize, 0, Math.PI * 2);
+          ctx.fill();
+          return;
+        } else {
+          ctx.globalAlpha = 1;
+          ctx.setLineDash([]);
+        }
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+      });
+
+      canvas.addEventListener('mouseup', () => {
+        drawing = false;
+        ctx.closePath();
+        ctx.globalAlpha = 1;
+      });
+
+      // Event สำหรับ touch events
+      canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        drawing = true;
+        const pos = getTouchPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+      });
+
+      canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (!drawing) return;
+        const pos = getTouchPos(e);
+        ctx.lineWidth = brushSize;
+        ctx.strokeStyle = brushColor;
+        if (brushType === 'dashed') {
+          ctx.setLineDash([10, 5]);
+        } else if (brushType === 'watercolor') {
+          ctx.globalAlpha = 0.3;
+          ctx.lineCap = 'round';
+          ctx.setLineDash([]);
+          const gradient = ctx.createRadialGradient(pos.x, pos.y, brushSize / 4, pos.x, pos.y, brushSize);
+          gradient.addColorStop(0, brushColor);
+          gradient.addColorStop(1, 'rgba(255,255,255,0)');
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, brushSize, 0, Math.PI * 2);
+          ctx.fill();
+          return;
+        } else {
+          ctx.globalAlpha = 1;
+          ctx.setLineDash([]);
+        }
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+      });
+
+      canvas.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        drawing = false;
+        ctx.closePath();
+        ctx.globalAlpha = 1;
+      });
+
+      // เลือกสีจาก palette
+      colors.forEach(color => {
+        color.addEventListener('click', () => {
+          colors.forEach(c => c.classList.remove('active'));
+          eraserButton.classList.remove('active');
+          color.classList.add('active');
+          brushColor = color.style.backgroundColor;
+        });
+      });
+
+      // เลือก custom color
+      customColor.addEventListener('input', () => {
+        colors.forEach(c => c.classList.remove('active'));
+        eraserButton.classList.remove('active');
+        brushColor = customColor.value;
+      });
+
+      // ปุ่มยางลบ
+      eraserButton.addEventListener('click', () => {
+        colors.forEach(c => c.classList.remove('active'));
+        eraserButton.classList.add('active');
+        brushColor = 'white';
+      });
+
+      // เลือกขนาดแปรง
+      sizeDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          sizeDots.forEach(d => d.classList.remove('active'));
+          dot.classList.add('active');
+          brushSize = parseInt(dot.dataset.size, 10);
+        });
+      });
+
+      // เลือกประเภทแปรง
+      brushSelect.addEventListener('change', (e) => {
+        brushType = e.target.value;
+      });
+
+      // ปุ่มบันทึกภาพ
+      saveButton.addEventListener('click', () => {
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        tempCtx.fillStyle = 'white';
+        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+        tempCtx.drawImage(canvas, 0, 0);
+        const link = document.createElement('a');
+        link.download = 'drawing.png';
+        link.href = tempCanvas.toDataURL('image/png');
+        link.click();
+      });
+    });
+
+    function goBack() {
+      window.location.href = "Drawing.html";
+    }
+  </script>
+</body>
+</html>

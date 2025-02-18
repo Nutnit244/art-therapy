@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+  <title>ระบาย</title>
+  <!-- <link rel="stylesheet" href="common/common.css"> -->
+  <style>
+    @font-face {
+      font-family: 'TorsilpChillChill';
+      src: url('https://example.com/fonts/TorsilpChillChill.ttf') format('truetype');
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: url('assets/img/writebg.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    h2 {
+      margin-top: 0.5vw; /* ยังคง 0.5vw */
+      font-size: 1.5vw;  
+      color: #714937;
+      font-family: 'TorsilpRajun2024';
+      font-weight:normal ;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* กลุ่มของข้อความและกล่องสีขาว */
+    .box-wrapper {
+      width: 27.8vw; /* 400px / 1440 * 100 = 27.8vw */
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* ให้ h2 และกล่องชิดด้านซ้าย */
+    }
+    .box-wrapper h2 {
+      margin-bottom: 1vw;
+      margin-left: 8vw;  /* ตามที่คุณกำหนดไว้ */
+      width: 30vw;
+    }
+    .box {
+      background-color: #fff;
+      border-radius: 2vw; /* 10px ≈ 0.7vw */
+      box-shadow: 0 0.3vw 0.7vw rgba(0, 0, 0, 0.1); /* 4px ≈ 0.28vw, 10px ≈ 0.7vw */
+      padding: 2.4vw;  /* 34px ≈ 2.4vw */
+      width: 27.8vw;   /* 400px ≈ 27.8vw */
+      height: 20.8vw;  /* 300px ≈ 20.8vw */
+      left: 25%;
+      position: relative;
+    }
+    .text-area {
+      width: 100%;
+      height: 15.6vw;  /* 225px ≈ 15.6vw */
+      border: 0.07vw solid #ccc; /* 1px ≈ 0.07vw */
+      border-radius: 0.35vw; /* 5px ≈ 0.35vw */
+      font-size: 1vw;  /* 16px ≈ 1.1vw */
+      resize: none;
+      font: 1.2vw "TorsilpChillChill";
+      color: #714937;
+    }
+    .button {
+      position: absolute;
+      bottom: 2.4vw;    /* 35px ≈ 2.4vw */
+      right: 1.9vw;     /* 28px ≈ 1.9vw */
+      padding: 0.7vw 1.4vw; /* 10px ≈ 0.7vw, 20px ≈ 1.4vw */
+      font-size: 1.1vw;  /* 16px ≈ 1.1vw */
+      color: white;
+      background-color: #f39eb6;
+      border: none;
+      border-radius: 1.4vw;  /* 20px ≈ 1.4vw */
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
+
+    .button:hover {
+      background-color: #e37daa;
+      color: white;
+    }
+    /* ปุ่ม Go Back ด้วยไอคอน SVG */
+    .back-btn {
+      position: absolute;
+      top: 1.4vw;    /* 20px ≈ 1.4vw */
+      left: 1.4vw;   /* 20px ≈ 1.4vw */
+      width: 4.2vw;   /* 60px ≈ 4.2vw */
+      height: 4.2vw;  /* 60px ≈ 4.2vw */
+      border: none;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0.14vw 0.35vw rgba(0, 0, 0, 0.2); /* 2px ≈ 0.14vw, 5px ≈ 0.35vw */
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      z-index: 1000;
+    }
+    .back-btn svg {
+      width: 2.1vw;   /* 30px ≈ 2.1vw */
+      height: 2.1vw;  /* 30px ≈ 2.1vw */
+      fill: #555;
+      transform: scaleX(-1); /* พลิกให้ชี้ซ้าย */
+      transition: fill 0.2s ease-in-out;
+    }
+    .back-btn:hover {
+      background-color: #f39eb6;
+    }
+    .back-btn:hover svg {
+      fill: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- <div id="common-content"></div> -->
+  <!-- ปุ่ม Go Back -->
+  <button class="back-btn" onclick="goBack()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+    </svg>
+  </button>
+  <div class="container">
+    <div class="box-wrapper">
+      <h2>"ให้เราช่วยเป็นที่ระบายให้กับคุณ"</h2>
+      <div class="box">
+        <textarea class="text-area" placeholder="พิมพ์ข้อความของคุณที่นี่"></textarea>
+        <!-- กำหนดให้ปุ่มเสร็จสิ้นเรียกฟังก์ชัน submitText() เพื่อตรวจสอบการกรอกข้อมูล -->
+        <button class="button" onclick="submitText()">เสร็จสิ้น</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // ฟังก์ชัน include HTML สำหรับ common-content
+    // function includeHTML() {
+    //   fetch('common/common.html')
+    //     .then(response => response.text())
+    //     .then(data => {
+    //       document.getElementById('common-content').innerHTML = data;
+    //     });
+    // }
+    // window.onload = includeHTML;
+
+    function goBack() {
+      window.location.href = "write.html";
+    }
+
+    function submitText() {
+      const text = document.querySelector('.text-area').value;
+      if (text.trim() === '') {
+        alert('กรุณากรอกข้อความก่อนกดเสร็จสิ้น');
+      } else {
+        // เมื่อมีข้อความใน textarea ให้เปลี่ยนหน้าไปยัง write3.html
+        window.location.href = "write3.html";
+      }
+    }
+  </script>
+  <!-- <script src="common/common.js"></script> -->
+</body>
+</html>

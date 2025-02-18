@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+  <title>ระบาย</title>
+  <style>
+    body {
+      font-family: TorsilpChillChill;
+      object-fit: cover;
+      background-size: cover;
+      background-image: url('assets/img/colorbg.PNG');
+    }
+
+    /* แปลง 1400px => 100vw และ 900px => (900/1400*100)vw ≈ 64.29vw */
+    .frame-container {
+      position: relative;
+      width: 100vw;
+      height: 64.29vw;
+      margin: 0 auto;
+      background-image: url('assets/img/frame.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+    }
+
+    .paint-area {
+      position: absolute;
+      width: 78%;
+      height: 68%;
+      top: 20%;
+      left: 11%;
+      background-color: transparent;
+      overflow: hidden;
+    }
+
+    .splash {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 0;
+      left: 82%;
+      transform: translateX(-50%);
+    }
+
+    .controls button {
+      /* คำนวณ: 20px => (20/1400*100)vw ≈ 1.43vw, 10px ≈ 0.71vw, 16px ≈ 1.14vw, 15px ≈ 1.07vw, 2px ≈ 0.14vw */
+      padding: 1.43vw 1.43vw;
+      margin: 0.71vw;
+      font-size: 1.14vw;
+      cursor: pointer;
+      border-radius: 1.07vw;
+      border: 0.14vw solid #1c1d1d;
+      background-color: hsl(51, 52%, 85%);
+      color: #1d1b13;
+      transition: background-color 0.3s ease;
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
+    .controls button:hover {
+      background-color: hsl(52, 37%, 80%);
+    }
+    
+    /* ปุ่ม Go Back */
+    .back-btn {
+      position: absolute;
+      /* 20px => 1.43vw, 60px => 4.29vw, 1px => 0.07vw */
+      top: 1.43vw;
+      left: 1.43vw;
+      width: 4.29vw;
+      height: 4.29vw;
+      border: 0.07vw solid grey;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* box-shadow: 0 2px 5px => 0, 0.14vw, 0.36vw (ประมาณ) */
+      box-shadow: 0 0.14vw 0.36vw rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      z-index: 1000;
+    }
+    .back-btn svg {
+      /* 30px => 2.14vw */
+      width: 2.14vw;
+      height: 2.14vw;
+      fill: #555;
+      transform: scaleX(-1); /* พลิกให้ชี้ซ้าย */
+      transition: fill 0.2s ease-in-out;
+    }
+    .back-btn:hover {
+      background-color: #f39eb6;
+    }
+    .back-btn:hover svg {
+      fill: white;
+    }
+    
+  </style>
+</head>
+<body>
+  <!-- ปุ่ม Go Back -->
+  <button class="back-btn" onclick="goBack()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+    </svg>
+  </button>
+
+  <div class="frame-container">
+    <div class="paint-area" id="paint-area"></div>
+    <div class="controls">
+      <button id="addImageButton">เพิ่มรูปภาพ</button>
+      <button id="saveButton">บันทึก</button>
+    </div>
+  </div>
+
+  <script>
+    // ฟังก์ชันสำหรับปุ่ม Go Back
+    function goBack() {
+      window.location.href = "color.html"; 
+    }
+
+    // ฟังก์ชันสร้าง splash สี เมื่อคลิกที่พื้นที่วาด
+    function createColorSplash(x, y) {
+      const paintArea = document.getElementById("paint-area");
+      const splash = document.createElement("div");
+      splash.className = "splash";
+      // คำนวณขนาด splash แบบสุ่ม (หน่วย px) แล้วแปลงเป็น vw
+      const size = Math.random() * 80 + 100; // px
+      const vwSize = (size / 1400) * 100; // เปลี่ยนเป็น vw เมื่อ 1400px = 100vw
+      splash.style.width = `${vwSize}vw`;
+      splash.style.height = `${vwSize}vw`;
+      const color = getRandomColor();
+      splash.dataset.color = color;
+      splash.style.background = `radial-gradient(circle, ${color} 0%, ${color} 60%, transparent 100%)`;
+      // คำนวณตำแหน่งโดยแปลง px เป็น vw
+      splash.style.left = `${((x - size / 2) / 1400) * 100}vw`;
+      splash.style.top = `${((y - size / 2) / 1400) * 100}vw`;
+      paintArea.appendChild(splash);
+    }
+
+    // ฟังก์ชันสุ่มสีแบบ Hex
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    // เมื่อคลิกใน paint-area ให้สร้าง splash
+    document.getElementById("paint-area").addEventListener("click", function (event) {
+      const rect = this.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      createColorSplash(x, y);
+    });
+
+    // เมื่อคลิกปุ่ม "เพิ่มรูปภาพ" ให้เลือกรูปและแสดงใน paint-area
+    document.getElementById("addImageButton").addEventListener("click", function () {
+      const paintArea = document.getElementById("paint-area");
+      const oldImage = paintArea.querySelector("img");
+      if (oldImage) {
+        paintArea.removeChild(oldImage);
+      }
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.style.position = "absolute";
+            img.style.width = "auto";
+            img.style.height = "auto";
+            img.style.left = "50%";
+            img.style.top = "50%";
+            img.style.transform = "translate(-50%, -50%)";
+            img.style.cursor = "move";
+            img.ondragstart = function () {
+              return false;
+            };
+            paintArea.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      input.click();
+    });
+
+    // เมื่อคลิกปุ่ม "บันทึก" ให้สร้าง canvas และวาดรูปภาพและ splash ในลำดับที่ถูกต้อง
+    document.getElementById("saveButton").addEventListener("click", function () {
+      const paintArea = document.getElementById("paint-area");
+      const paintAreaStyles = getComputedStyle(paintArea);
+      const canvas = document.createElement("canvas");
+      canvas.width = parseInt(paintAreaStyles.width);
+      canvas.height = parseInt(paintAreaStyles.height);
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const paintAreaRect = paintArea.getBoundingClientRect();
+      const imageElement = paintArea.querySelector("img");
+      if (imageElement) {
+        const rect = imageElement.getBoundingClientRect();
+        const x = rect.left - paintAreaRect.left;
+        const y = rect.top - paintAreaRect.top;
+        ctx.drawImage(imageElement, x, y, rect.width, rect.height);
+      }
+      const splashElements = paintArea.querySelectorAll(".splash");
+      splashElements.forEach(splash => {
+        // ดึงขนาดและตำแหน่งที่คำนวณเป็น pxโดย getComputedStyle จะให้ค่าเป็น px
+        const size = parseFloat(getComputedStyle(splash).width);
+        const left = parseFloat(getComputedStyle(splash).left);
+        const top = parseFloat(getComputedStyle(splash).top);
+        const color = splash.dataset.color;
+        if (color) {
+          const x = left + size / 2;
+          const y = top + size / 2;
+          const gradient = ctx.createRadialGradient(x, y, 0, x, y, size / 2);
+          gradient.addColorStop(0, color);
+          gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+      const link = document.createElement("a");
+      link.download = "Rabyecolor.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  </script>
+</body>
+</html>

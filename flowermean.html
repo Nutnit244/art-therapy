@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+  <title>ระบาย</title>
+  <!-- <link rel="stylesheet" href="common/common.css"> -->
+
+  <style>
+    @font-face {
+      font-family: 'TORSILPCHILLCHILL';
+      src: url('fonts/TORSILPCHILLCHILL.TTF') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'TORSILPCHILLCHILL', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('assets/img/flowerbg.PNG') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .containerfwmeaning {
+      padding: 2vw;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 2.2vw;
+      color: #714937;
+      text-align: center;
+    }
+
+    .gridfwmeaning {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5vw;
+    }
+
+    .cardfwmeaning {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 1vw;
+      padding: 1vw;
+      box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.1);
+      text-align: left;
+      height: auto;
+    }
+
+    .cardfwmeaning img {
+      width: 11vw;
+      height: auto;
+      margin-right: 1vw;
+      flex-shrink: 0;
+    }
+
+    .card-contentfwmeaning {
+      flex: 1;
+    }
+
+    .cardfwmeaning h2 {
+      font-size: 1.5vw;
+      color: #714937;
+      margin-bottom: 0.5vw;
+    }
+
+    .cardfwmeaning p {
+      font-size: 1vw;
+      color: #714937;
+      line-height: 1.5;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .gridfwmeaning {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cardfwmeaning img {
+        width: 12vw;
+      }
+
+      .cardfwmeaning h2 {
+        font-size: 2vw;
+      }
+
+      .cardfwmeaning p {
+        font-size: 1.2vw;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gridfwmeaning {
+        grid-template-columns: 1fr;
+      }
+
+      .cardfwmeaning img {
+        width: 15vw;
+      }
+
+      .cardfwmeaning h2 {
+        font-size: 2.5vw;
+      }
+
+      .cardfwmeaning p {
+        font-size: 1.5vw;
+      }
+    }
+
+    /* ปุ่ม Go Back */
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      border: 1px solid grey;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      z-index: 1000;
+    }
+    .back-btn svg {
+      width: 30px;
+      height: 30px;
+      fill: #555;
+      transform: scaleX(-1); /* พลิกให้ชี้ซ้าย */
+      transition: fill 0.2s ease-in-out;
+    }
+    .back-btn:hover {
+      background-color: #f187b5;
+    }
+    .back-btn:hover svg {
+      fill: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- <div id="common-content"></div> -->
+
+  <!-- ปุ่ม Go Back -->
+  <button class="back-btn" onclick="goBack()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+    </svg>
+  </button>
+
+  <div class="containerfwmeaning">
+    <header>
+      <h1>ความหมายของดอกไม้</h1>
+    </header>
+    <main class="gridfwmeaning">
+      <div class="cardfwmeaning">
+        <img src="assets/img/carnation.png" alt="Carnation">
+        <div class="card-contentfwmeaning">
+          <h2>คาร์เนชั่น</h2>
+          <p>สื่อถึงความรัก ความเคารพ และความภักดี ดอกคาร์เนชั่นมักใช้แสดงความรักและความห่วงใยต่อบุคคลที่สำคัญ</p>
+        </div>
+      </div>
+      <div class="cardfwmeaning">
+        <img src="assets/img/daffodil.png" alt="Daffodil">
+        <div class="card-contentfwmeaning">
+          <h2>ดารารัตน์</h2>
+          <p>หมายถึงการยกย่องและการมองเห็นคุณค่าในตัวเอง บางวัฒนธรรมมองว่าเป็นดอกไม้แห่งการเริ่มต้นใหม่และการฟื้นฟู</p>
+        </div>
+      </div>
+      <div class="cardfwmeaning">
+        <img src="assets/img/hydrangea.png" alt="Hydrangea">
+        <div class="card-contentfwmeaning">
+          <h2>ไฮเดรนเยีย</h2>
+          <p>สื่อถึงความขอบคุณ ความเข้าใจ และการขอโทษ ไฮเดรนเยียยังแสดงถึงความลึกซึ้งในความรู้สึกและความชื่นชม</p>
+        </div>
+      </div>
+      <div class="cardfwmeaning">
+        <img src="assets/img/lilac.png" alt="Lilac">
+        <div class="card-contentfwmeaning">
+          <h2>ไลแลค</h2>
+          <p>สัญลักษณ์ของความรักแรกพบ ความบริสุทธิ์ใจ และความคิดถึง ดอกไลแลคมักเกี่ยวข้องกับความทรงจำที่ดีและช่วงเวลาที่อบอุ่น</p>
+        </div>
+      </div>
+      <div class="cardfwmeaning">
+        <img src="assets/img/lily.png" alt="Lily">
+        <div class="card-contentfwmeaning">
+          <h2>ลิลลี่</h2>
+          <p>หมายถึงความบริสุทธิ์ ความสงบและความสง่างาม มักใช้ในพิธีทางศาสนาเพื่อแสดงถึงความสงบสุขและความหวัง</p>
+        </div>
+      </div>
+      <div class="cardfwmeaning">
+        <img src="assets/img/tulip.png" alt="Tulip">
+        <div class="card-contentfwmeaning">
+          <h2>ทิวลิป</h2>
+          <p>แสดงถึงความรักที่สมบูรณ์แบบ ความสง่างามและความอบอุ่น ดอกทิวลิปมักมอบให้ในช่วงเทศกาลหรือโอกาสพิเศษเพื่อแสดงถึงความสุขและความชื่นชม</p>
+        </div>
+      </div>
+      <div class="cardfwmeaning">
+        <img src="assets/img/orchid.png" alt="Orchid">
+        <div class="card-contentfwmeaning">
+          <h2>กล้วยไม้</h2>
+          <p>เป็นตัวแทนของความงาม ความสง่างามและความรักที่ลึกซึ้ง กล้วยไม้ยังแสดงถึงความแข็งแกร่งและความเป็นเอกลักษณ์</p>
+        </div>
+      </div>
+      <div class="cardfwmeaning">
+        <img src="assets/img/rose.png" alt="Rose">
+        <div class="card-contentfwmeaning">
+          <h2>กุหลาบ</h2>
+          <p>เป็นสัญลักษณ์ของความรัก ความโรแมนติกและความงดงาม ดอกกุหลาบมักถูกใช้ในโอกาสพิเศษเพื่อแสดงความรู้สึกลึกซึ้งและความจริงใจต่อคนสำคัญ</p>
+        </div>
+      </div>
+      <div class="cardfwmeaning">
+        <img src="assets/img/sunflower.png" alt="Sunflower">
+        <div class="card-contentfwmeaning">
+          <h2>ทานตะวัน</h2>
+          <p>สื่อถึงความสดใส ความเข้มแข็งและการมองโลกในแง่ดี ดอกทานตะวันยังเป็นสัญลักษณ์ของความภักดีและความหวังเพราะมันหันหน้าตามแสงอาทิตย์เสมอ</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ฟังก์ชัน include HTML สำหรับ common-content
+    // function includeHTML() {
+    //   fetch('common/common.html')
+    //     .then(response => response.text())
+    //     .then(data => {
+    //       document.getElementById('common-content').innerHTML = data;
+    //     });
+    // }
+    // window.onload = includeHTML;
+
+    // ฟังก์ชันสำหรับปุ่ม Go Back
+    function goBack() {
+      window.location.href = 'flower.html';
+    }
+  </script>
+  <!-- <script src="common/common.js"></script> -->
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png" />
+  <title>ระบาย</title>
+  <style>
+    /* โดยอิงจาก 1920px: 1px = (100/1920)vw ≈ 0.05208vw */
+    body {
+      margin: 0;
+      font-family: 'TorsilpChillChill';
+      background: url('assets/img/bg.png') no-repeat center center fixed;
+      background-size: cover;
+      text-align: center;
+      color: #714937;
+    }
+
+    .container {
+      text-align: center;
+      padding-top: 2.5vw; /* 20px */
+    }
+
+    .title {
+      font-size: 2vw; /* 36px */
+      text-shadow: 0.1042vw 0.1042vw white; /* 2px offset */
+      font-weight: bold;
+      margin-bottom: 1.5625vw; /* 30px */
+      z-index: 1;
+    }
+
+    .members {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2.6042vw; /* 50px */
+      z-index: 1;
+    }
+
+    .member {
+      text-align: center;
+      z-index: 1;
+    }
+
+    .profile-pic {
+      width: 11vw;  /* 120px */
+      height: 11vw; /* 120px */
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 0.5208vw; /* 10px */
+      z-index: 1;
+      box-shadow: 0.1563vw 0.1563vw 0.2604vw #333; /* 3px 3px 5px */
+    }
+
+    .name {
+      font-size: 1.5vw; /* 18px */
+      font-weight: bold;
+      z-index: 1;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .advisor {
+      margin-top: 2.6042vw; /* 50px */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .advisor .profile-pic {
+      width: 11vw; /* 140px */
+      height: 11vw; /* 140px */
+      z-index: 1;
+    }
+
+    .advisor .name {
+      font-size: 1.5vw; /* 20px */
+      margin-top: 0.5208vw; /* 10px */
+      z-index: 1;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .flowerm1 {
+      position: fixed;
+      bottom: 0;
+      width: 100vw;
+      height: 50vw;
+      background-image: url('assets/img/flower1.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index: 0;
+      transform: translateY(0);
+    }
+    .flowerm3 {
+      position: fixed;
+      bottom: 0;
+      width: 100vw;
+      height: 50vw;
+      background-image: url('assets/img/flower3.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index: -1;
+      transform: translateY(0);
+    }
+
+    /* Media Query สำหรับอุปกรณ์ที่มีความกว้างหน้าจอ <= 1024px (เช่น iPad Air) */
+    @media screen and (max-width: 1180px) {
+      /* ปรับ padding-top ให้ใหญ่ขึ้นเพื่อความสมดุล */
+      .container {
+        padding-top: 5vw;
+      }
+      
+      /* เพิ่มขนาดตัวอักษรและช่องว่างให้เหมาะสมกับหน้าจอเล็ก */
+      .title {
+        font-size: 3vw; /* ขนาดเพิ่มขึ้นเพื่อให้ดูเด่นบนหน้าจอขนาดเล็ก */
+        margin-bottom: 3vw;
+      }
+
+      .members {
+        gap: 4vw;
+      }
+
+      .profile-pic {
+        width: 12vw;  /* เพิ่มขนาดรูปโปรไฟล์ */
+        height: 12vw;
+        margin-bottom: 1vw;
+        box-shadow: 0.3vw 0.3vw 0.5vw #333;
+      }
+
+      .name {
+        font-size: 2vw;
+      }
+
+      .advisor {
+        margin-top: 4vw;
+      }
+
+      .advisor .profile-pic {
+        width: 12vw;
+        height: 12vw;
+      }
+
+      .advisor .name {
+        font-size: 2vw;
+        margin-top: 1vw;
+      }
+
+      /* ปรับขนาดของภาพพื้นดอกไม้ (ถ้าจำเป็น) */
+      .flowerm1,
+      .flowerm3 {
+        height: 60vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">ผู้จัดทำ</div>
+
+    <div class="members">
+      <div class="member">
+        <div class="profile-pic" style="background-image: url('assets/img/Profile.jpg');"></div>
+        <div class="name">กนกวรรณ เปรมจิตร<br> 64080500201</div>
+      </div>
+      <div class="member">
+        <div class="profile-pic" style="background-image: url('assets/img/Profile.jpg');"></div>
+        <div class="name">วรรวดี เกิดศิลป์<br> 64080500234</div>
+      </div>
+      <div class="member">
+        <div class="profile-pic" style="background-image: url('assets/img/Profile.jpg');"></div>
+        <div class="name">ณักฐนิช จันทร์ฉาย <br> 64080500244</div>
+      </div>
+    </div>
+
+    <div class="advisor">
+      <div class="title">อาจารย์ที่ปรึกษา</div>
+      <div class="profile-pic" style="background-image: url('assets/img/Profile.jpg');"></div>
+      <div class="name">ผศ.ดร. ชนินทร์ ตั้งพานทอง</div>
+    </div>
+    <div class="flowerm1"></div>
+    <div class="flowerm3"></div>
+  </div>
+  <script>
+    window.addEventListener("scroll", function () {
+      if (window.scrollY <= 0) {
+        setTimeout(() => {
+          // เปลี่ยนหน้าไปยัง end.html โดยมี anchor "#last-section"
+          window.location.href = "end2.html";  
+        }, 1000);
+      }
+    });
+  </script>
+</body>
+</html>

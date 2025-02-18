@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png" />
+  <title>ระบาย</title>
+  <!-- <link rel="stylesheet" href="common/common.css" /> -->
+
+  <style>
+    @font-face {
+      font-family: 'TorsilpChillChill';
+      src: url('fonts/TorsilpChillChill.ttf') format('truetype');
+    }
+
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      height: 250vh;
+    }
+
+    body::after {
+      content: '';
+      display: block;
+      height: 1000px;
+      /* เพิ่มพื้นที่ว่างเพื่อให้เลื่อนได้ไกลขึ้น */
+    }
+
+    .background {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-image: url('assets/img/bg.png');
+      background-size: cover;
+      background-attachment: fixed;
+      z-index: -6;
+    }
+
+    .clouds {
+      position: fixed;
+      top: 0%;
+      left: 0;
+      width: 100vw;
+      height: 20vw;
+      background-image: url('assets/img/clouds.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index: -5;
+      transform: translateX(0);
+      transition: transform 0.2s ease-out;
+    }
+
+    .flower1 {
+      position: fixed;
+      bottom: 0%;
+      width: 100vw;
+      height: 50vw;
+      background-image: url('assets/img/flower1.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index: -2;
+      transform: translateY(0);
+    }
+
+    .flower2 {
+      position: fixed;
+      top: -10vw;
+      width: 100vw;
+      height: 50vw;
+      background-image: url('assets/img/flower2.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index: -3;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 1s ease-out, opacity 1s ease-out;
+    }
+
+    .flower3 {
+      position: fixed;
+      top: -10vw;
+      width: 100vw;
+      height: 60vw;
+      background-image: url('assets/img/flower3.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index: -5;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 1s ease-out, opacity 1s ease-out;
+    }
+
+    .logo {
+      position: absolute;
+      top: -2vw;
+      left: 55%;
+      transform: translateX(-45%);
+      width: 100%;
+      height: 50vw;
+      background-image: url('assets/img/logo.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      z-index: 1;
+      opacity: 1;
+      transition: opacity 1s ease-out;
+    }
+
+    .house {
+      position: fixed;
+      bottom: -50%;
+      left: 60%;
+      transform: translateX(-50%) scale(1);
+      width: 100%;
+      height: 50vw;
+      background-image: url('assets/img/house.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: -4;
+      transition: bottom 1s ease-in-out, opacity 1s ease-in-out, transform 1s ease-in-out;
+      opacity: 0;
+    }
+
+    .doorclose {
+      position: fixed;
+      bottom: -50%;
+      left: 60%;
+      transform: translateX(-50%) scale(1);
+      width: 100%;
+      height: 50vw;
+      background-image: url('assets/img/door close.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: 10;
+      transition: bottom 1s ease-in-out, opacity 1s ease-in-out, transform 1s ease-in-out;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .door-text {
+      position: fixed;
+      bottom: 50vw;
+      left: 64.5%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      font-family: TorsilpChillChill;
+      color: rgb(0, 0, 0);
+      padding: 10px 20px;
+      border-radius: 10px;
+      z-index: 20;
+      opacity: 0;
+      transition: bottom 1s ease-in-out, opacity 1s ease-in-out;
+    }
+
+    .light-overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 0%;
+      height: 0%;
+      background-color: white;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      opacity: 0;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 30;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .subtitle {
+      position: fixed;
+      bottom: 2%;
+      left: 52%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      font-family: 'TorsilpChillChill', sans-serif;
+      color: #000;
+      background-color: rgba(255, 255, 255, 0.4);
+      padding: 5px 20px;
+      border-radius: 1px;
+      z-index: 50;
+      text-align: center;
+      white-space: nowrap;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+ /* สไตล์สำหรับ Popup (Desktop) */
+#popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+#popup {
+  background: #fff ;
+  padding: 1vw;           
+  border-radius: 1vw;    
+  text-align: center;
+  width: 60vw;            /* ปรับความกว้างให้กว้างขึ้น */
+  max-width: 500px;       /* จำกัดความกว้างสูงสุด */
+  font-family: 'TorsilpChillChill', sans-serif;
+}
+
+#popup h2 {
+  margin-top: 0;
+  font-size: 1.2vw;
+  color: #714937;
+}
+
+#popup p,
+#popup ul {
+  font-size: 1vw;
+  margin: 0.5vw 0;
+  color: #714937;
+}
+
+#popup button {
+  margin-top: 0.8vw;
+  padding: 0.6vw 1vw;
+  font-size: 1vw;
+  border: none;
+  border-radius: 0.3vw;
+  background: #f39eb6;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Noto Sans Thai', sans-serif;
+}
+#popup button:hover{
+    background: #e37daa;   
+}
+
+/* Responsive สำหรับหน้าจอ Tablets (ไม่เกิน 768px) */
+@media (max-width: 768px) {
+  #popup {
+    width: 60vw;         /* ปรับความกว้าง Popup ให้กว้างขึ้นเล็กน้อย */
+    padding: 1.5vw;
+    border-radius: 0.8vw;
+  }
+  #popup h2 {
+    font-size: 2vw;
+  }
+  #popup p,
+  #popup ul {
+    font-size: 1.8vw;
+  }
+  #popup button {
+    margin-top: 1vw;
+    padding: 1vw 1.5vw;
+    font-size: 1.8vw;
+    border-radius: 0.5vw;
+  }
+}
+
+/* Responsive สำหรับหน้าจอ Mobile (ไม่เกิน 480px) */
+@media (max-width: 480px) {
+  #popup {
+    width: 60vw;         /* บนหน้าจอเล็ก Popup จะกว้างขึ้นเพื่อความอ่านง่าย */
+    padding: 2vw;
+    border-radius: 1vw;
+  }
+  #popup h2 {
+    font-size: 3vw;
+  }
+  #popup p,
+  #popup ul {
+    font-size: 2.5vw;
+  }
+  #popup button {
+    margin-top: 1.5vw;
+    padding: 1.5vw 2vw;
+    font-size: 2.5vw;
+    border-radius: 1vw;
+  }
+}
+
+
+
+
+    @media (max-width: 1024px) {
+      .clouds {
+        height: 60vh;
+      }
+
+      .flower1 {
+        height: 50vw;
+      }
+
+      .flower2 {
+        position: fixed;
+        top: -15vw;
+        width: 100vw;
+        height: 50vw;
+        background-image: url(assets/img/flower2.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        z-index: -3;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: transform 1s ease-out, opacity 1s ease-out;
+      }
+
+      .flower3 {
+        position: fixed;
+        top: -10vw;
+        width: 100vw;
+        height: 60vw;
+        background-image: url(assets/img/flower3.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        z-index: -5;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: transform 1s ease-out, opacity 1s ease-out;
+      }
+
+      .logo {
+        width: 80vw;
+        left: 50vw;
+        top: 4vw;
+      }
+
+      .house,
+      .doorclose {
+        width: 100vw;
+      }
+
+      .door-text {
+        font-size: 1.2rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .clouds {
+        height: 60vh;
+      }
+
+      .flower1 {
+        height: 50vw;
+      }
+
+      .flower2 {
+        height: 50vw;
+        top: -9vw;
+      }
+
+      .flower3 {
+        height: 60vw;
+        top: -9vw;
+      }
+
+      .logo {
+        width: 80vw;
+        left: 50vw;
+        top: 4vw;
+      }
+
+      .house,
+      .doorclose {
+        width: 100vw;
+      }
+
+      .door-text {
+        font-size: 0.8rem;
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+      .clouds {
+        height: 50vh;
+      }
+
+      .flower1 {
+        height: 80vh;
+      }
+
+      .flower2 {
+        top: 4vw;
+        height: 50vw;
+      }
+
+      .flower3 {
+        top: 8vw;
+        height: 60vw;
+      }
+
+      .logo {
+        top: 10vw;
+      }
+
+      .house,
+      .doorclose {
+        width: 100vw;
+        bottom: -30vw;
+        height: 60vw;
+        left: 55vw;
+      }
+
+      .door-text {
+        font-size: 1rem;
+        left: 70%;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        padding: 5px 10px;
+      }
+
+      .video-container video {
+        object-fit: cover;
+      }
+
+      /* ป้องกันการ scroll */
+      .no-scroll {
+        overflow: hidden !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ส่วนโหลด HTML จากไฟล์ common -->
+  <!-- <div id="common-content"></div> -->
+
+  <!-- Popup คำแนะนำ -->
+  <div id="popup-overlay">
+    <div id="popup">
+      <h2>คำแนะนำ</h2>
+      <p>เว็บไซต์นี้เป็นเพียงการให้ความรู้และทดลองทำกิจกรรมที่เกี่ยวข้องกับศิลปะบำบัด ไม่ได้เป็นการช่วยบำบัดแต่อย่างใด </p>
+      <ul style="text-align: center;">
+        "ขอให้ทุกท่านเพลิดเพลินกับเว็บไซต์ของเรา"
+      </ul>
+      <button id="close-popup">ตกลง</button>
+    </div>
+  </div>
+
+  <div class="background"></div>
+  <div class="clouds"></div>
+  <div class="flower3"></div>
+  <div class="flower2"></div>
+  <div class="flower1"></div>
+  <div class="logo"></div>
+  <div class="house"></div>
+  <div class="doorclose"></div>
+  <div class="door-text"><b>👆คลิกเพื่อเปิดประตูสิ</b></div>
+  <div class="light-overlay"></div>
+  <div class="video-container">
+    <video id="fullscreen-video" src="assets/img/withoutpro.mov" muted autoplay></video>
+  </div>
+  <div class="subtitle" id="subtitle"></div>
+
+  <script>
+    // // โหลดเนื้อหา common.html
+    // function includeHTML() {
+    //   fetch('common/common.html')
+    //     .then(response => response.text())
+    //     .then(data => {
+    //       document.getElementById('common-content').innerHTML = data;
+    //     });
+    // }
+    // window.onload = includeHTML;
+
+    // ปิดการ scroll จนกว่าปิด Popup
+    document.body.style.overflow = 'hidden';
+
+    // จัดการปิด Popup เมื่อคลิกปุ่ม "ตกลง"
+    document.getElementById('close-popup').addEventListener('click', function () {
+      document.getElementById('popup-overlay').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
+    const video = document.getElementById('fullscreen-video');
+    const videoContainer = document.querySelector('.video-container');
+    const lightOverlay = document.querySelector('.light-overlay');
+
+    window.addEventListener('scroll', function () {
+      const scrollPos = window.scrollY;
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+      // แสดงวิดีโอเมื่อเลื่อนถึงตำแหน่งที่กำหนด
+      if (scrollPos > 4500 && !videoContainer.style.display) {
+        videoContainer.style.display = "flex";
+        video.play();
+      }
+
+      // เชื่อมตำแหน่งเลื่อนกับตำแหน่งวิดีโอ
+      if (videoContainer.style.display === "flex") {
+        const videoDuration = video.duration || 5; // ความยาววิดีโอ (default 5 วินาที)
+        const scrollFraction = scrollPos / maxScroll;
+        const videoTime = videoDuration * scrollFraction;
+        video.currentTime = videoTime;
+
+        // เมื่อเลื่อนกลับจนถึงจุดเริ่มต้น (scrollPos === 0)
+        if (scrollPos === 0) {
+          video.pause(); // หยุดวิดีโอ
+          videoContainer.style.display = "none"; // ซ่อนวิดีโอ
+
+          // แสดงแสงสีขาว
+          lightOverlay.style.display = "block";
+          lightOverlay.style.opacity = 1;
+          lightOverlay.style.width = "300%";
+          lightOverlay.style.height = "300%";
+
+          // จางแสงสีขาวหลังเวลาที่กำหนด
+          setTimeout(() => {
+            lightOverlay.style.opacity = 0;
+            lightOverlay.style.width = "0%";
+            lightOverlay.style.height = "0%";
+          }, 800);
+        }
+      }
+    });
+
+    document.querySelector('.doorclose').addEventListener('click', function () {
+      this.style.backgroundImage = "url('assets/img/door open.png')";
+      setTimeout(() => {
+        this.style.backgroundImage = "url('assets/img/door open light.png')";
+        setTimeout(() => {
+          lightOverlay.style.opacity = 1;
+          lightOverlay.style.width = "300%";
+          lightOverlay.style.height = "300%";
+          setTimeout(() => {
+            lightOverlay.style.display = "none";
+            videoContainer.style.display = "flex";
+          }, 800);
+        }, 350);
+      }, 350);
+    });
+
+    window.addEventListener('scroll', function () {
+      let scrollPos = window.scrollY;
+      let maxScroll = document.body.scrollHeight - window.innerHeight;
+      const lightOverlay = document.querySelector('.light-overlay');
+
+      // จางแสงสีขาวเมื่อ scroll กลับ
+      if (scrollPos < maxScroll - 50) {
+        lightOverlay.style.opacity = 0;
+        lightOverlay.style.width = "0%";
+        lightOverlay.style.height = "0%";
+      }
+
+      // จัดการเมฆและดอกไม้
+      let cloudMove = Math.min(scrollPos * 0.2, 300);
+      document.querySelector('.clouds').style.transform = `translateX(${cloudMove}px)`;
+
+      const flower3 = document.querySelector('.flower3');
+      const flower2 = document.querySelector('.flower2');
+
+      if (scrollPos > 250) {
+        flower3.style.transform = `translateY(${scrollPos * 0.14}px)`;
+        flower3.style.opacity = 1;
+      }
+
+      if (scrollPos > 350) {
+        flower2.style.transform = `translateY(${scrollPos * 0.16}px)`;
+        flower2.style.opacity = 1;
+      }
+
+      document.querySelector('.flower1').style.transform = `translateY(${scrollPos * 0.12}px)`;
+
+      const logo = document.querySelector('.logo');
+      if (scrollPos > 40) {
+        logo.style.opacity = 1;
+      }
+
+      // จัดการบ้านและประตู
+      const house = document.querySelector('.house');
+      const doorclose = document.querySelector('.doorclose');
+      const doorText = document.querySelector('.door-text');
+
+      if (scrollPos > 400) {
+        house.style.bottom = '-15%';
+        house.style.opacity = 1;
+
+        doorclose.style.bottom = '-15%';
+        doorclose.style.opacity = 1;
+
+        // แสดงข้อความ
+        doorText.style.bottom = '10%';
+        doorText.style.opacity = 1;
+
+        // ขยายขนาดเมื่อเลื่อนจนสุด
+        if (scrollPos >= maxScroll - 50) {
+          house.style.transform = 'translateX(-50%) scale(1.2)';
+          doorclose.style.transform = 'translateX(-50%) scale(1.2)';
+        } else {
+          house.style.transform = 'translateX(-50%) scale(1)';
+          doorclose.style.transform = 'translateX(-50%) scale(1)';
+        }
+      } else {
+        house.style.bottom = '-50%';
+        house.style.opacity = 0;
+
+        doorclose.style.bottom = '-50%';
+        doorclose.style.opacity = 0;
+
+        // ซ่อนข้อความ
+        doorText.style.bottom = '-60%';
+        doorText.style.opacity = 0;
+      }
+    });
+
+    // เพิ่ม Event Listener เฉพาะที่ประตู
+    document.querySelector('.doorclose').addEventListener('click', function () {
+      const lightOverlay = document.querySelector('.light-overlay');
+      const videoContainer = document.querySelector('.video-container');
+
+      this.style.backgroundImage = "url('assets/img/door open.png')";
+
+      setTimeout(() => {
+        this.style.backgroundImage = "url('assets/img/door open light.png')";
+        setTimeout(() => {
+          lightOverlay.style.opacity = 1;
+          lightOverlay.style.width = "300%";
+          lightOverlay.style.height = "300%";
+          setTimeout(() => {
+            lightOverlay.style.display = "none";
+            videoContainer.style.display = "flex"; // แสดงวิดีโอ
+          }, 800);
+        }, 350);
+      }, 350);
+    });
+
+    // ป้องกันการคลิกนอกประตูทำให้แสงแสดง
+    document.body.addEventListener('click', function () {
+      const lightOverlay = document.querySelector('.light-overlay');
+      // ซ่อนแสงสีขาวเมื่อคลิกที่อื่น
+      lightOverlay.style.opacity = 0;
+      lightOverlay.style.width = "0%";
+      lightOverlay.style.height = "0%";
+    });
+
+    /***ซับไตเติล***/
+    const subtitle = document.getElementById('subtitle'); // อ้างอิง subtitle
+
+    // ข้อความต่างๆ ที่จะแสดงตามตำแหน่งการเลื่อน
+    const subtitles = [
+      { scroll: 800, text: 'ในเมืองเล็กๆ ท่ามกลางภูเขาและแม่น้ำ มีสถานที่เงียบสงบ' },
+      { scroll: 1000, text: 'บ้านหลังนี้ถูกโอบล้อมด้วยดอกไม้และธรรมชาติ' },
+      { scroll: 1400, text: 'ที่นี่ไม่มีใครคาดหวังความสมบูรณ์แบบ ทุกอย่างเกี่ยวกับการเป็นตัวเองและการแสดงออกผ่านศิลปะ' }
+    ];
+
+    // ข้อความซับไตเติลใหม่ที่จะแสดงขณะเล่นวิดีโอ
+    const videoSubtitles = [
+      { time: 0, text: 'เมื่อมาสถานที่นี้ให้ความรู้สึกเหมือนเวลาหยุด ปัญหาหลากหลายอย่างที่คุณได้พบเจอในชีวิตประจำวัน' },
+      { time: 2, text: 'ความกดดันจากงาน ความสัมพันธ์ที่ซับซ้อน หรือความเครียดที่สะสม' },
+      { time: 4, text: 'เสมือนกับว่าปัญหาเริ่มจางหายไป' }
+    ];
+
+    let hasScrolledToVideo = false; // สถานะตรวจสอบว่าเคยเลื่อนถึงวิดีโอหรือยัง
+
+    // ฟังก์ชันอัปเดตข้อความ Subtitle
+    function updateSubtitle(scrollPos) {
+      // หากยังไม่เคยเลื่อนถึงวิดีโอ
+      if (!hasScrolledToVideo) {
+        for (let i = 0; i < subtitles.length; i++) {
+          const current = subtitles[i];
+          const next = subtitles[i + 1];
+
+          if (scrollPos >= current.scroll && (!next || scrollPos < next.scroll)) {
+            if (subtitle.textContent !== current.text) {
+              subtitle.textContent = current.text; // อัปเดตข้อความ
+              subtitle.style.opacity = 1; // แสดงข้อความ
+              subtitle.style.visibility = 'visible';
+              console.log(`แสดงข้อความ: ${current.text}`);
+            }
+            break;
+          }
+        }
+      }
+
+      // ซ่อนข้อความก่อนถึงจุดเริ่มต้น
+      if (scrollPos < 200) {
+        subtitle.style.opacity = 0;
+        subtitle.style.visibility = 'hidden';
+      }
+    }
+
+    // ฟังก์ชันอัปเดตข้อความซับไตเติลตามเวลาในวิดีโอ
+    function updateVideoSubtitle(videoTime) {
+      for (let i = 0; i < videoSubtitles.length; i++) {
+        const current = videoSubtitles[i];
+        const next = videoSubtitles[i + 1];
+
+        if (videoTime >= current.time && (!next || videoTime < next.time)) {
+          if (subtitle.textContent !== current.text) {
+            subtitle.textContent = current.text;
+            subtitle.style.opacity = 1;
+            subtitle.style.visibility = 'visible';
+            console.log(`แสดงข้อความวิดีโอ: ${current.text}`);
+          }
+          break;
+        }
+      }
+    }
+
+    // Event Listener สำหรับ Scroll
+    window.addEventListener('scroll', function () {
+      const scrollPos = window.scrollY;
+      console.log(`scrollPos: ${scrollPos}`);
+
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+      // แสดงวิดีโอเมื่อเลื่อนถึงตำแหน่งที่กำหนด
+      if (scrollPos > 4500 && !videoContainer.style.display) {
+        videoContainer.style.display = "flex";
+        video.play();
+        hasScrolledToVideo = true;
+      }
+
+      // เชื่อมตำแหน่งเลื่อนกับตำแหน่งวิดีโอ
+      if (videoContainer.style.display === "flex") {
+        const videoDuration = video.duration || 5;
+        const scrollFraction = scrollPos / maxScroll;
+        const videoTime = videoDuration * scrollFraction;
+        video.currentTime = videoTime;
+      } else {
+        updateSubtitle(scrollPos);
+      }
+
+      // ซ่อนข้อความปกติเมื่อเลื่อนย้อนกลับหลังจากถึงวิดีโอ
+      if (hasScrolledToVideo && scrollPos < 4500) {
+        subtitle.style.opacity = 0;
+        subtitle.style.visibility = 'hidden';
+      }
+    });
+
+    // เพิ่ม Event Listener สำหรับวิดีโอ
+    video.addEventListener('timeupdate', function () {
+      const videoTime = video.currentTime;
+      updateVideoSubtitle(videoTime);
+    });
+
+    // ซ่อนซับไตเติลเมื่อวิดีโอหยุด
+    video.addEventListener('pause', function () {
+      subtitle.style.opacity = 0;
+      subtitle.style.visibility = 'hidden';
+    });
+
+    video.addEventListener('ended', function () {
+      window.location.href = 'content2.html'; // เมื่อวิดีโอเล่นจบ ไปยัง content2.html
+    });
+  </script>
+  <!-- <script src="common/common.js"></script> -->
+</body>
+
+</html>

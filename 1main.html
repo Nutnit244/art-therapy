@@ -1,0 +1,125 @@
+<!-- ไฟล์: main.html -->
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+    <title>ระบาย</title>
+    <link rel="stylesheet" href="common/common.css" />
+    <style>
+        /* รีเซ็ต html, body ให้เต็มจอ และไม่เลื่อน */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* ซ่อน scroll ของหน้าหลัก */
+        }
+
+        /* iFrame ให้เต็มหน้าจอ */
+        #content-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 1;
+            /* ให้เมนูอยู่เหนือ iFrame */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- เมนู -->
+    <div class="menu" id="menu">
+        <a href="#" onclick="loadIframe('open.html')">เกริ่นเรื่อง</a>
+        <a href="#" onclick="loadIframe('content2.html')">เนื้อหา</a>
+        <p>กิจกรรม</p>
+        <a href="#" onclick="loadIframe('Drawing.html')">วาดรูป ระบายสี</a>
+        <a href="#" onclick="loadIframe('flower.html')">จัดดอกไม้แสนสวย</a>
+        <a href="#" onclick="loadIframe('color.html')">ปาสีพาเพลิน</a>
+        <a href="#" onclick="loadIframe('write.html')">ระบายความรู้สึก</a>
+        <p>ข้อมูลเพิ่มเติม</p>
+        <a href="#" onclick="loadIframe('end.html')">ปิดเรื่อง</a>
+        <a href="#" onclick="loadIframe('end2.html')">ช่องทางการเยียวยาจิตใจเพิ่มเติม</a>
+        <a href="#" onclick="loadIframe('member.html')">ผู้จัดทำ</a>
+    </div>
+
+    <!-- ปุ่มเมนูและเสียง -->
+    <div class="button-group">
+        <div class="circle-button" onclick="toggleMenu()">
+            <img src="assets/img/menuicon.PNG" alt="Menu">
+        </div>
+        <div class="circle-button" onclick="toggleSound()">
+            <img id="sound-icon" src="assets/img/soundofficon.PNG" alt="Sound">
+        </div>
+    </div>
+
+    <!-- เพลงพื้นหลัง -->
+    <audio id="background-music" src="assets/Jazz Music.mp3" loop></audio>
+
+    <!-- iFrame สำหรับโหลดเนื้อหาของแต่ละหน้า -->
+    <iframe id="content-frame" src="open.html"></iframe>
+
+    <script>
+        let globalAudio;
+        document.addEventListener("DOMContentLoaded", () => {
+            globalAudio = document.getElementById("background-music");
+            const soundIcon = document.getElementById("sound-icon");
+
+            // โหลดสถานะเสียงจาก localStorage
+            const isPlaying = localStorage.getItem("isPlaying") || "false";
+            const currentTime = localStorage.getItem("currentTime") || "0";
+
+            globalAudio.currentTime = parseFloat(currentTime);
+
+            if (isPlaying === "true") {
+                globalAudio.play();
+                soundIcon.src = 'assets/img/soundonicon.PNG';
+            } else {
+                soundIcon.src = 'assets/img/soundofficon.PNG';
+            }
+
+            // บันทึกสถานะก่อนออกจากหน้า
+            window.addEventListener("beforeunload", () => {
+                localStorage.setItem("isPlaying", !globalAudio.paused);
+                localStorage.setItem("currentTime", globalAudio.currentTime);
+            });
+        });
+
+        // เปลี่ยนเนื้อหา iframe
+        function loadIframe(pageUrl) {
+            document.getElementById("content-frame").src = pageUrl;
+            toggleMenu(); // ปิดเมนูอัตโนมัติเมื่อเลือกเมนู
+        }
+
+        // ควบคุมเสียง
+        function toggleSound() {
+            const soundIcon = document.getElementById("sound-icon");
+            if (!globalAudio) return;
+
+            if (globalAudio.paused) {
+                globalAudio.play();
+                soundIcon.src = 'assets/img/soundonicon.PNG';
+                localStorage.setItem("isPlaying", "true");
+            } else {
+                globalAudio.pause();
+                soundIcon.src = 'assets/img/soundofficon.PNG';
+                localStorage.setItem("isPlaying", "false");
+            }
+        }
+
+        // เปิด/ปิดเมนู
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('open');
+        }
+    </script>
+
+</body>
+</html>

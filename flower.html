@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+    <title>ระบาย</title>
+    <!-- <link rel="stylesheet" href="common/common.css" /> -->
+  <style>
+    @font-face {
+      font-family: 'TORSILPCHILLCHILL';
+      src: url('fonts/TORSILPCHILLCHILL.TTF') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'TorsilpRajun2024';
+        src: url('fonts/TorsilpRajun2024.TTF') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    /* ตั้งค่าเบื้องต้น */
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      min-height: 120vh;
+      background-color: #f4e9dd;
+      font-family: 'TORSILPCHILLCHILL', sans-serif;
+    }
+
+    .containerflower {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ดอกไม้ */
+    .flower-left, .flower-right {
+      position: fixed;
+      background-size: contain;
+      background-repeat: no-repeat;
+      transition: all 0.5s ease-in-out;
+      width: 300vw;
+      height: 100%;
+    }
+
+    .flower-left {
+      top: 50%;
+      left: 148vw;
+      transform: translate(-50%, -50%);
+      background-image: url('assets/img/flower_left.png');
+      z-index: 2;
+    }
+
+    .flower-right {
+      top: 50%;
+      left: 167vw;
+      transform: translate(-50%, -50%);
+      background-image: url('assets/img/flower_right.png');
+      z-index: 2;
+    }
+
+    /* เอฟเฟกต์แอนิเมชันสำหรับดอกไม้ */
+    .flower-left.slide-left {
+      left: 140vw;
+    }
+
+    .flower-right.slide-right {
+      left: 180vw;
+    }
+
+    /* แจกัน */
+    .vase {
+      position: fixed;
+      width: 105vw;
+      height: 114vh;
+      left: 50%;
+      bottom: 1vh;
+      transform: translateX(-50%);
+      background-image: url('assets/img/vasem.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      z-index: 1;
+      opacity: 0;
+      transition: transform 0.3s ease-in-out, opacity 0.5s ease-in-out;
+    }
+
+    .vase.show {
+      opacity: 1;
+    }
+
+    /* คอนเทนเนอร์สำหรับข้อความ */
+    .contentflower {
+      position: fixed;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    
+    .contentflower.show {
+      opacity: 1;
+    }
+
+    /* หัวข้อ */
+    .title-flower {
+      font-size: 2.5vw;
+      font-weight: normal;
+      color: #714937;
+      margin-bottom: 1vw;
+      opacity: 0;
+      transform: translateY(2vw);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      font-family: "TorsilpRajun2024", sans-serif;
+    }
+
+    /* เนื้อหา */
+    .text-flower {
+      font-size: 2vw;
+      color: #714937;
+      opacity: 0;
+      transform: translateY(2vw);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    /* ปุ่ม */
+    .button-container {
+      position: fixed;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .button-container button {
+      padding: 1vw 2vw;
+      background-color: #f39eb6;
+      border: none;
+      border-radius: 2vw;
+      color: white;
+      font-size: 1.4vw;
+      cursor: pointer;
+      transition: background-color 0.3s, border-radius 0.3s;
+      box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
+
+    .button-container button:hover {
+      background-color: #e37daa;
+      color: white;
+    }
+
+    /* ============================================================
+       Media Queries สำหรับปรับตำแหน่งและขนาดของดอกไม้และแจกัน
+       ============================================================ */
+
+    /* สำหรับเดสก์ท็อป (กว้างมากกว่า 1024px) */
+    @media screen and (min-width: 1025px) {
+      /* ค่าเริ่มต้นสำหรับเดสก์ท็อป (ไม่ใช่ iPad Pro) */
+      .flower-left {
+        left: 148vw;
+      }
+      .flower-right {
+        left: 167vw;
+      }
+      .flower-left.slide-left {
+        left: 136vw;
+      }
+      .flower-right.slide-right {
+        left: 180vw;
+      }
+      .vase {
+        width: 105vw;
+        height: 114vh;
+        bottom: 1vh;
+      }
+    }
+
+    /* สำหรับ iPad Air (ความกว้างไม่เกิน 1024px) */
+    @media screen and (max-width: 1024px) {
+      .vase {
+        width: 141vw;
+        height: 109vh;
+        bottom: -1vh;
+      }
+      /* ปรับตำแหน่งของดอกไม้สำหรับ iPad Air */
+      .flower-left {
+        left: 140vw;
+      }
+      .flower-right {
+        left: 143vw;
+      }
+      .flower-left.slide-left {
+        left: 118vw;
+      }
+      .flower-right.slide-right {
+        left: 168vw;
+      }
+    }
+
+    /* สำหรับ iPad Pro (ความกว้างระหว่าง 1025px ถึง 1366px) */
+    @media screen and (min-width: 1025px) and (max-width: 1366px) {
+      .vase {
+        width: 120vw;
+        height: 110vh;
+        bottom: 0;
+        left: 41vw;
+      }
+      /* ปรับตำแหน่งและขนาดของดอกไม้ให้เหมาะกับ iPad Pro */
+      .flower-left {
+        left: 130vw;
+        width: 300vw;
+      }
+      .flower-right {
+        left: 150vw;
+        width: 300vw;
+      }
+      .flower-left.slide-left {
+        left: 120vw;
+      }
+      .flower-right.slide-right {
+        left: 165vw;
+      }
+    }
+
+    /* สำหรับมือถือทั่วไป (ความกว้างไม่เกิน 768px) */
+    @media screen and (max-width: 768px) {
+      .vase {
+        width: 105vw;
+        height: 105vh;
+        bottom: -1vh;
+      }
+      /* ปรับตำแหน่งของดอกไม้ */
+      .flower-left {
+        left: 172vw;
+        width: 350vw;
+      }
+      .flower-right {
+        left: 175vw;
+        width: 350vw;
+      }
+      .flower-left.slide-left {
+        left: 157vw;
+      }
+      .flower-right.slide-right {
+        left: 202vw;
+      }
+    }
+
+    /* สำหรับ iPhone SE (ความกว้างไม่เกิน 375px) */
+    @media screen and (max-width: 375px) {
+      .vase {
+        width: 55vw;
+        height: 40vh;
+        bottom: 18vh;
+      }
+      .flower-left {
+        left: 120vw;
+        width: 400vw;
+      }
+      .flower-right {
+        left: 140vw;
+        width: 400vw;
+      }
+      .flower-left.slide-left {
+        left: 112vw;
+      }
+      .flower-right.slide-right {
+        left: 148vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- <div id="common-content"></div> -->
+  <div class="containerflower">
+    <!-- คอนเทนเนอร์สำหรับข้อความ -->
+    <div class="contentflower">
+      <div class="title-flower">"การจัดดอกไม้"</div>
+      <div class="text-flower">
+        เสริมสร้างสมาธิ มีความจดจ่อ<br />
+        ทำให้คลายเครียดและความวิตกกังวลน้อยลง
+      </div>
+    </div>
+
+    <!-- ปุ่ม -->
+    <div class="button-container">
+      <a href="flower1.html">
+        <button>ลองมาจัดดอกไม้กับเรา👈🏼</button>
+      </a>
+    </div>
+
+    <div class="flower flower-left"></div>
+    <div class="flower flower-right"></div>
+    <a href="flower1.html">
+      <div class="vase"></div>
+    </a>
+  </div>
+
+  <script>
+    // ฟังก์ชัน include HTML (ถ้ามีไฟล์ common)
+    // function includeHTML() {
+    //   fetch('common/common.html')
+    //     .then(response => response.text())
+    //     .then(data => {
+    //       document.getElementById('common-content').innerHTML = data;
+    //     });
+    // }
+    // window.onload = includeHTML;
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      // เลือก element ที่ต้องใช้
+      const flowerLeft = document.querySelector('.flower-left');
+      const flowerRight = document.querySelector('.flower-right');
+      const vase = document.querySelector('.vase');
+      const content = document.querySelector('.contentflower');
+      const title = document.querySelector('.title-flower');
+      const text = document.querySelector('.text-flower');
+      const buttonContainer = document.querySelector('.button-container');
+  
+      console.log("Script Loaded");
+  
+      // ฟังก์ชันจัดการเหตุการณ์ scroll
+      const handleScroll = () => {
+        const scrollY = window.scrollY;
+        const triggerPoint = 15;
+  
+        console.log("Scroll Position:", scrollY);
+  
+        if (scrollY > triggerPoint) {
+          flowerLeft.classList.add('slide-left');
+          flowerRight.classList.add('slide-right');
+          vase.classList.add('show');
+          content.classList.add('show');
+          title.style.opacity = "1";
+          title.style.transform = "translateY(0)";
+          text.style.opacity = "1";
+          text.style.transform = "translateY(0)";
+          buttonContainer.style.opacity = "1";
+        } else {
+          flowerLeft.classList.remove('slide-left');
+          flowerRight.classList.remove('slide-right');
+          vase.classList.remove('show');
+          content.classList.remove('show');
+          title.style.opacity = "0";
+          title.style.transform = "translateY(2vw)";
+          text.style.opacity = "0";
+          text.style.transform = "translateY(2vw)";
+          buttonContainer.style.opacity = "0";
+        }
+      };
+  
+      // เพิ่ม event listener สำหรับ scroll (ภายใน DOMContentLoaded)
+      window.addEventListener('scroll', handleScroll);
+    });
+  
+    /****************** จัดการเหตุการณ์ Wheel สำหรับการเปลี่ยนหน้า ******************/
+    let isScrolling = false;  // ป้องกันการเลื่อนซ้อน
+    const delayScroll = 1500; // ระยะเวลาหน่วง (มิลลิวินาที)
+    const scrollThreshold = 50; // กำหนด threshold เพื่อให้ตรวจจับเฉพาะเมื่ออยู่สุดของหน้า
+  
+    function smoothScroll(targetY) {
+      window.scrollTo({
+        top: targetY,
+        behavior: "smooth",
+      });
+    }
+  
+    window.addEventListener("wheel", (event) => {
+      if (isScrolling) return;  // ถ้าอยู่ในช่วงเลื่อนอยู่แล้ว ให้ข้าม
+  
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+  
+      // เมื่อเลื่อนลงและอยู่ใกล้ล่างสุด (scrollY ≥ maxScroll - scrollThreshold)
+      if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
+        isScrolling = true;
+        setTimeout(() => {
+          window.location.href = "color.html"; // เปลี่ยนไปหน้า color.html
+        }, delayScroll);
+      }
+      // เมื่อเลื่อนขึ้นและอยู่ใกล้บนสุด (scrollY ≤ scrollThreshold)
+      else if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
+        isScrolling = true;
+        setTimeout(() => {
+          window.location.href = "Drawing.html"; // เปลี่ยนไปหน้า Drawing.html
+        }, delayScroll);
+      }
+    });
+  </script>
+  
+      <!-- <script src="common/common.js"></script> -->
+
+</body>
+</html>

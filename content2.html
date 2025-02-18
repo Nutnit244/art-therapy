@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบาย</title>
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+  <!-- <link rel="stylesheet" href="common/common.css"> -->
+  <style>
+    /* ---------------------- ตั้งค่าพื้นฐาน ---------------------- */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: TorsilpChillChill, sans-serif;
+      overflow: hidden; /* ปิด scroll ธรรมดา */
+      background: url('assets/img/bg.png') no-repeat center center/cover;
+      background-attachment: fixed;
+    }
+    /* ---------------------- Container หลักของทุก Section ---------------------- */
+    .sections-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* ---------------------- Transition สำหรับแต่ละ Section ---------------------- */
+    .section {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    /* Section ที่มีคลาส active จะแสดง */
+    .section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* ---------------------- เนื้อหาภายในแต่ละ Section ---------------------- */
+    /* --- Section 1 --- */
+    .section1 {
+      position: relative;
+    }
+    .section1 .text1 {
+      font-size: 3.5vw; /* ประมาณ 50px บนจอขนาด 1440px */
+      text-align: center;
+      z-index: 3;
+      color: #714937;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+    /* สไตล์สำหรับรูป pcolor.png */
+    .pcolor {
+      position: absolute;
+      bottom: -9.7vw; /* ประมาณ -140px */
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+      z-index: 2;
+    }
+    .pcolor.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-1.4vw); /* ประมาณ 20px */
+    }
+    .skipbutton {
+      position: absolute;
+      bottom: 1.39vw;  /* ประมาณ 20px */
+      right: 1.39vw;   /* ประมาณ 20px */
+      padding: 0.7vw 1.39vw; /* ประมาณ 10px และ 20px */
+      font-size: 1.11vw;  /* ประมาณ 16px */
+      border: none;
+      background-color: #fff;
+      cursor: pointer;
+      border-radius: 0.35vw; /* ประมาณ 5px */
+      box-shadow: 0 0.28vw 0.42vw rgba(0, 0, 0, 0.2); /* ประมาณ 4px และ 6px */
+      z-index: 100;
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
+    .skipbutton:hover {
+      background-color: #f187b5;
+      color: white;
+    }
+    .clouds {
+      position: absolute;
+      top: 2vw;
+      left: -13.9vw; /* ประมาณ -200px */
+      width: 100vw;
+      opacity: 0.8;
+      z-index: 1;
+      animation: moveClouds 50s linear infinite;
+    }
+    @keyframes moveClouds {
+      0% {
+        left: 5.56vw; /* ประมาณ 80px */
+      }
+      100% {
+        left: 100vw;
+      }
+    }
+
+    /* --- Section 2 --- */
+    .section2 {
+      position: absolute;
+      flex-direction: row;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(1.39vw); /* ประมาณ 20px */
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .section2.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Container สำหรับข้อความใน Section 2 */
+    .text {
+      position: absolute;
+      margin-left: 10%;
+      width: 50%;
+      z-index: 3;
+    }
+    /* ส่วนหัวข้อ: "ศิลปะ" */
+    .text-title {
+      font-size: 2.8vw; /* ปรับขนาดตามที่ต้องการ */
+      text-align: center;
+      color: #714937;
+      font-family: 'TorsilpChillChill';
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.5vw;
+    }
+    /* ส่วนเนื้อความ: ข้อความที่เหลือ */
+    .text-body {
+      font-size: 1.7vw; /* ปรับขนาดตามที่ต้องการ */
+      text-align: center;
+      color: #714937;
+      font-family: 'TorsilpChillChill';
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+      margin-top: 0.5vw;
+    }
+    
+    /* Container สำหรับรูปภาพใน Section 2 */
+    .frame {
+      position: absolute;
+      top: 0;
+      left: 60vw;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+    /* รูปภาพใน .frame (ซ่อนโดยค่าเริ่มต้น) */
+    .frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+    /* รูปที่มีคลาส active จะแสดง */
+    .frame img.active {
+      display: block;
+    }
+    
+    /* --- Section 3 --- */
+    .section3 .Texts3 {
+      font-size: 2.1vw; /* ประมาณ 30px */
+      text-align: center;
+      margin-top: 2.78vw; 
+      z-index: 2;
+      font-family: TorsilpChillChill;
+      font-weight: normal;
+      color: #714937;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+    .frame-large {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('assets/img/frame.png') no-repeat center center/contain;
+      z-index: 2;
+    }
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.78vw; /* ประมาณ 40px */
+      margin-top: 0.69vw; /* ประมาณ 10px */
+      position: relative;
+      z-index: 2;
+    }
+    .card {
+      width: 10.42vw;  /* ประมาณ 150px */
+      height: 10.42vw;
+      perspective: 69.44vw; /* ประมาณ 1000px */
+      cursor: pointer;
+    }
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: 0 0.56vw 0.83vw rgba(0,0,0,0.2); /* ประมาณ 8px และ 12px */
+      border: 0.07vw solid #BEBEBE; /* ประมาณ 1px */
+      font-size: 0.97vw; /* ประมาณ 14px */
+      text-align: center;
+      font-family: 'TorsilpChillChill';
+    }
+    .card-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    .card-back {
+      background: linear-gradient(135deg, #f3ec78, #87CEFA);
+      transform: rotateY(180deg);
+    }
+    /* --- Section 4 --- */
+    .section4 .frame-f2 {
+      background: url('assets/img/F2.png') no-repeat center center/contain;
+      width: 80%;
+      height: 100%;
+      right: 30%;
+      position: absolute;
+      z-index: 1;
+    }
+    .palette-p {
+      background: url('assets/img/P.png') no-repeat center center/contain;
+      width: 25%;
+      height: 40%;
+      position: absolute;
+      top: 15%;
+      left: 25%;
+      z-index: 2;
+    }
+    .text4 {
+      font-size: 2.5vw; /* ประมาณ 40px */
+      color: #714937;
+      text-align: left;
+      position: absolute;
+      right: 20%;
+      z-index: 2;
+      font-family: TorsilpChillChill;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+    /* --- Section 5 --- */
+    .section5 .cloud5 {
+      position: absolute;
+      bottom: 25%;
+      width: 100%;
+      height: 100%;
+      background: url('assets/img/clouds.png') no-repeat center center/contain;
+      z-index: 1;
+    }
+    .texts5 {
+      position: relative;
+      z-index: 2;
+      font-family: TorsilpChillChill;
+      top: 5%;
+      font-size: 2.5vw; /* ประมาณ 40px */
+      color: #714937;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+    .texts5 p {
+      margin: 0.69vw 0; /* ประมาณ 10px */
+    }
+    /* --- Section 6 --- */
+    .section6 .emoji-container {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 1.39vw; /* ประมาณ 20px */
+    }
+    .emoji {
+      object-fit: contain;
+      opacity: 0;  /* เริ่มต้นเป็น 0 */
+      transition: opacity 1s ease;
+      position: absolute;
+    }
+    .emoji.hidden {
+      opacity: 0;
+    }
+    /* ตำแหน่งอีโมจิแต่ละตัว */
+    #emoji-yellow {
+      top: 10%;
+      left: 65%;
+      width: 20.83vw; /* ประมาณ 300px */
+      height: 20.83vw;
+    }
+    #emoji-red {
+      bottom: 15%;
+      left: 70%;
+      width: 17.36vw; /* ประมาณ 250px */
+      height: 17.36vw;
+    }
+    #emoji-blue {
+      bottom: 12%;
+      left: 7%;
+      width: 24.31vw; /* ประมาณ 350px */
+      height: 24.31vw;
+    }
+    #emoji-green {
+      top: 10%;
+      left: 18%;
+      width: 17.36vw; /* ประมาณ 250px */
+      height: 17.36vw;
+    }
+    .text6 {
+      font-size: 2.3vw; /* ประมาณ 30px */
+      color: #714937;
+      text-align: center;
+      margin-top: 1.39vw; /* ประมาณ 20px */
+      z-index: 2;
+      font-family: TorsilpChillChill;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+      font-weight: normal;
+    }
+    .text6 p {
+      margin: 0.69vw 0; /* ประมาณ 10px */
+    }
+    /* --- Section 7 --- */
+    .section7 .text7 {
+      font-size: 2.5vw; /* ประมาณ 35px */
+      line-height: 1.74vw; /* ประมาณ 25px */
+      color: #714937;
+      text-align: center;
+      z-index: 2;
+      font-family: TorsilpChillChill;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+    .clouds7 {
+      position: absolute;
+      width: 100%;
+      left: 40%;
+      top: 45%;
+      height: 50%;
+      background: url('assets/img/cloud1.png') no-repeat center center;
+      z-index: 1;
+    }
+    .clouds71 {
+      position: absolute;
+      width: 100%;
+      bottom: 35%;
+      height: 80%;
+      right: 40%;
+      background: url('assets/img/cloud1.png') no-repeat center center;
+      z-index: 0;
+    }
+    /* --- Section 8 --- */
+    .section8 .littlebg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('assets/img/Bg8.png') no-repeat center center/cover;
+      z-index: 1;
+    }
+    .section8 .text8 {
+      position: absolute;
+      bottom: 15%;
+      left: 8%;
+      font-size: 2.08vw; /* ประมาณ 30px */
+      color: #714937;
+      text-align: center;
+      line-height: 1.5;
+      z-index: 2;
+      font-family: TorsilpChillChill;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+    /* สไตล์พื้นฐานสำหรับ .brush */
+    .section8 .brush {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 50vw;
+      background: url('assets/img/rainbow.png') no-repeat center center;
+      background-size: contain;
+      z-index: 10;
+    }
+    /* เมื่อ Section 8 มีคลาส active ให้ .brush เล่นแอนิเมชัน */
+    .section8.active .brush {
+      animation: brushStroke 3s linear forwards;
+    }
+    @keyframes brushStroke {
+      0% {
+        transform: translateX(5vw);
+      }
+      100% {
+        transform: translateX(20vw);
+      }
+    }
+    .underline {
+      border-bottom: 0.35vw solid #714937; /* ประมาณ 5px */
+    }
+
+    /* ---------- CSS สำหรับเอฟเฟคข้อความทีละบรรทัดใน section (ยกเว้น section1) ---------- */
+    .section:not(.section1) p {
+      opacity: 0;
+      transform: translateY(1.39vw); /* ประมาณ 20px */
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .section:not(.section1) p.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- Media Query สำหรับอุปกรณ์ที่มีความกว้าง <= 375px (iPhone SE) ด้วยหน่วย vw ---------- */
+    @media screen and (max-width: 375px) {
+      /* ลดขนาด Section 1 */
+      .section1 .text1 {
+        font-size: 8vw; /* 8vw บนหน้าจอ 375px ≈ 30px */
+      }
+      .pcolor {
+        bottom: -26.67vw; /* 100px ≈ 26.67vw บนหน้าจอ 375px */
+      }
+      .pcolor.show {
+        transform: translateX(-50%) translateY(-4vw); /* 15px ≈ 4vw */
+      }
+      .skipbutton {
+        bottom: 2.67vw;  /* 10px ≈ 2.67vw */
+        right: 2.67vw;   /* 10px */
+        padding: 1.33vw 2.67vw; /* 5px และ 10px */
+        font-size: 3.2vw;  /* 12px ≈ 3.2vw */
+        border-radius: 0.8vw; /* 3px ≈ 0.8vw */
+      }
+      /* ลดขนาด Section 2: ฟอนต์และรูปภาพ */
+      .text-title {
+        font-size: 8vw; /* ตัวอย่างปรับขนาด */
+      }
+      .text-body {
+        font-size: 5vw;
+      }
+      .frame img {
+        max-width: 80vw; /* ประมาณ 300px บนหน้าจอ 375px */
+        height: auto;
+      }
+      /* ลดขนาดก้อนเมฆใน Section 7 */
+      .clouds7,
+      .clouds71 {
+        height: 20vw; /* ลดลงเป็น 20vw */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- <div id="common-content"></div> -->
+  <!-- Container หลักสำหรับ Sections -->
+  <div class="sections-container">
+    <button class="skipbutton">ข้าม</button>
+    <!-- ==================== Section 1 (Typewriter Effect + pcolor Image) ==================== -->
+    <section class="section section1 active" id="section1">
+      
+      <div class="text1" id="typewriter"></div>
+      <!-- รูปภาพ pcolor.png ที่จะค่อยๆ เลื่อนขึ้นจากด้านล่าง -->
+      <img src="assets/img/pcolor.png" alt="pcolor" class="pcolor" id="pcolor">
+      <img src="assets/img/clouds.png" alt="clouds" class="clouds">
+      <!-- ปุ่ม "ข้าม" ที่ไม่มีการห่อด้วย <a> และมีการจับ click ด้วย event listener -->
+      
+    </section>
+    
+    <!-- ==================== Section 2 ==================== -->
+    <section class="section section2" id="section2">
+      <div class="text" id="text-content">
+        <!-- ส่วนหัวข้อ: คำว่า "ศิลปะ" -->
+        <h1 class="text-title">"ศิลปะบำบัด"</h1>
+        <!-- ส่วนเนื้อความ: ข้อความที่เหลือ -->
+        <div class="text-body">
+          <p id="line-2">เป็นวิธีการเยียวยาด้วยการนำเทคนิคทางศิลปะที่ทำให้ได้แสดงออกมา</p>
+          <p id="line-3">เพื่อช่วยผู้คนให้ผ่อนคลายและเปิดรับกับสภาวะอารมณ์</p>
+          <p id="line-4">ของตัวเอง ดูแล จัดการความเครียด ความเศร้า</p>
+          <p id="line-5">และทำความเข้าใจกับประสบการณ์และความรู้สึกต่าง ๆ ที่เป็นปัญหา</p>
+          <p id="line-6">ผ่านการสร้างสรรค์งานศิลปะ</p>
+        </div>
+      </div>
+      <div class="frame">
+        <img src="assets/img/C1 1.png" alt="Image 1" id="frame-image-1">
+        <img src="assets/img/C1 2.png" alt="Image 2" id="frame-image-2">
+        <img src="assets/img/C1 3.png" alt="Image 3" id="frame-image-3">
+        <img src="assets/img/C1 4.png" alt="Image 4" id="frame-image-4">
+        <img src="assets/img/C1 5.png" alt="Image 5" id="frame-image-5">
+      </div>
+    </section>
+    
+    <!-- ==================== Section 3 ==================== -->
+    <section class="section section3" id="section3">
+      <div class="frame-large"></div>
+      <h1 class="Texts3">ลายเส้นสื่ออารมณ์อย่างไรบ้าง?</h1>
+      <div class="cards-container">
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front"><img src="assets/img/แนวนอน.png" alt="เส้นแนวนอน"></div>
+            <div class="card-back">สื่อถึงความสงบ</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front"><img src="assets/img/หยัก.png" alt="เส้นหยัก"></div>
+            <div class="card-back">สื่อถึงความไม่แน่นอน</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front"><img src="assets/img/ขด.png" alt="เส้นขด"></div>
+            <div class="card-back">สื่อถึงความซับซ้อน</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front"><img src="assets/img/คลื่น.png" alt="เส้นคลื่น"></div>
+            <div class="card-back">สื่อถึงความผ่อนคลาย</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front"><img src="assets/img/ตรง.png" alt="เส้นตรง"></div>
+            <div class="card-back">สื่อถึงความมั่นคง</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front"><img src="assets/img/โค้ง.png" alt="เส้นโค้ง"></div>
+            <div class="card-back">สื่อถึงความอ่อนโยน</div>
+          </div>
+        </div>
+      </div>
+      <div class="clouds3"></div>
+      <div class="clouds31"></div>
+    </section>
+    
+    <!-- ==================== Section 4 ==================== -->
+    <section class="section section4" id="section4">
+      <div class="frame-f2"></div>
+      <div class="palette-p"></div>
+      <div class="text4">
+        <p>ไม่จำเป็นต้องเป็นคน<br>ที่วาดรูปเป็นเท่านั้น</p>
+      </div>
+      <div class="clouds4"></div>
+      <div class="clouds41"></div>
+    </section>
+    
+    <!-- ==================== Section 5 ==================== -->
+    <section class="section section5" id="section5">
+      <div class="cloud5"></div>
+      <div class="texts5">
+        <p>เพราะ ศิลปะบำบัด</p>
+        <p>เป็นศิลปะที่เน้นการแสดงออกของแต่ละบุคคลไม่ใช่</p>
+        <p>เพียงการแสดงความสวยงามจากโลกภายนอกเท่านั้น</p>
+      </div>
+    </section>
+    
+    <!-- ==================== Section 6 ==================== -->
+    <section class="section section6" id="section6">
+      <div class="emoji-container">
+        <img src="assets/img/เหลือง.png" class="emoji" id="emoji-yellow" alt="Yellow Emoji">
+        <img src="assets/img/แดง.png" class="emoji hidden" id="emoji-red" alt="Red Emoji">
+        <img src="assets/img/ฟ้า.png" class="emoji hidden" id="emoji-blue" alt="Blue Emoji">
+        <img src="assets/img/เขียว.png" class="emoji hidden" id="emoji-green" alt="Green Emoji">
+      </div>
+      <div class="text6">
+        <p class="fade-in">ศิลปะบำบัดจะช่วยให้คุณ</p>
+        <p class="fade-in hidden">ได้แสดงออกทางอารมณ์</p>
+        <p class="fade-in hidden">ความรู้สึก และการเข้าใจตนเอง</p>
+        <p class="fade-in hidden">ผ่านเหตุการณ์ต่างๆ ได้มากขึ้น</p>
+      </div>
+    </section>
+    
+    <!-- ==================== Section 7 ==================== -->
+    <section class="section section7" id="section7">
+      <div class="text7">
+        <p>มุ่งเน้นให้ได้ </p>
+        <p>แสดงออกถึงอารมณ์ </p>
+        <p>และ ความรู้สึกภายใน </p>
+      </div>
+      <div class="clouds7"></div>
+      <div class="clouds71"></div>
+    </section>
+    
+    <!-- ==================== Section 8 ==================== -->
+    <section class="section section8" id="section8">
+      <div class="littlebg"></div>
+      <div class="text8">
+        โดยผ่านจินตนาการของตนเอง<br>
+        ได้อย่างไม่มีข้อจำกัด
+      </div>
+      <div class="brush"></div>
+    </section>
+  </div>
+  
+  <!-- ---------------------- JavaScript สำหรับสลับ Section และเอฟเฟคประโยคทีละบรรทัด ---------------------- -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      /* ========= Typewriter Effect สำหรับ Section 1 ========= */
+      const textToType = "ทุกสิ่งรอบตัวพาคุณเข้าสู่โลก\nที่มีเพียงคุณและศิลปะ";
+      const typewriterEl = document.getElementById("typewriter");
+      let i = 0;
+      function type() {
+        if (i < textToType.length) {
+          const char = textToType.charAt(i);
+          typewriterEl.innerHTML += (char === "\n") ? "<br>" : char;
+          i++;
+          setTimeout(type, 90);
+        } else {
+          addQuotesToArt();
+        }
+      }
+      type();
+      // ฟังก์ชันเปลี่ยนคำว่า "ศิลปะ" ให้ถูกครอบด้วย double quotes แทนการขีดเส้นใต้
+      function addQuotesToArt() {
+        typewriterEl.innerHTML = typewriterEl.innerHTML.replace(
+          "ศิลปะ",
+          '"ศิลปะ"'
+        );
+      }
+      // ให้ pcolor.png เลื่อนเข้ามา (เพิ่มคลาส .show) หลังจาก 1 วินาที
+      setTimeout(() => {
+        document.getElementById("pcolor").classList.add("show");
+      }, 1000);
+
+      /* ========= กำหนด event listener ให้กับปุ่ม "ข้าม" เพื่อให้คลิกได้  ========= */
+      const skipButton = document.querySelector('.skipbutton');
+      if (skipButton) {
+        skipButton.addEventListener('click', (e) => {
+          e.stopPropagation(); // ป้องกันการส่งต่อเหตุการณ์ (ถ้ามี)
+          window.location.href = "Drawing.html";
+        });
+      }
+
+      /* ========= ฟังก์ชันสำหรับค่อยๆ แสดงข้อความทีละบรรทัดใน section (ยกเว้น section1) ========= */
+      function animateParagraphs(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section.getAttribute('data-animated')) return;
+        const paragraphs = section.querySelectorAll("p");
+        paragraphs.forEach((p, index) => {
+          setTimeout(() => {
+            p.classList.add("show");
+          }, index * 1000);
+        });
+        section.setAttribute('data-animated', 'true');
+      }
+
+      /* ========= ฟังก์ชันช่วยสำหรับ Section 6 (แอนิเมทอิโมจิ) ========= */
+      function fadeInEmojis() {
+        const emojis = [
+          document.getElementById("emoji-yellow"),
+          document.getElementById("emoji-red"),
+          document.getElementById("emoji-blue"),
+          document.getElementById("emoji-green"),
+        ];
+        emojis.forEach((emoji, index) => {
+          setTimeout(() => {
+            emoji.classList.remove("hidden");
+            emoji.style.opacity = "1";
+          }, index * 900);
+        });
+      }
+
+      /* ========= ฟังก์ชันสลับ Section ========= */
+      let currentSection = 1;
+      const totalSections = document.querySelectorAll(".section").length;
+      let isScrolling = false;
+      function switchSection(nextSection) {
+        if (isScrolling || nextSection < 1 || nextSection > totalSections) return;
+        isScrolling = true;
+        document.getElementById("section" + currentSection).classList.remove("active");
+        document.getElementById("section" + nextSection).classList.add("active");
+        
+        // สำหรับทุก section (ยกเว้น section1) ให้เรียกใช้งานเอฟเฟคประโยคทีละบรรทัด
+        if (nextSection !== 1) {
+          animateParagraphs("section" + nextSection);
+        }
+        if (nextSection === 6) {
+          fadeInEmojis();
+        }
+        if (nextSection === 8) {
+          setTimeout(() => {
+            const brush = document.querySelector(".section8.active .brush");
+            if (brush) {
+              brush.addEventListener("animationend", function onAnimationEnd() {
+                brush.removeEventListener("animationend", onAnimationEnd);
+                window.location.href = "Drawing.html";
+              });
+            } else {
+              setTimeout(() => {
+                window.location.href = "Drawing.html";
+              }, 10000);
+            }
+          }, 100);
+        }
+        currentSection = nextSection;
+        setTimeout(() => {
+          isScrolling = false;
+        }, 1000);
+      }
+      window.addEventListener("wheel", (event) => {
+        if (event.deltaY > 0) {
+          switchSection(currentSection + 1);
+        } else {
+          switchSection(currentSection - 1);
+        }
+      }, { passive: false });
+
+      /* ========= Slideshow สำหรับ Section 2 ========= */
+      const images = document.querySelectorAll(".section2 .frame img");
+      let currentImageIndex = 0;
+      images.forEach((img) => img.classList.remove("active"));
+      if (images.length > 0) {
+        images[0].classList.add("active");
+      }
+      setInterval(() => {
+        images[currentImageIndex].classList.remove("active");
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        images[currentImageIndex].classList.add("active");
+      }, 1000);
+
+      /* ========= การพลิกการ์ดใน Section 3 ========= */
+      const cards = document.querySelectorAll(".card");
+      cards.forEach((card) => {
+        card.addEventListener("click", () => {
+          if (!card.classList.contains("flipped")) {
+            cards.forEach((otherCard) => {
+              otherCard.classList.remove("flipped");
+            });
+            card.classList.add("flipped");
+          } else {
+            card.classList.remove("flipped");
+          }
+        });
+      });
+    });
+
+    // function includeHTML() {
+    //   fetch('common/common.html')
+    //     .then(response => response.text())
+    //     .then(data => {
+    //       document.getElementById('common-content').innerHTML = data;
+    //     });
+    // }
+    // window.onload = includeHTML;
+  </script>
+  <!-- <script src="common/common.js"></script> -->
+</body>
+</html>
