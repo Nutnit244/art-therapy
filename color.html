@@ -15,7 +15,8 @@
       font-style: normal;
     }
 
-    body, html {
+    body,
+    html {
       margin: 0;
       padding: 0;
       width: 100%;
@@ -49,7 +50,7 @@
       opacity: 1;
     }
 
-    .textdrop-container{
+    .textdrop-container {
       text-align: center;
       position: relative;
       z-index: 2;
@@ -142,7 +143,7 @@
     }
 
     .buttondrop-and-image button {
-      background-color:#f77e39;
+      background-color: #f77e39;
       border: none;
       padding: 1vw 1vw;
       border-radius: 3vw;
@@ -152,13 +153,14 @@
       box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.2);
       font-family: 'Noto Sans Thai', sans-serif;
     }
-    .buttondrop-and-image button:hover {
-            background-color: #ea7938;
-            color: white;
-        }
 
+    .buttondrop-and-image button:hover {
+      background-color: #ea7938;
+      color: white;
+    }
   </style>
 </head>
+
 <body>
   <!-- <div id="common-content"></div> -->
 
@@ -172,23 +174,24 @@
     <div class="color-item" style="background-image: url('assets/img/drop7.png');"></div>
 
 
-<div class="textdrop-container">
-    <div class="textdrop-overlay">
-      "การปาสี"
-    </div>
+    <div class="textdrop-container">
+      <div class="textdrop-overlay">
+        "การปาสี"
+      </div>
 
-    <div class="secondary-text">
-      ช่วยให้คลายเครียด ระบายอารมณ์
-    </div></div>
+      <div class="secondary-text">
+        ช่วยให้คลายเครียด ระบายอารมณ์
+      </div>
+    </div>
 
     <div class="buttondrop-and-image">
       <div class="text-container">
         <!-- <p>ลองมาระบายอารมณ์กับเราดูสิ</p> -->
         <a href="color1.html">
-        <button>มาลองปาสีกับเรา👈🏼</button></a>
+          <button>มาลองปาสีกับเรา👈🏼</button></a>
       </div>
       <a href="color1.html">
-      <img src="assets/img/iconcolor.png" alt="Paint Bucket"></a>
+        <img src="assets/img/iconcolor.png" alt="Paint Bucket"></a>
     </div>
   </div>
 
@@ -204,7 +207,7 @@
     //     });
     // }
     // window.onload = includeHTML;
-    
+
     const backgroundItems = document.querySelectorAll('.color-item');
     const textOverlay = document.querySelector('.textdrop-overlay');
     const secondaryText = document.querySelector('.secondary-text');
@@ -240,29 +243,65 @@
 
     // จัดการเหตุการณ์ wheel เพื่อเปลี่ยนหน้าเมื่อเลื่อนถึงขอบของหน้า
     let isScrolling = false;
-      const delayScroll = 1500; // หน่วง 1.5 วินาที
-      const scrollThreshold = 10; // ตรวจจับเมื่อ scroll อยู่ใกล้ขอบ (50px)
+    const delayScroll = 1500; // หน่วง 1.5 วินาที
+    const scrollThreshold = 10; // ตรวจจับเมื่อ scroll อยู่ใกล้ขอบ (50px)
 
-      window.addEventListener("wheel", function (event) {
-        if (isScrolling) return;
+    window.addEventListener("wheel", function (event) {
+      if (isScrolling) return;
 
-        const maxScroll = document.body.scrollHeight - window.innerHeight;
-        // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
-        if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
+      if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
+        isScrolling = true;
+        setTimeout(() => {
+          window.location.href = "write.html"; // เปลี่ยนไปหน้า write.html
+        }, delayScroll);
+      }
+      // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
+      if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
+        isScrolling = true;
+        setTimeout(() => {
+          window.location.href = "flower.html"; // เปลี่ยนไปหน้า flower.html
+        }, delayScroll);
+      }
+    });
+
+    /****************** จัดการเหตุการณ์ Touch สำหรับ iPad/มือถือ ******************/
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    window.addEventListener("touchstart", (e) => {
+      touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (e) => {
+      touchEndY = e.changedTouches[0].clientY;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const swipeThreshold = 50; // กำหนดระยะที่ต้องปัด (พิกเซล)
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+      if (touchStartY - touchEndY > swipeThreshold) {
+        // ปัดขึ้น (swipe up) ถ้าอยู่ใกล้ล่างสุด
+        if (window.scrollY >= maxScroll - scrollThreshold && !isScrolling) {
           isScrolling = true;
           setTimeout(() => {
-            window.location.href = "write.html"; // เปลี่ยนไปหน้า write.html
+            window.location.href = "write.html";
           }, delayScroll);
         }
-        // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
-        if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
+      } else if (touchEndY - touchStartY > swipeThreshold) {
+        // ปัดลง (swipe down) ถ้าอยู่ใกล้บนสุด
+        if (window.scrollY <= scrollThreshold && !isScrolling) {
           isScrolling = true;
           setTimeout(() => {
-            window.location.href = "flower.html"; // เปลี่ยนไปหน้า flower.html
+            window.location.href = "flower.html";
           }, delayScroll);
         }
-      });
-    
+      }
+    }
+
   </script>
   <!-- <script src="common/common.js"></script> -->
 </body>

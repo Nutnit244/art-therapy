@@ -1,219 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
-    <title>ระบาย</title>
-    <!-- <link rel="stylesheet" href="common/common.css" /> -->
-    <style>
-        @font-face {
-            font-family: 'TORSILPCHILLCHILL';
-            src: url('fonts/TORSILPCHILLCHILL.TTF') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        @font-face {
-        font-family: 'TorsilpRajun2024';
-        src: url('fonts/TorsilpRajun2024.TTF') format('truetype');
-        font-weight: normal;
-        font-style: normal;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png" />
+  <title>ระบาย</title>
+  <!-- <link rel="stylesheet" href="common/common.css" /> -->
+  <style>
+    @font-face {
+      font-family: 'TORSILPCHILLCHILL';
+      src: url('fonts/TORSILPCHILLCHILL.TTF') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'TorsilpRajun2024';
+      src: url('fonts/TorsilpRajun2024.TTF') format('truetype');
+      font-weight: normal;
+      font-style: normal;
     }
 
-        body {
-            margin: 0;
-            font-family: 'TORSILPCHILLCHILL', sans-serif;
-            background-color: #fbeadd;
-            height: 20vh;
-            overflow-x: hidden;
-        }
+    body {
+      margin: 0;
+      font-family: 'TORSILPCHILLCHILL', sans-serif;
+      background-color: #fbeadd;
+      height: 20vh;
+      overflow-x: hidden;
+    }
 
-        .containerdraw {
-            position: relative;
-            text-align: center;
-            height: 101vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 0 3vw;
-        }
+    .containerdraw {
+      position: relative;
+      text-align: center;
+      height: 101vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 0 3vw;
+    }
 
-        .decorations img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 65vw;
-            transform: translate(-50%, 100%) scale(0);
-            object-fit: contain;
-            transition: transform 0.5s ease-out;
-        }
+    .decorations img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 65vw;
+      transform: translate(-50%, 100%) scale(0);
+      object-fit: contain;
+      transition: transform 0.5s ease-out;
+    }
 
-        .decorations img.active {
-            transform: translate(-50%, -50%) scale(1.5);
-        }
+    .decorations img.active {
+      transform: translate(-50%, -50%) scale(1.5);
+    }
 
-        /* แยกสไตล์ "การวาดรูป" และเนื้อหา */
-        .textdraw-container {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            top: 16vw;
-            right: 65px;
-        }
+    /* แยกสไตล์ "การวาดรูป" และเนื้อหา */
+    .textdraw-container {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      top: 16vw;
+      right: 65px;
+    }
 
-        .title-draw {
-            font-size: 2.5vw;
-            font-weight: normal;
-            color: #714937;
-            margin-bottom: 1vw;
-            opacity: 0;
-            transform: translateY(2vw);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-            font-family: "TorsilpRajun2024", sans-serif;
-            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
-        }
+    .title-draw {
+      font-size: 2.5vw;
+      font-weight: normal;
+      color: #714937;
+      margin-bottom: 1vw;
+      opacity: 0;
+      transform: translateY(2vw);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      font-family: "TorsilpRajun2024", sans-serif;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
 
-        .textdraw {
-            font-size: 2vw;
-            color: #714937;
-            opacity: 0;
-            transform: translateY(2vw);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-            
-        }
+    .textdraw {
+      font-size: 2vw;
+      color: #714937;
+      opacity: 0;
+      transform: translateY(2vw);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
 
-        /* ทำให้แสดงเมื่อเลื่อนถึงตำแหน่ง */
-        .textdraw-container.active .title-draw,
-        .textdraw-container.active .textdraw {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* ทำให้แสดงเมื่อเลื่อนถึงตำแหน่ง */
+    .textdraw-container.active .title-draw,
+    .textdraw-container.active .textdraw {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .palette {
-            opacity: 0;
-            width: 45vw;
-            position: relative;
-            transform: translateY(2vw);
-            z-index: 2;
-            right: -22vw;
-            bottom: -3vw;
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
+    .palette {
+      opacity: 0;
+      width: 45vw;
+      position: relative;
+      transform: translateY(2vw);
+      z-index: 2;
+      right: -22vw;
+      bottom: -3vw;
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
 
-        .palette.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .palette.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .palette:hover {
-            transform: translateY(0) scale(1.2);
-            transition: transform 0.3s ease-in-out;
-            cursor: pointer;
-        }
+    .palette:hover {
+      transform: translateY(0) scale(1.2);
+      transition: transform 0.3s ease-in-out;
+      cursor: pointer;
+    }
 
-        .buttondraw-container {
-            opacity: 0;
-            margin-top: 2vw;
-            position: relative;
-            z-index: 2;
-            transform: translateY(2vw);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-            bottom: 16vw;
-            left: 22px;
-        }
+    .buttondraw-container {
+      opacity: 0;
+      margin-top: 2vw;
+      position: relative;
+      z-index: 2;
+      transform: translateY(2vw);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      bottom: 16vw;
+      left: 22px;
+    }
 
-        .buttondraw-container.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .buttondraw-container.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .draw-button {
-            padding: 1vw 2vw;
-            background-color: #f39eb6;
-            border: none;
-            border-radius: 2vw;
-            color:white;
-            font-size: 1.4vw;
-            cursor: pointer;
-            transition: background-color 0.3s, border-radius 0.3s;
-            box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
-            font-family: 'Noto Sans Thai', sans-serif;
-        }
+    .draw-button {
+      padding: 1vw 2vw;
+      background-color: #f39eb6;
+      border: none;
+      border-radius: 2vw;
+      color: white;
+      font-size: 1.4vw;
+      cursor: pointer;
+      transition: background-color 0.3s, border-radius 0.3s;
+      box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
 
-        .draw-button:hover {
-            background-color: #e37daa;
-            color: white;
-        }
-
-    </style>
+    .draw-button:hover {
+      background-color: #e37daa;
+      color: white;
+    }
+  </style>
 </head>
 <body>
   <!-- <div id="common-content"></div> -->
-    <div class="containerdraw">
-        <div class="decorations">
-            <img src="assets/img/drawA.png" alt="background decorations">
-        </div>
-
-        <!-- กล่องข้อความ -->
-        <div class="textdraw-container">
-            <div class="title-draw">"การวาดรูป"</div>
-            <div class="textdraw">
-                ช่วยระบายความรู้สึกนึกคิดที่ไม่สามารถพูดออกมาได้<br>
-                สื่อสารแทนคำพูด
-            </div>
-        </div>
-
-        <!-- พาเลตสี -->
-        <a href="Drawing2.html">
-            <img src="assets/img/icondraw.png" alt="palette" class="palette">
-        </a>
-
-        <!-- ปุ่มวาดรูป -->
-        <div class="buttondraw-container">
-            <a href="Drawing2.html">
-                <button class="draw-button">ลองมาวาดรูปกับเราดูสิ👈🏼</button>
-            </a>
-        </div>
+  <div class="containerdraw">
+    <div class="decorations">
+      <img src="assets/img/drawA.png" alt="background decorations" />
     </div>
 
-    <script>
-       // ฟังก์ชัน include HTML (ถ้ามีไฟล์ common)
-    // function includeHTML() {
-    //   fetch('common/common.html')
-    //     .then(response => response.text())
-    //     .then(data => {
-    //       document.getElementById('common-content').innerHTML = data;
-    //     });
-    // }
-    // window.onload = includeHTML;
+    <!-- กล่องข้อความ -->
+    <div class="textdraw-container">
+      <div class="title-draw">"การวาดรูป"</div>
+      <div class="textdraw">
+        ช่วยระบายความรู้สึกนึกคิดที่ไม่สามารถพูดออกมาได้<br />
+        สื่อสารแทนคำพูด
+      </div>
+    </div>
 
-        // ดึงองค์ประกอบทั้งหมดที่ต้องการควบคุม
-        const decorationsImg = document.querySelector('.decorations img');
-        const textContainer = document.querySelector('.textdraw-container');
-        const palette = document.querySelector('.palette');
-        const buttonContainer = document.querySelector('.buttondraw-container');
+    <!-- พาเลตสี -->
+    <a href="Drawing2.html">
+      <img src="assets/img/icondraw.png" alt="palette" class="palette" />
+    </a>
 
-        // ตรวจจับการเลื่อนและเพิ่ม/ลบคลาส
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            const triggerPoint = 0;
+    <!-- ปุ่มวาดรูป -->
+    <div class="buttondraw-container">
+      <a href="Drawing2.html">
+        <button class="draw-button">ลองมาวาดรูปกับเราดูสิ👈🏼</button>
+      </a>
+    </div>
+  </div>
 
-            if (scrollPosition > triggerPoint) {
-                decorationsImg.classList.add('active');
-                textContainer.classList.add('active');
-                palette.classList.add('active');
-                buttonContainer.classList.add('active');
-            } else {
-                decorationsImg.classList.remove('active');
-                textContainer.classList.remove('active');
-                palette.classList.remove('active');
-                buttonContainer.classList.remove('active');
-            }
-        });
+  <script>
+    // ดึงองค์ประกอบทั้งหมดที่ต้องการควบคุม
+    const decorationsImg = document.querySelector('.decorations img');
+    const textContainer = document.querySelector('.textdraw-container');
+    const palette = document.querySelector('.palette');
+    const buttonContainer = document.querySelector('.buttondraw-container');
 
-          /****************** จัดการเหตุการณ์ Wheel สำหรับการเปลี่ยนหน้า ******************/
-    let isScrolling = false;  // ป้องกันการเลื่อนซ้อน
+    // ตรวจจับการเลื่อน (scroll) และเพิ่ม/ลบคลาสเพื่อให้เอฟเฟคแสดง
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      const triggerPoint = 0;
+
+      if (scrollPosition > triggerPoint) {
+        decorationsImg.classList.add('active');
+        textContainer.classList.add('active');
+        palette.classList.add('active');
+        buttonContainer.classList.add('active');
+      } else {
+        decorationsImg.classList.remove('active');
+        textContainer.classList.remove('active');
+        palette.classList.remove('active');
+        buttonContainer.classList.remove('active');
+      }
+    });
+
+    /****************** จัดการเหตุการณ์ Wheel สำหรับการเปลี่ยนหน้า ******************/
+    let isScrolling = false; // ป้องกันการเลื่อนซ้อน
     const delayScroll = 1500; // ระยะเวลาหน่วง (มิลลิวินาที)
     // ปรับ scrollThreshold ให้ต่ำกว่าเดิม (เช่น 50px) เพื่อให้ตรวจจับเฉพาะเมื่ออยู่ที่สุดของหน้า
     const scrollThreshold = 50;
@@ -226,7 +214,7 @@
     }
 
     window.addEventListener("wheel", (event) => {
-      if (isScrolling) return;  // ถ้าอยู่ในช่วงกำลังเลื่อนอยู่ ให้ข้าม
+      if (isScrolling) return; // ถ้าอยู่ในช่วงกำลังเลื่อนอยู่ ให้ข้าม
 
       const maxScroll = document.body.scrollHeight - window.innerHeight;
       
@@ -242,11 +230,48 @@
       else if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
         isScrolling = true;
         setTimeout(() => {
-          window.location.href = "content2.html"; // เปลี่ยนไปหน้า content.html
+          window.location.href = "content2.html"; // เปลี่ยนไปหน้า content2.html
         }, delayScroll);
       }
     });
-    </script>
-    <!-- <script src="common/common.js"></script> -->
+
+        /****************** จัดการเหตุการณ์ Touch สำหรับ iPad/มือถือ ******************/
+        let touchStartY = 0;
+    let touchEndY = 0;
+
+    window.addEventListener("touchstart", (e) => {
+      touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (e) => {
+      touchEndY = e.changedTouches[0].clientY;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const swipeThreshold = 50; // กำหนดระยะที่ต้องปัด (พิกเซล)
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+      if (touchStartY - touchEndY > swipeThreshold) {
+        // ปัดขึ้น (swipe up) ถ้าอยู่ใกล้ล่างสุด
+        if (window.scrollY >= maxScroll - scrollThreshold && !isScrolling) {
+          isScrolling = true;
+          setTimeout(() => {
+            window.location.href = "flower.html";
+          }, delayScroll);
+        }
+      } else if (touchEndY - touchStartY > swipeThreshold) {
+        // ปัดลง (swipe down) ถ้าอยู่ใกล้บนสุด
+        if (window.scrollY <= scrollThreshold && !isScrolling) {
+          isScrolling = true;
+          setTimeout(() => {
+            window.location.href = "content2.html";
+          }, delayScroll);
+        }
+      }
+    }
+    
+  </script>
+  <!-- <script src="common/common.js"></script> -->
 </body>
 </html>
