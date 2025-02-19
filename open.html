@@ -206,101 +206,112 @@
       transition: opacity 0.5s ease;
     }
 
- /* สไตล์สำหรับ Popup (Desktop) */
-#popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
-}
+    /* สไตล์สำหรับ Popup (Desktop) */
+    #popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
 
-#popup {
-  background: #fff ;
-  padding: 1vw;           
-  border-radius: 1vw;    
-  text-align: center;
-  width: 60vw;            /* ปรับความกว้างให้กว้างขึ้น */
-  max-width: 500px;       /* จำกัดความกว้างสูงสุด */
-  font-family: 'TorsilpChillChill', sans-serif;
-}
+    #popup {
+      background: #fff;
+      padding: 1vw;
+      border-radius: 1vw;
+      text-align: center;
+      width: 60vw;
+      /* ปรับความกว้างให้กว้างขึ้น */
+      max-width: 500px;
+      /* จำกัดความกว้างสูงสุด */
+      font-family: 'TorsilpChillChill', sans-serif;
+    }
 
-#popup h2 {
-  margin-top: 0;
-  font-size: 1.2vw;
-  color: #714937;
-}
+    #popup h2 {
+      margin-top: 0;
+      font-size: 1.2vw;
+      color: #714937;
+    }
 
-#popup p,
-#popup ul {
-  font-size: 1vw;
-  margin: 0.5vw 0;
-  color: #714937;
-}
+    #popup p,
+    #popup ul {
+      font-size: 1vw;
+      margin: 0.5vw 0;
+      color: #714937;
+    }
 
-#popup button {
-  margin-top: 0.8vw;
-  padding: 0.6vw 1vw;
-  font-size: 1vw;
-  border: none;
-  border-radius: 0.3vw;
-  background: #f39eb6;
-  color: #fff;
-  cursor: pointer;
-  font-family: 'Noto Sans Thai', sans-serif;
-}
-#popup button:hover{
-    background: #e37daa;   
-}
+    #popup button {
+      margin-top: 0.8vw;
+      padding: 0.6vw 1vw;
+      font-size: 1vw;
+      border: none;
+      border-radius: 0.3vw;
+      background: #f39eb6;
+      color: #fff;
+      cursor: pointer;
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
 
-/* Responsive สำหรับหน้าจอ Tablets (ไม่เกิน 768px) */
-@media (max-width: 768px) {
-  #popup {
-    width: 60vw;         /* ปรับความกว้าง Popup ให้กว้างขึ้นเล็กน้อย */
-    padding: 1.5vw;
-    border-radius: 0.8vw;
-  }
-  #popup h2 {
-    font-size: 2vw;
-  }
-  #popup p,
-  #popup ul {
-    font-size: 1.8vw;
-  }
-  #popup button {
-    margin-top: 1vw;
-    padding: 1vw 1.5vw;
-    font-size: 1.8vw;
-    border-radius: 0.5vw;
-  }
-}
+    #popup button:hover {
+      background: #e37daa;
+    }
 
-/* Responsive สำหรับหน้าจอ Mobile (ไม่เกิน 480px) */
-@media (max-width: 480px) {
-  #popup {
-    width: 60vw;         /* บนหน้าจอเล็ก Popup จะกว้างขึ้นเพื่อความอ่านง่าย */
-    padding: 2vw;
-    border-radius: 1vw;
-  }
-  #popup h2 {
-    font-size: 3vw;
-  }
-  #popup p,
-  #popup ul {
-    font-size: 2.5vw;
-  }
-  #popup button {
-    margin-top: 1.5vw;
-    padding: 1.5vw 2vw;
-    font-size: 2.5vw;
-    border-radius: 1vw;
-  }
-}
+    /* Responsive สำหรับหน้าจอ Tablets (ไม่เกิน 768px) */
+    @media (max-width: 768px) {
+      #popup {
+        width: 60vw;
+        /* ปรับความกว้าง Popup ให้กว้างขึ้นเล็กน้อย */
+        padding: 1.5vw;
+        border-radius: 0.8vw;
+      }
+
+      #popup h2 {
+        font-size: 2vw;
+      }
+
+      #popup p,
+      #popup ul {
+        font-size: 1.8vw;
+      }
+
+      #popup button {
+        margin-top: 1vw;
+        padding: 1vw 1.5vw;
+        font-size: 1.8vw;
+        border-radius: 0.5vw;
+      }
+    }
+
+    /* Responsive สำหรับหน้าจอ Mobile (ไม่เกิน 480px) */
+    @media (max-width: 480px) {
+      #popup {
+        width: 60vw;
+        /* บนหน้าจอเล็ก Popup จะกว้างขึ้นเพื่อความอ่านง่าย */
+        padding: 2vw;
+        border-radius: 1vw;
+      }
+
+      #popup h2 {
+        font-size: 3vw;
+      }
+
+      #popup p,
+      #popup ul {
+        font-size: 2.5vw;
+      }
+
+      #popup button {
+        margin-top: 1.5vw;
+        padding: 1.5vw 2vw;
+        font-size: 2.5vw;
+        border-radius: 1vw;
+      }
+    }
 
 
 
@@ -463,7 +474,8 @@
   <div id="popup-overlay">
     <div id="popup">
       <h2>คำแนะนำ</h2>
-      <p>เว็บไซต์นี้เป็นเพียงการให้ความรู้และทดลองทำกิจกรรมที่เกี่ยวข้องกับศิลปะบำบัด ไม่ได้เป็นการช่วยบำบัดแต่อย่างใด </p>
+      <p>เว็บไซต์นี้เป็นเพียงการให้ความรู้และทดลองทำกิจกรรมที่เกี่ยวข้องกับศิลปะบำบัด ไม่ได้เป็นการช่วยบำบัดแต่อย่างใด
+      </p>
       <ul style="text-align: center;">
         "ขอให้ทุกท่านเพลิดเพลินกับเว็บไซต์ของเรา"
       </ul>
