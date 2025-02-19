@@ -71,69 +71,76 @@
     height: 45px;
 }
 
-/* ================= Responsive ================= */
-
-/* หน้าจอเล็ก (มือถือ) */
-@media screen and (max-width: 768px) {
-    .menu {
-        width: 100%;
-        left: -100%;
-    }
-
-    .menu.open {
-        left: 0;
-    }
-
-    .menu p {
-        font-size: 18px;
-        padding: 15px;
-    }
-
-    .menu a {
-        font-size: 15px;
-        padding: 15px;
-    }
-
-    .button-group {
-        top: 10px;
-        right: 10px;
-        gap: 5px;
-    }
-
-    .circle-button {
-        width: 45px;
-        height: 45px;
-    }
-
-    .circle-button img {
-        width: 35px;
-        height: 35px;
-    }
+/* เมนูปกติ */
+.menu {
+    position: fixed;
+    top: 0;
+    left: -220px;
+    width: 200px;
+    height: 100%;
+    background: white;
+    border-right: 1px solid #ccc;
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
 }
 
-/* หน้าจอใหญ่ (Desktop) */
-@media screen and (min-width: 1024px) {
-    .menu {
-        width: 250px;
-    }
-
-    .menu a {
-        font-size: 15px;
-        padding: 15px;
-    }
-
-    .button-group {
-        top: 20px;
-        right: 30px;
-    }
-
-    .circle-button {
-        width: 60px;
-        height: 60px;
-    }
-
-    .circle-button img {
-        width: 50px;
-        height: 50px;
-    }
+.menu.open {
+    left: 0;
+    z-index: 20;
 }
+
+.menu p {
+    font-family: TorsilpChillChill;
+    font-weight: bold;
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin: 0;
+}
+
+.menu a {
+    text-decoration: none;
+    font-family: TorsilpChillChill;
+    color: black;
+    display: block;
+    padding: 15px;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.menu a:last-child {
+    border-bottom: none;
+}
+
+.menu a:hover {
+    background: #f0f0f0;
+}
+
+/* ปุ่มเมนู */
+.button-group {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 20;
+}
+
+.circle-button {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid grey;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.circle-button img {
+    width: 35px;
+    height: 45px;
+}
+
