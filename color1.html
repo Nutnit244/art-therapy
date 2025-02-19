@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png" />
   <title>ระบาย</title>
   <style>
     body {
@@ -34,6 +34,8 @@
       left: 11%;
       background-color: transparent;
       overflow: hidden;
+      /* ป้องกัน touch action ที่อาจรบกวนการวาด */
+      touch-action: none;
     }
 
     .splash {
@@ -101,7 +103,6 @@
     .back-btn:hover svg {
       fill: white;
     }
-    
   </style>
 </head>
 <body>
@@ -126,22 +127,21 @@
       window.location.href = "color.html"; 
     }
 
-    // ฟังก์ชันสร้าง splash สี เมื่อคลิกที่พื้นที่วาด
+    // ฟังก์ชันสร้าง splash สี เมื่อกดที่พื้นที่วาด
     function createColorSplash(x, y) {
       const paintArea = document.getElementById("paint-area");
       const splash = document.createElement("div");
       splash.className = "splash";
-      // คำนวณขนาด splash แบบสุ่ม (หน่วย px) แล้วแปลงเป็น vw
+      // สุ่มขนาด splash ในหน่วย px
       const size = Math.random() * 80 + 100; // px
-      const vwSize = (size / 1400) * 100; // เปลี่ยนเป็น vw เมื่อ 1400px = 100vw
-      splash.style.width = `${vwSize}vw`;
-      splash.style.height = `${vwSize}vw`;
+      splash.style.width = `${size}px`;
+      splash.style.height = `${size}px`;
       const color = getRandomColor();
       splash.dataset.color = color;
       splash.style.background = `radial-gradient(circle, ${color} 0%, ${color} 60%, transparent 100%)`;
-      // คำนวณตำแหน่งโดยแปลง px เป็น vw
-      splash.style.left = `${((x - size / 2) / 1400) * 100}vw`;
-      splash.style.top = `${((y - size / 2) / 1400) * 100}vw`;
+      // กำหนดตำแหน่ง splash ให้ตรงกับตำแหน่งที่สัมผัส (ใช้ px โดยตรง)
+      splash.style.left = `${x - size / 2}px`;
+      splash.style.top = `${y - size / 2}px`;
       paintArea.appendChild(splash);
     }
 
@@ -155,11 +155,23 @@
       return color;
     }
 
-    // เมื่อคลิกใน paint-area ให้สร้าง splash
-    document.getElementById("paint-area").addEventListener("click", function (event) {
+    const paintArea = document.getElementById("paint-area");
+
+    // ใช้ pointerdown เพื่อรองรับ mouse และ touch
+    paintArea.addEventListener("pointerdown", function (event) {
+      event.preventDefault();
       const rect = this.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
+      createColorSplash(x, y);
+    });
+
+    // สำหรับรองรับกรณีที่อุปกรณ์ไม่รองรับ pointer events ให้เพิ่ม touchstart ด้วย
+    paintArea.addEventListener("touchstart", function (event) {
+      const touch = event.touches[0];
+      const rect = this.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
       createColorSplash(x, y);
     });
 
@@ -218,7 +230,7 @@
       }
       const splashElements = paintArea.querySelectorAll(".splash");
       splashElements.forEach(splash => {
-        // ดึงขนาดและตำแหน่งที่คำนวณเป็น pxโดย getComputedStyle จะให้ค่าเป็น px
+        // ดึงขนาดและตำแหน่งที่คำนวณเป็น px โดย getComputedStyle จะให้ค่าเป็น px
         const size = parseFloat(getComputedStyle(splash).width);
         const left = parseFloat(getComputedStyle(splash).left);
         const top = parseFloat(getComputedStyle(splash).top);
