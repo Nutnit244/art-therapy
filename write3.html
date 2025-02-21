@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png">
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
   <title>ระบาย</title>
-  <!-- <link rel="stylesheet" href="common/common.css"> -->
   <style>
     @font-face {
       font-family: 'TORSILPCHILLCHILL';
@@ -14,52 +12,39 @@
       font-weight: normal;
       font-style: normal;
     }
-
     body {
       margin: 0;
       padding: 0;
       font-family: 'TORSILPCHILLCHILL', sans-serif;
       background-image: url('assets/img/writebgclose.png');
-      /* Replace with actual image file path */
       background-size: cover;
       background-position: center;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
     }
-
-    /* .container {
-            position: relative;
-            width: 35vw;
-            height: 35vw;
-            border: 0.2vw dashed white;
-            padding: 2vw;
-            box-sizing: border-box;
-            border-radius: 1.5vw;
-        } */
-
-    .quote {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1.8vw;
-      text-align: center;
-      color: #714937;
+    .container {
+      position: relative;
+      width: 35vw;
+      height: 35vw;
+      border: 0.2vw dashed white;
+      box-sizing: border-box;
+      border-radius: 1.5vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: white;
-      padding: 1.5vw;
-      border-radius: 2vw;
       box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.1);
-      opacity: 90%;
-      font-family: 'TorsilpRajun2024';
-      font-weight: normal;
     }
-
-    .back-btn {
+    .container img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 1vw;
+    }
+    .back-btn, .save-btn, .share-btn {
       position: absolute;
-      top: 20px;
-      left: 20px;
       width: 60px;
       height: 60px;
       border: none;
@@ -73,80 +58,138 @@
       transition: all 0.2s ease-in-out;
       z-index: 1000;
     }
-
+    .back-btn {
+      top: 20px;
+      left: 20px;
+    }
     .back-btn svg {
       width: 30px;
       height: 30px;
       fill: #555;
       transform: scaleX(-1);
-      /* พลิกให้ชี้ซ้าย */
       transition: fill 0.2s ease-in-out;
     }
-
     .back-btn:hover {
       background-color: #f39eb6;
     }
-
     .back-btn:hover svg {
       fill: white;
     }
+    .action-buttons {
+      margin-top: 2vh;
+      display: flex;
+      gap: 1.5vw;
+    }
+    .save-btn, .share-btn {
+      font-size: 1rem;
+      font-family: sans-serif;
+      background-color: #fff;
+      border: 2px solid #ccc;
+      padding: 0.5vw 1vw;
+      border-radius: 0.5vw;
+      position: static;
+    }
+    .save-btn:hover, .share-btn:hover {
+      background-color: #f39eb6;
+      color: #fff;
+      border-color: #f39eb6;
+    }
   </style>
 </head>
-
 <body>
-  <!-- <div id="common-content"></div> -->
   <button class="back-btn" onclick="goBack()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <path
-        d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
     </svg>
   </button>
 
   <div class="container">
-    <div class="quote" id="quote"></div>
+    <img id="randomImage" src="" alt="Random Image">
+  </div>
+
+  <div class="action-buttons">
+    <button class="save-btn" onclick="saveImage()">บันทึก</button>
+    <button class="share-btn" onclick="shareImage()">แชร์</button>
   </div>
 
   <script>
-    // ฟังก์ชัน include HTML สำหรับ common-content
-    // function includeHTML() {
-    //   fetch('common/common.html')
-    //     .then(response => response.text())
-    //     .then(data => {
-    //       document.getElementById('common-content').innerHTML = data;
-    //     });
-    // }
-
+    // ฟังก์ชันไปหน้าก่อนหน้า
     function goBack() {
       window.location.href = "write.html";
     }
 
-    // window.onload = includeHTML;
-
-    const quotes = [
-      "ฉันก็ไม่รู้หรอกนะว่าคุณจะรู้สึกแย่สักแค่ไหน แต่ฉันยินดีจะทำความเข้าใจ",
-      "พวกเราจะไม่ทิ้งคุณ เราจะอยู่ข้างๆ คุณ",
-      "คุณไม่ได้อยู่ตัวคนเดียวนะ ฉันจะอยู่ข้างๆ คุณเอง",
-      "ฉันอาจจะไม่เข้าใจคุณ แต่ฉันเป็นห่วงและอยากช่วยคุณนะ",
-      "ฉันเป็นกำลังใจให้นะ",
-      "อย่ากลัวที่จะล้ม เพราะทุกครั้งที่ลุกขึ้นมา คุณจะเข้มแข็งกว่าเดิม",
-      "อย่าลืมว่าคุณมีคุณค่า และคุณก็สมควรได้รับความสุขเช่นกัน",
-      "ทุกอย่างจะผ่านไปได้ เชื่อสิ!",
-      "ยิ้มหน่อยนะ เดี๋ยวทุกอย่างจะโอเคเอง"
+    // อาร์เรย์เก็บที่อยู่รูปภาพทั้งหมด 9 รูป
+    const images = [
+      'assets/img/rabyewrite3_1.png',
+      'assets/img/rabyewrite3_2.png',
+      'assets/img/rabyewrite3_3.png',
+      'assets/img/rabyewrite3_4.png',
+      'assets/img/rabyewrite3_5.png',
+      'assets/img/rabyewrite3_6.png',
+      'assets/img/rabyewrite3_7.png',
+      'assets/img/rabyewrite3_8.png',
+      'assets/img/rabyewrite3_9.png'
     ];
 
-    const quoteElement = document.getElementById('quote');
+    // ฟังก์ชันแสดงรูปภาพแบบสุ่ม
+    function displayRandomImage() {
+      const randomIndex = Math.floor(Math.random() * images.length);
+      document.getElementById('randomImage').src = images[randomIndex];
+    }
+    displayRandomImage();
 
-    function displayRandomQuote() {
-      const randomIndex = Math.floor(Math.random() * quotes.length);
-      quoteElement.textContent = quotes[randomIndex];
+    // ฟังก์ชันบันทึกรูปลงในอุปกรณ์ (ดาวน์โหลด)
+    function saveImage() {
+      const imgSrc = document.getElementById('randomImage').src;
+      const a = document.createElement('a');
+      a.href = imgSrc;
+      // ดึงชื่อไฟล์จากที่อยู่รูปภาพ
+      const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
-    displayRandomQuote();
+    // ฟังก์ชันแชร์รูปภาพผ่าน Web Share API (รองรับการแชร์เป็นไฟล์หากมีการสนับสนุน)
+    async function shareImage() {
+      const imgElement = document.getElementById('randomImage');
+      const imgSrc = imgElement.src;
 
+      try {
+        // ดึงรูปเป็น blob
+        const response = await fetch(imgSrc);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const blob = await response.blob();
+        const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+        const file = new File([blob], fileName, { type: blob.type });
 
+        // ตรวจสอบว่าเบราว์เซอร์รองรับการแชร์ไฟล์หรือไม่
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: 'ดูรูปนี้สิ!',
+            text: 'ฉันเจอรูปนี้และคิดว่าคุณน่าจะชอบ'
+          });
+          console.log('แชร์สำเร็จด้วยการแชร์ไฟล์');
+        } else if (navigator.share) {
+          // หากไม่รองรับแชร์ไฟล์ ให้แชร์ผ่าน URL
+          await navigator.share({
+            title: 'ดูรูปนี้สิ!',
+            text: 'ฉันเจอรูปนี้และคิดว่าคุณน่าจะชอบ',
+            url: imgSrc
+          });
+          console.log('แชร์สำเร็จด้วย URL');
+        } else {
+          alert('เบราว์เซอร์ของคุณไม่รองรับการแชร์');
+        }
+      } catch (error) {
+        console.error('Error sharing:', error);
+        alert('เกิดข้อผิดพลาดในการแชร์รูป: ' + error.message);
+      }
+    }
   </script>
-  <!-- <script src="common/common.js"></script> -->
-
 </body>
-
 </html>
