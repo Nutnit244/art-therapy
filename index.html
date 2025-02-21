@@ -62,8 +62,6 @@
 
     <!-- iFrame สำหรับโหลดเนื้อหาของแต่ละหน้า -->
     <iframe id="content-frame" src="open.html"></iframe>
-    <div id="content-section"></div>
-
 
     <script>
         let globalAudio;
@@ -91,34 +89,12 @@
             });
         });
 
-        //กดหน้า
+        // เปลี่ยนเนื้อหา iframe
         function loadIframe(pageUrl) {
             document.getElementById("content-frame").src = pageUrl;
-            document.getElementById("content-frame").style.display = "block";
-            document.getElementById("content-section").style.display = "none";
+            toggleMenu(); // ปิดเมนูอัตโนมัติเมื่อเลือกเมนู
         }
 
-        function loadSection(event, url, sectionId) {
-            event.preventDefault();
-            
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    let tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = data;
-
-                    let section = tempDiv.querySelector(`#${sectionId}`);
-                    if (section) {
-                        document.getElementById("content-section").innerHTML = section.innerHTML;
-                        document.getElementById("content-frame").style.display = "none";
-                        document.getElementById("content-section").style.display = "block";
-                    } else {
-                        document.getElementById("content-section").innerHTML = "<p>ไม่พบเนื้อหาที่ต้องการ</p>";
-                    }
-                })
-                .catch(error => console.error('เกิดข้อผิดพลาด:', error));
-        }
-        
         // ควบคุมเสียง
         function toggleSound() {
             const soundIcon = document.getElementById("sound-icon");
