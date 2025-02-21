@@ -1,219 +1,141 @@
 <!DOCTYPE html>
 <html lang="th">
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png">
     <title>ระบาย</title>
-    <!-- <link rel="stylesheet" href="common/common.css"> -->
-
     <style>
-        @font-face {
-            font-family: 'TORSILPCHILLCHILL';
-            src: url('fonts/TORSILPCHILLCHILL.TTF') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'TorsilpRajun2024';
-            src: url('fonts/TorsilpRajun2024.TTF') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'TORSILPCHILLCHILL', sans-serif;
-        }
-
         body {
-            background: url(assets/img/bg.png);
+            background: url('assets/img/bg.png') no-repeat center center/cover;
             background-size: cover;
-            background-position: center;
-            min-height: 100vh;
-            padding: 5vw;
-        }
-
-        .container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
         }
 
-        h1 {
+        .final-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .final-container h1 {
             font-size: 2.5vw;
             color: #714937;
-            margin-bottom: 1.5vw;
-            font-family: "TorsilpChillChill", sans-serif;
-            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+            text-shadow: 2px 2px rgb(255, 249, 249);
+            margin-bottom: 2vw;
+            font-family: "TorsilpRajun2024",
+            sans-serif;
+        }
+
+        /* ปรับการ์ดให้มีขนาดเท่ากัน */
+        .cards-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 1.5vw;
+            overflow-x: auto;
+            padding-bottom: 1vw;
         }
 
         .card {
+            flex: 1;
+            width: 25vw;
+            height: 30vw;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 1.5vw;
             padding: 2vw;
-            margin-bottom: 1.5vw;
             display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: space-between;
             box-shadow: 0 0.5vw 2vw rgba(0, 0, 0, 0.1);
-            max-width: 80vw;
-            margin-left: auto;
-            margin-right: auto;
+            text-align: center;
         }
 
         .card img {
-            width: 8vw;
-            height: 8vw;
+            width: 10vw;
+            height: 10vw;
             border-radius: 50%;
-            margin-right: 1vw;
+            margin-top: 2vw;
         }
 
         .card-content {
-            text-align: left;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-top: 3vw;
         }
 
         .card-title {
-            font-size: 1.5vw;
-            font-weight: bold;
+            font-size: 1.3vw;
+            font-weight: normal;
             margin-bottom: 1vw;
-            font-family: "TorsilpChillChill", sans-serif;
+            font-family: "TorsilpRajun2024", sans-serif;
             color: #714937;
         }
 
         .card-text {
-            font-size: 1.3vw;
+            font-size: 1.2vw;
             color: #714937;
             font-family: "TORSILPCHILLCHILL", sans-serif;
+            text-align: left;
         }
 
-        .flowers {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100vw;
-            height: auto;
-            z-index: -5;
-        }
-
-        /* @media (max-width: 768px) {
-            h1 {
-                font-size: 2vw;
+        @media (max-width: 768px) {
+            .cards-wrapper {
+                flex-wrap: nowrap;
+                overflow-x: scroll;
+                padding-bottom: 1vw;
             }
+
             .card {
-                flex-direction: column;
-                text-align: center;
-                padding: 5vw;
+                width: 70vw;
+                height: auto;
             }
-            .card img {
-                margin-right: 0;
-                margin-bottom: 2vw;
-            }
-            .card-title {
-                font-size: 4vw;
-            }
-            .card-text {
-                font-size: 3vw;
-            } */
+        }
     </style>
 </head>
 
 <body>
-    <!-- <div id="common-content"></div> -->
-
-    <div class="container">
+    <div class="final-container">
         <h1>ช่องทางการเยียวยาจิตใจเพิ่มเติม</h1>
-
-        <div class="card">
-            <img src="assets/img/tol1323.jpg" alt="กรมสุขภาพจิต">
-            <div class="card-content">
-                <div class="card-title">บริการสายด่วนสุขภาพจิต 1323</div>
-                <div class="card-text">การให้บริการปรึกษาทางโทรศัพท์ 24 ชั่วโมง</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="assets/img/manarom.jpg" alt="โรงพยาบาลมนารมย์">
-            <div class="card-content">
-                <div class="card-title">โรงพยาบาลมนารมย์</div>
-                <div class="card-text">
-                    โรงเรียนศิลปะเพื่อดูแลจิตใจ<br>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" />
-                    </svg> เลขที่ 9 ถนนสุขุมวิท 70/3 แขวงบางนาใต้ เขตบางนา กรุงเทพ ฯ 10260<br>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green"
-                        class="bi bi-telephone-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M3.654 1.328a1.745 1.745 0 0 1 2.636.163l1.294 1.66c.45.577.562 1.357.313 2.02l-.477 1.272a.678.678 0 0 0 .146.69l2.457 2.457a.678.678 0 0 0 .69.146l1.272-.477c.663-.249 1.443-.137 2.02.313l1.66 1.294c.746.582.936 1.642.376 2.416-.75 1.058-1.879 2.07-3.053 1.938-3.39-.4-6.646-3.003-9.258-5.615C1.384 7.99-1.219 4.733-.82 1.344c.131-1.175.88-2.303 1.938-3.053a1.745 1.745 0 0 1 2.416.376z" />
-                    </svg> 02-725-9595, 02-032-9595
+        <div class="cards-wrapper">
+            <div class="card">
+                <img src="assets/img/tol1323.jpg" alt="กรมสุขภาพจิต">
+                <div class="card-content">
+                    <div class="card-title">บริการสายด่วนสุขภาพจิต 1323</div>
+                    <div class="card-text">
+                       📍การให้บริการปรึกษาทางโทรศัพท์ <br>24 ชั่วโมง  <br>📞 1323 </div>
                 </div>
             </div>
-        </div>
-
-        <div class="card">
-            <img src="assets/img/Studio Persona.jpg" alt="Studio Persona">
-            <div class="card-content">
-                <div class="card-title">Studio Persona</div>
-                <div class="card-text">
-                    โรงเรียนศิลปะเพื่อดูแลจิตใจ<br>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" />
-                    </svg> 660 อโศก-ดินแดง ซอยมักกะสัน เขตราชเทวี กรุงเทพมหานคร 10400<br>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green"
-                        class="bi bi-telephone-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M3.654 1.328a1.745 1.745 0 0 1 2.636.163l1.294 1.66c.45.577.562 1.357.313 2.02l-.477 1.272a.678.678 0 0 0 .146.69l2.457 2.457a.678.678 0 0 0 .69.146l1.272-.477c.663-.249 1.443-.137 2.02.313l1.66 1.294c.746.582.936 1.642.376 2.416-.75 1.058-1.879 2.07-3.053 1.938-3.39-.4-6.646-3.003-9.258-5.615C1.384 7.99-1.219 4.733-.82 1.344c.131-1.175.88-2.303 1.938-3.053a1.745 1.745 0 0 1 2.416.376z" />
-                    </svg> 089-448-7488
+            <div class="card">
+                <img src="assets/img/manarom.jpg" alt="โรงพยาบาลมนารมย์">
+                <div class="card-content">
+                    <div class="card-title">โรงพยาบาลมนารมย์</div>
+                    <div class="card-text">
+                        📍 9 ถนนสุขุมวิท 70/3, บางนา, กรุงเทพฯ 10260<br>
+                        📞 02-725-9595, 02-032-9595
+                    </div>
                 </div>
             </div>
-
+            <div class="card">
+                <img src="assets/img/Studio Persona.jpg" alt="Studio Persona">
+                <div class="card-content">
+                    <div class="card-title">Studio Persona</div>
+                    <div class="card-text">
+                        📍 660 อโศก-ดินแดง, เขตราชเทวี, กรุงเทพฯ 10400<br>
+                        📞 089-448-7488
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- <img src="img/flower2.png" class="flowers" style="position: fixed; left: 0; bottom: 0; width: 100%; max-height: 30vh; object-fit: cover; opacity: 0.8;"> -->
-    <img src="assets/img/flower1.png" class="flowers"
-        style="position: fixed; left: 0; bottom: 0; width: 100%; max-height: 30vh; object-fit: cover;">
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            includeHTML();
-        });
-
-        // function includeHTML() {
-        //     fetch('common/common.html')
-        //         .then(response => response.text())
-        //         .then(data => {
-        //             document.getElementById('common-content').innerHTML = data;
-        //             const script = document.createElement('script');
-        //             script.src = 'common/common.js';
-        //             document.body.appendChild(script);
-        //         });
-        // }
-        let isRedirecting = false;
-
-        window.addEventListener("scroll", function () {
-            if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
-
-            // ถ้าอยู่ด้านบน (scrollY <= 0)
-            if (window.scrollY <= 0) {
-                isRedirecting = true;
-                setTimeout(() => {
-                    window.location.href = "end.html";
-                }, 1000);
-            }
-            // ถ้าอยู่ด้านล่าง
-            else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
-                isRedirecting = true;
-                setTimeout(() => {
-                    window.location.href = "member.html";
-                }, 1000);
-            }
-        });
-
-    </script>
-    <!-- <script src="common/common.js"></script> -->
 
 </body>
 

@@ -40,10 +40,7 @@
         <a href="#" onclick="loadIframe('open.html')">เกริ่นเรื่อง</a>
         <a href="#" onclick="loadIframe('content2.html')">เนื้อหา</a>
         <p>กิจกรรม</p>
-        <a href="#" onclick="loadIframe('Drawing.html')">วาดรูป ระบายสี</a>
-        <a href="#" onclick="loadIframe('flower.html')">จัดดอกไม้แสนสวย</a>
-        <a href="#" onclick="loadIframe('color.html')">ปาสีพาเพลิน</a>
-        <a href="#" onclick="loadIframe('write.html')">ระบายความรู้สึก</a>
+        <a href="#" onclick="loadIframe('drawing.html')">กิจกรรม</a>
         <p>ข้อมูลเพิ่มเติม</p>
         <a href="#" onclick="loadIframe('end.html')">ปิดเรื่อง</a>
         <a href="#" onclick="loadIframe('end2.html')">ช่องทางการเยียวยาจิตใจเพิ่มเติม</a>
@@ -65,6 +62,8 @@
 
     <!-- iFrame สำหรับโหลดเนื้อหาของแต่ละหน้า -->
     <iframe id="content-frame" src="open.html"></iframe>
+    <div id="content-section"></div>
+
 
     <script>
         let globalAudio;
@@ -92,12 +91,34 @@
             });
         });
 
-        // เปลี่ยนเนื้อหา iframe
+        //กดหน้า
         function loadIframe(pageUrl) {
             document.getElementById("content-frame").src = pageUrl;
-            toggleMenu(); // ปิดเมนูอัตโนมัติเมื่อเลือกเมนู
+            document.getElementById("content-frame").style.display = "block";
+            document.getElementById("content-section").style.display = "none";
         }
 
+        function loadSection(event, url, sectionId) {
+            event.preventDefault();
+            
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    let tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = data;
+
+                    let section = tempDiv.querySelector(`#${sectionId}`);
+                    if (section) {
+                        document.getElementById("content-section").innerHTML = section.innerHTML;
+                        document.getElementById("content-frame").style.display = "none";
+                        document.getElementById("content-section").style.display = "block";
+                    } else {
+                        document.getElementById("content-section").innerHTML = "<p>ไม่พบเนื้อหาที่ต้องการ</p>";
+                    }
+                })
+                .catch(error => console.error('เกิดข้อผิดพลาด:', error));
+        }
+        
         // ควบคุมเสียง
         function toggleSound() {
             const soundIcon = document.getElementById("sound-icon");
