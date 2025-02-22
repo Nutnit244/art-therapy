@@ -16,26 +16,28 @@
       margin: 0;
       padding: 0;
       font-family: 'TORSILPCHILLCHILL', sans-serif;
-      background-image: url('assets/img/writebgclose.png');
+      background-image: url('assets/img/writeclose2.png');
       background-size: cover;
       background-position: center;
       height: 100vh;
+      position: relative;
+    }
+    /* ปรับโครงสร้างให้ใช้ Flexbox จัดวางในแนวแถว */
+    .content-wrapper {
+      position: absolute;
+      top: 55%;
+      left: 40vw;  /* ปรับตำแหน่งแนวนอนตามที่ต้องการ */
+      transform: translateY(-50%);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
+      gap: 2vw;  /* ช่องว่างระหว่างรูปกับปุ่ม */
     }
     .container {
       position: relative;
       width: 35vw;
       height: 35vw;
-      border: 0.2vw dashed white;
       box-sizing: border-box;
       border-radius: 1.5vw;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: white;
       box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.1);
     }
     .container img {
@@ -43,30 +45,29 @@
       max-height: 100%;
       border-radius: 1vw;
     }
-    .back-btn, .save-btn, .share-btn {
+    /* ปุ่ม Go Back ด้วยไอคอน SVG */
+    .back-btn {
       position: absolute;
-      width: 60px;
-      height: 60px;
+      top: 1.4vw;    /* 20px ≈ 1.4vw */
+      left: 1.4vw;   /* 20px ≈ 1.4vw */
+      width: 4.2vw;   /* 60px ≈ 4.2vw */
+      height: 4.2vw;  /* 60px ≈ 4.2vw */
       border: none;
       background-color: #fff;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0.14vw 0.35vw rgba(0, 0, 0, 0.2); /* 2px ≈ 0.14vw, 5px ≈ 0.35vw */
       cursor: pointer;
       transition: all 0.2s ease-in-out;
       z-index: 1000;
     }
-    .back-btn {
-      top: 20px;
-      left: 20px;
-    }
     .back-btn svg {
-      width: 30px;
-      height: 30px;
+      width: 2.1vw;   /* 30px ≈ 2.1vw */
+      height: 2.1vw;  /* 30px ≈ 2.1vw */
       fill: #555;
-      transform: scaleX(-1);
+      transform: scaleX(-1); /* พลิกให้ชี้ซ้าย */
       transition: fill 0.2s ease-in-out;
     }
     .back-btn:hover {
@@ -75,24 +76,31 @@
     .back-btn:hover svg {
       fill: white;
     }
+    /* จัดวางปุ่มไอคอนในแนวตั้ง */
     .action-buttons {
-      margin-top: 2vh;
       display: flex;
-      gap: 1.5vw;
+      flex-direction: column;
+      gap: 1.5vh;
+      margin-left: 3vw;
     }
     .save-btn, .share-btn {
-      font-size: 1rem;
-      font-family: sans-serif;
-      background-color: #fff;
-      border: 2px solid #ccc;
-      padding: 0.5vw 1vw;
-      border-radius: 0.5vw;
-      position: static;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      padding: 0;
     }
-    .save-btn:hover, .share-btn:hover {
-      background-color: #f39eb6;
-      color: #fff;
-      border-color: #f39eb6;
+    /* กำหนดขนาดให้กับไอคอนในแต่ละปุ่ม */
+    .save-btn img, 
+    .share-btn img {
+      background-color: #fff;
+      border-radius: 50%;
+      width: 4vw;
+      height: 4vw;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .save-btn img:hover, 
+    .share-btn img:hover {
+      background-color: #f6f2f2;
     }
   </style>
 </head>
@@ -103,22 +111,28 @@
     </svg>
   </button>
 
-  <div class="container">
-    <img id="randomImage" src="" alt="Random Image">
-  </div>
+  <div class="content-wrapper">
+    <div class="container">
+      <img id="randomImage" src="" alt="Random Image">
+    </div>
 
-  <div class="action-buttons">
-    <button class="save-btn" onclick="saveImage()">บันทึก</button>
-    <button class="share-btn" onclick="shareImage()">แชร์</button>
+    <div class="action-buttons">
+      <!-- ปุ่มบันทึกด้วยไอคอน -->
+      <button class="save-btn" onclick="saveImage()">
+        <img src="assets/img/save.png" alt="บันทึก">
+      </button>
+      <!-- ปุ่มแชร์ด้วยไอคอน -->
+      <button class="share-btn" onclick="shareImage()">
+        <img src="assets/img/share.png" alt="แชร์">
+      </button>
+    </div>
   </div>
 
   <script>
-    // ฟังก์ชันไปหน้าก่อนหน้า
     function goBack() {
       window.location.href = "write.html";
     }
 
-    // อาร์เรย์เก็บที่อยู่รูปภาพทั้งหมด 9 รูป
     const images = [
       'assets/img/rabyewrite3_1.png',
       'assets/img/rabyewrite3_2.png',
@@ -131,19 +145,16 @@
       'assets/img/rabyewrite3_9.png'
     ];
 
-    // ฟังก์ชันแสดงรูปภาพแบบสุ่ม
     function displayRandomImage() {
       const randomIndex = Math.floor(Math.random() * images.length);
       document.getElementById('randomImage').src = images[randomIndex];
     }
     displayRandomImage();
 
-    // ฟังก์ชันบันทึกรูปลงในอุปกรณ์ (ดาวน์โหลด)
     function saveImage() {
       const imgSrc = document.getElementById('randomImage').src;
       const a = document.createElement('a');
       a.href = imgSrc;
-      // ดึงชื่อไฟล์จากที่อยู่รูปภาพ
       const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
       a.download = fileName;
       document.body.appendChild(a);
@@ -151,13 +162,11 @@
       document.body.removeChild(a);
     }
 
-    // ฟังก์ชันแชร์รูปภาพผ่าน Web Share API (รองรับการแชร์เป็นไฟล์หากมีการสนับสนุน)
     async function shareImage() {
       const imgElement = document.getElementById('randomImage');
       const imgSrc = imgElement.src;
 
       try {
-        // ดึงรูปเป็น blob
         const response = await fetch(imgSrc);
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -166,7 +175,6 @@
         const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
         const file = new File([blob], fileName, { type: blob.type });
 
-        // ตรวจสอบว่าเบราว์เซอร์รองรับการแชร์ไฟล์หรือไม่
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file],
@@ -175,7 +183,6 @@
           });
           console.log('แชร์สำเร็จด้วยการแชร์ไฟล์');
         } else if (navigator.share) {
-          // หากไม่รองรับแชร์ไฟล์ ให้แชร์ผ่าน URL
           await navigator.share({
             title: 'ดูรูปนี้สิ!',
             text: 'ฉันเจอรูปนี้และคิดว่าคุณน่าจะชอบ',
