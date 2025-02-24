@@ -269,43 +269,88 @@
       background-color: #e37daa;
       color: white;
     }
-    /* Media Queries สำหรับ Section 2 (Responsive) */
-    @media (max-width: 768px) {
-      /* สำหรับมือถือ */
-      #flower-animation .flower-left {
-        top: 45%;
-        left: 120vw; /* ปรับตำแหน่งให้เหมาะกับมือถือ */
-        width: 200vw;  /* ลดขนาดให้เหมาะสม */
+    /* สำหรับมือถือ (max-width: 768px) */
+/* สำหรับมือถือทั่วไป (max-width: 768px) – ค่าเดิมที่มีอยู่ */
+@media (max-width: 768px) {
+  #flower-animation .flower-left {
+    top: 45%;
+    left: 140vw;  /* ค่าเดิม */
+    width: 311vw;
+    visibility: hidden;
+  }
+  #flower-animation .flower-right {
+    top: 45%;
+    left: 180vw;
+    width: 320vw;
+    visibility: hidden;
+  }
+  #flower-animation .flower-left.slide-left {
+    left: 132vw;
+    visibility: visible;
+  }
+  #flower-animation .flower-right.slide-right {
+    left: 188vw;
+    visibility: visible;
+  }
+}
+
+/* สำหรับ iPhone 12, 15, XR (max-width: 428px)
+   ปรับให้ตำแหน่งในสถานะ hidden อยู่ใกล้กับตำแหน่งที่แสดงมากขึ้น */
+@media (max-width: 428px) {
+  #flower-animation .flower-left {
+    top: 45%;
+    left: 150vw;  /* ปรับเพิ่มเล็กน้อยเพื่อให้ตำแหน่ง hidden ใกล้กับ slide */
+    width: 420vw;  /* ปรับขนาดให้เหมาะสมกับหน้าจอเล็ก */
+    visibility: hidden;
+  }
+  #flower-animation .flower-right {
+    top: 45%;
+    left: 160vw;  /* ปรับให้ตรงกับดีไซน์ */
+    width: 420vw;
+    visibility: hidden;
+  }
+  #flower-animation .flower-left.slide-left {
+    left: 142vw;  /* ค่าแสดงผล เมื่อมีคลาส slide */
+    visibility: visible;
+  }
+  #flower-animation .flower-right.slide-right {
+    left: 168vw;
+    visibility: visible;
+  }
+ 
+}
+
+/* สำหรับ iPad Pro (min-width: 1025px ถึง max-width: 1366px)
+   ปรับตำแหน่งในสถานะ hidden และตำแหน่งแสดงผลให้เหมาะสมกับหน้าจอขนาดใหญ่ */
+@media (min-width: 1025px) and (max-width: 1366px) {
+  #flower-animation .flower-left {
+    top: 50%;
+    left: 140vw;  /* ค่า hidden ที่ใกล้เคียงกับตำแหน่งแสดง */
+    width: 300vw;
+    visibility: hidden;
+  }
+  #flower-animation .flower-right {
+    top: 50%;
+    left: 150vw;
+    width: 300vw;
+    visibility: hidden;
+  }
+  #flower-animation .flower-left.slide-left {
+    left: 127vw;  /* เมื่อมีคลาส slide ให้เลื่อนเข้ามา */
+    visibility: visible;
+  }
+  #flower-animation .flower-right.slide-right {
+    left: 160vw;
+    visibility: visible;
+  }
+  #flower-animation .vase {
+        width: 113vw;
+        height: 66vw;
+        bottom: 2vh;
       }
-      #flower-animation .flower-right {
-        top: 45%;
-        left: 180vw;
-        width: 200vw;
-      }
-      #flower-animation .vase {
-        width: 120vw;
-        height: auto;
-        bottom: 0;
-      }
-    }
-    @media (min-width: 769px) and (max-width: 1200px) {
-      /* สำหรับแท็บเล็ต (iPad Pro, iPad Air) */
-      #flower-animation .flower-left {
-        top: 48%;
-        left: 140vw;
-        width: 250vw;
-      }
-      #flower-animation .flower-right {
-        top: 48%;
-        left: 170vw;
-        width: 250vw;
-      }
-      #flower-animation .vase {
-        width: 110vw;
-        height: auto;
-        bottom: 1vh;
-      }
-    }
+}
+
+
 
     /* Section 3: Interactive Animation */
     #interactive-animation {
@@ -608,11 +653,9 @@
 
       <div class="buttondrop-and-image">
         <div class="text-container">
-          <a href="color1.html">
-          <button>มาลองปาสีกับเรา👈🏼</button>
+          <a href="color1.html"><button>มาลองปาสีกับเรา👈🏼</button></a>
         </div>
-        <a href="color1.html">
-        <img src="assets/img/iconcolor.png" alt="Paint Bucket"></a>
+        <a href="color1.html"><img src="assets/img/iconcolor.png" alt="Paint Bucket"></a>
       </div>
     </div>
   </section>
