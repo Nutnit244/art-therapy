@@ -753,17 +753,79 @@
 
     function shareImage() {
       const vaseArea = document.getElementById('vaseArea');
-      html2canvas(vaseArea).then(canvas => {
-        canvas.toBlob(blob => {
+      const refBtn = document.getElementById('ref-btn');
+      const undoRedoContainer = document.querySelector('.undo-redo-container');
+
+      // ซ่อนปุ่ม ref และ undo/redo
+      refBtn.style.display = "none";
+      undoRedoContainer.style.display = "none";
+
+      // เพิ่มโลโก้เข้าไปใน vaseArea
+      const logo = document.createElement('img');
+      logo.src = "assets/img/Tinylogo.png";
+      logo.style.position = "absolute";
+
+      if (window.matchMedia("(max-width: 1024px)").matches) {
+        logo.style.top = "1.5vw";
+        logo.style.right = "9vw";
+        logo.style.width = "5vw";
+      } else {
+        logo.style.top = "1vw";
+        logo.style.right = "3vw";
+        logo.style.width = "4vw";
+      }
+
+      logo.style.height = "auto";
+      logo.style.zIndex = "300";
+      logo.style.border = "none";
+      logo.style.boxShadow = "none";
+      logo.style.display = "block";
+
+      vaseArea.appendChild(logo);
+
+      // ถ่ายภาพด้วย html2canvas พร้อมปรับค่าต่างๆให้เหมือนกันกับฟังก์ชัน saveImage
+      html2canvas(vaseArea, {
+        backgroundColor: "transparent",
+        scale: window.devicePixelRatio || 2,
+        useCORS: true
+      }).then(canvas => {
+        // ครอปภาพตามพิกเซลที่ต้องการ (cropPixels = 5)
+        const cropPixels = 5;
+        const croppedCanvas = document.createElement('canvas');
+        const ctx = croppedCanvas.getContext('2d');
+        const cropX = cropPixels;
+        const cropY = cropPixels;
+        const cropWidth = canvas.width - cropPixels * 2;
+        const cropHeight = canvas.height - cropPixels * 2;
+        croppedCanvas.width = cropWidth;
+        croppedCanvas.height = cropHeight;
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(canvas, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+        // แปลง canvas ที่ครอปแล้วเป็น blob เพื่อนำไปแชร์
+        croppedCanvas.toBlob(blob => {
           const file = new File([blob], 'vase_image.png', { type: blob.type });
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
             navigator.share({
               files: [file],
               title: 'จัดดอกไม้',
               text: 'ดูการจัดดอกไม้ของฉัน!'
-            }).catch(error => console.error('Error sharing', error));
+            }).then(() => {
+              // คืนค่าให้ element กลับมาแสดงตามปกติ
+              vaseArea.removeChild(logo);
+              refBtn.style.display = "";
+              undoRedoContainer.style.display = "";
+            }).catch(error => {
+              console.error('Error sharing', error);
+              vaseArea.removeChild(logo);
+              refBtn.style.display = "";
+              undoRedoContainer.style.display = "";
+            });
           } else {
             alert('Sharing is not supported on this device.');
+            vaseArea.removeChild(logo);
+            refBtn.style.display = "";
+            undoRedoContainer.style.display = "";
           }
         });
       });
