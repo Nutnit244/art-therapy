@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png">
-  <title>Drawing Board</title>
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+  <title>ระบาย</title>
   <style>
     @font-face {
       font-family: 'TorsilpChillChill';
       src: url('https://example.com/fonts/TorsilpChillChill.ttf') format('truetype');
     }
+
     /* ทุกค่าถูกแปลงเป็น vw โดยอ้างอิงจาก design base 1440px (1vw ≈ 14.4px) */
     body {
       margin: 0;
@@ -18,20 +20,25 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: url(assets/img/bg.png) no-repeat center center fixed;
+      background: url(assets/img/bg.PNG) no-repeat center center fixed;
       background-size: cover;
     }
+
     .container {
       display: flex;
       gap: 2vw;
       align-items: flex-start;
     }
+
     #drawing-area {
+      position: relative;
+      /* เพื่อให้ปุ่ม reference สามารถ absolute */
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1.5vw;
     }
+
     /* กำหนดขนาดของ canvas ด้วย CSS โดยใช้ vw: 62.5vw ≈ 900px, 36.5vw ≈ 525px */
     #drawing-board {
       width: 62.5vw;
@@ -40,8 +47,10 @@
       background-color: white;
       border-radius: 1vw;
       box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.1);
-      touch-action: none; /* ป้องกัน gesture ของเบราว์เซอร์ */
+      touch-action: none;
+      /* ป้องกัน gesture ของเบราว์เซอร์ */
     }
+
     .palette {
       display: grid;
       grid-template-columns: repeat(3);
@@ -51,6 +60,7 @@
       border-radius: 1vw;
       box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.1);
     }
+
     .color {
       width: 4vw;
       height: 4vw;
@@ -58,9 +68,11 @@
       border: 0.1vw solid black;
       border-radius: 0.5vw;
     }
+
     .color.active {
       border: 0.2vw solid black;
     }
+
     #custom-color {
       grid-column: span 3;
       height: 5vw;
@@ -68,97 +80,135 @@
       border: 0.1vw solid black;
       border-radius: 0.3vw;
     }
+
     .controls {
       display: flex;
       flex-direction: column;
-      gap: 1vw;
+      gap: -2vw;
       background-color: white;
       padding: 1vw;
       border-radius: 1vw;
       box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.1);
       margin-top: 1vw;
     }
+
     .brush-controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    select, button {
+
+    select,
+    button {
       padding: 1vw;
-      border: 0.1vw solid black;
+      border: 0.1vw solid #714937;
       border-radius: 0.5vw;
       background-color: white;
       cursor: pointer;
       font-family: 'Noto Sans Thai', sans-serif;
       font-size: 1vw;
     }
-    button:hover, select:hover {
+
+    button:hover,
+    select:hover {
       background-color: #ddd;
     }
+
     .eraser-icon {
-      width: 3vw;
-      height: 3vw;
-      background: url('https://img.icons8.com/ios/50/eraser.png') no-repeat center center;
+      width: 5vw;
+      height: 5vw;
+      background: url('assets/img/eraser2.png') no-repeat center center;
       background-size: contain;
       cursor: pointer;
+      /* border: 0.1vw solid #714937;
+      border-radius: 40%; */
     }
+
     .eraser-icon.active {
-      border: 0.2vw solid black;
-      border-radius: 0.5vw;
+      border: 0.2vw solid #714937;
+      border-radius: 2vw;
       box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.5);
     }
+
     .brush-size {
       display: flex;
       justify-content: space-around;
       align-items: center;
       margin-top: 1vw;
     }
+
     .size-dot {
       cursor: pointer;
       border: 0.1vw solid black;
       border-radius: 50%;
     }
+
     .size-dot[data-size="5"] {
       width: 1vw;
       height: 1vw;
     }
+
     .size-dot[data-size="10"] {
       width: 1.5vw;
       height: 1.5vw;
     }
+
     .size-dot[data-size="15"] {
       width: 2vw;
       height: 2vw;
     }
+
     .size-dot[data-size="20"] {
       width: 2.5vw;
       height: 2.5vw;
     }
+
     .size-dot.active {
       background-color: gray;
     }
+
+    /* ปุ่มบันทึกและแชร์ */
     #save-btn {
       padding: 1vw 2.5vw;
       font-size: 1.5vw;
       border: none;
       background-color: #4CAF50;
       color: white;
-      border-radius: 0.5vw;
+      border-radius: 2vw;
       cursor: pointer;
       box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
       font-family: 'Noto Sans Thai', sans-serif;
     }
+
     #save-btn:hover {
       background-color: #45a049;
     }
+
+    #share-btn {
+      padding: 1vw 2.5vw;
+      font-size: 1.5vw;
+      border: none;
+      background-color: #1da1f2;
+      color: white;
+      border-radius: 2vw;
+      cursor: pointer;
+      box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+      font-family: 'Noto Sans Thai', sans-serif;
+      margin-left: 1vw;
+    }
+
+    #share-btn:hover {
+      background-color: #0d8dd6;
+    }
+
     /* ปุ่ม Go Back ด้วยไอคอน SVG */
     .back-btn {
       position: absolute;
-      top: 1.4vw;    
-      left: 1.4vw;   
-      width: 4.2vw;  
-      height: 4.2vw; 
-      border: 0.07vw solid grey; 
+      top: 1.4vw;
+      left: 1.4vw;
+      width: 4.2vw;
+      height: 4.2vw;
+      border: 0.07vw solid grey;
       background-color: #fff;
       border-radius: 50%;
       display: flex;
@@ -169,6 +219,7 @@
       transition: all 0.2s ease-in-out;
       z-index: 1000;
     }
+
     .back-btn svg {
       width: 2.1vw;
       height: 2.1vw;
@@ -176,28 +227,126 @@
       transform: scaleX(-1);
       transition: fill 0.2s ease-in-out;
     }
+
     .back-btn:hover {
       background-color: #f187b5;
     }
+
     .back-btn:hover svg {
       fill: white;
     }
+
+    /* สไตล์สำหรับปุ่ม Undo และ Redo */
+    .history-controls {
+      display: flex;
+      gap: 1vw;
+      justify-content: center;
+    }
+
+    .history-controls button {
+      padding: 0.5vw;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .history-controls img {
+      width: 4vw;
+      height: 4vw;
+    }
+
+    #ref-btn {
+      position: absolute;
+      top: 1vw;
+      left: 1vw;
+      z-index: 1100;
+      /* ใช้ Flexbox จัดตำแหน่งให้อยู่กึ่งกลาง */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 0.1vw solid #714937;
+      border-radius: 50%;
+      cursor: pointer;
+      overflow: hidden;
+      width: 4vw;
+      /* กำหนดขนาดปุ่มให้เล็กลง */
+      height: 4vw;
+    }
+
+    #ref-btn:hover {
+      background-color: rgba(234, 227, 227, 0.8);
+    }
+
+    #ref-btn img {
+      width: 3vw;
+      /* ลดขนาดรูปภาพ */
+      height: 3vw;
+      border-radius: 50%;
+    }
+
+
+    /* สไตล์สำหรับ modal popup */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* container สำหรับรูป reference ที่มี position relative */
+    .modal-container {
+      position: relative;
+      margin: 5% auto;
+      max-width: 60vw;
+    }
+
+    .modal-content {
+      display: block;
+      width: 100%;
+      border-radius: 0.5vw;
+    }
+
+    /* ปุ่มปิด modal อยู่ใน container รูป reference */
+    .modal-close {
+      position: absolute;
+      top: 0.5vw;
+      right: 0.5vw;
+      font-size: 3vw;
+      color: black;
+      cursor: pointer;
+      border-radius: 50%;
+      padding: 0.2vw 0.5vw;
+    }
   </style>
 </head>
+
 <body>
   <!-- ปุ่ม Go Back -->
   <button class="back-btn" onclick="goBack()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+      <path
+        d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
     </svg>
   </button>
   <div class="container">
     <div id="drawing-area">
-      <!-- ใช้ CSS เพื่อกำหนดขนาด canvas ด้วย vw -->
-      <canvas id="drawing-board"></canvas>
-      <button id="save-btn">
-        บันทึก
+      <!-- ปุ่ม Reference อยู่ด้านบนซ้ายของ canvas -->
+      <button id="ref-btn">
+        <img src="assets/img/idea.png">
       </button>
+      <!-- Canvas สำหรับวาด -->
+      <canvas id="drawing-board"></canvas>
+      <!-- ปุ่ม บันทึก และ แชร์ อยู่ในกลุ่มเดียวกัน -->
+      <div style="display: flex; margin-top: 1vw;">
+        <button id="save-btn">บันทึก</button>
+        <button id="share-btn">แชร์</button>
+      </div>
     </div>
     <div>
       <div class="palette">
@@ -214,7 +363,7 @@
           <select id="brush-select">
             <option value="solid">ปกติ</option>
             <option value="dashed">เส้นประ</option>
-            <option value="watercolor">สเปรย์</option>
+            <option value="watercolor">สีน้ำ</option>
           </select>
           <div id="eraser" class="eraser-icon"></div>
         </div>
@@ -224,11 +373,27 @@
           <div class="size-dot" data-size="15"></div>
           <div class="size-dot" data-size="20"></div>
         </div>
+        <!-- ปุ่ม Undo และ Redo -->
+        <div class="history-controls">
+          <button id="undo-btn">
+            <img src="assets/img/undo.png" alt="Undo" />
+          </button>
+          <button id="redo-btn">
+            <img src="assets/img/forward.png" alt="Redo" />
+          </button>
+        </div>
       </div>
     </div>
   </div>
+  <!-- Modal สำหรับแสดง Reference Image -->
+  <div id="ref-modal" class="modal">
+    <div class="modal-container">
+      <span class="modal-close" id="modal-close">&times;</span>
+      <img class="modal-content" id="ref-img" src="assets/img/bg draw.png" alt="Reference Image">
+    </div>
+  </div>
   <script>
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
       const canvas = document.getElementById('drawing-board');
       const ctx = canvas.getContext('2d');
 
@@ -245,12 +410,28 @@
       }
       setupCanvas();
 
+      // ประวัติการวาดสำหรับ Undo/Redo
+      const undoStack = [];
+      const redoStack = [];
+      function saveState() {
+        // บันทึกสถานะปัจจุบัน
+        undoStack.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+        // เมื่อมีการวาดใหม่ redoStack จะถูกล้าง
+        redoStack.length = 0;
+      }
+
+      // บันทึกสถานะเริ่มต้น (พื้นหลังสีขาว)
+      saveState();
+
       const colors = document.querySelectorAll('.color');
       const customColor = document.getElementById('custom-color');
       const brushSelect = document.getElementById('brush-select');
       const eraserButton = document.getElementById('eraser');
       const sizeDots = document.querySelectorAll('.size-dot');
       const saveButton = document.getElementById('save-btn');
+      const shareButton = document.getElementById('share-btn');
+      const undoButton = document.getElementById('undo-btn');
+      const redoButton = document.getElementById('redo-btn');
 
       let brushColor = 'black';
       let brushSize = 5;
@@ -266,7 +447,6 @@
           y: touch.clientY - rect.top
         };
       }
-
       // ฟังก์ชันคำนวณตำแหน่งเมาส์ (recalc rect ทุกครั้ง)
       function getMousePos(e) {
         const rect = canvas.getBoundingClientRect();
@@ -275,7 +455,6 @@
           y: e.clientY - rect.top
         };
       }
-
       // Event สำหรับ mouse events
       canvas.addEventListener('mousedown', (e) => {
         drawing = true;
@@ -283,7 +462,6 @@
         ctx.beginPath();
         ctx.moveTo(pos.x, pos.y);
       });
-
       canvas.addEventListener('mousemove', (e) => {
         if (!drawing) return;
         const pos = getMousePos(e);
@@ -310,13 +488,12 @@
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
       });
-
       canvas.addEventListener('mouseup', () => {
         drawing = false;
         ctx.closePath();
         ctx.globalAlpha = 1;
+        saveState();
       });
-
       // Event สำหรับ touch events
       canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -325,7 +502,6 @@
         ctx.beginPath();
         ctx.moveTo(pos.x, pos.y);
       });
-
       canvas.addEventListener('touchmove', (e) => {
         e.preventDefault();
         if (!drawing) return;
@@ -353,14 +529,13 @@
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
       });
-
       canvas.addEventListener('touchend', (e) => {
         e.preventDefault();
         drawing = false;
         ctx.closePath();
         ctx.globalAlpha = 1;
+        saveState();
       });
-
       // เลือกสีจาก palette
       colors.forEach(color => {
         color.addEventListener('click', () => {
@@ -370,21 +545,18 @@
           brushColor = color.style.backgroundColor;
         });
       });
-
       // เลือก custom color
       customColor.addEventListener('input', () => {
         colors.forEach(c => c.classList.remove('active'));
         eraserButton.classList.remove('active');
         brushColor = customColor.value;
       });
-
       // ปุ่มยางลบ
       eraserButton.addEventListener('click', () => {
         colors.forEach(c => c.classList.remove('active'));
         eraserButton.classList.add('active');
         brushColor = 'white';
       });
-
       // เลือกขนาดแปรง
       sizeDots.forEach(dot => {
         dot.addEventListener('click', () => {
@@ -393,14 +565,13 @@
           brushSize = parseInt(dot.dataset.size, 10);
         });
       });
-
       // เลือกประเภทแปรง
       brushSelect.addEventListener('change', (e) => {
         brushType = e.target.value;
       });
-
-      // ปุ่มบันทึกภาพ
+      // ปุ่มบันทึกภาพ (เมื่อกด save จะนำ Data URL ของภาพไปยังหน้า share.html)
       saveButton.addEventListener('click', () => {
+        // สร้าง canvas ชั่วคราวเพื่อให้พื้นหลังเป็นสีขาว
         const tempCanvas = document.createElement('canvas');
         const tempCtx = tempCanvas.getContext('2d');
         tempCanvas.width = canvas.width;
@@ -408,16 +579,94 @@
         tempCtx.fillStyle = 'white';
         tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
         tempCtx.drawImage(canvas, 0, 0);
+
+        // สร้าง Data URL ของรูปภาพ
+        const dataURL = tempCanvas.toDataURL('image/png');
+
+        // สร้าง element <a> ชั่วคราว และกำหนด attribute download
         const link = document.createElement('a');
+        link.href = dataURL;
         link.download = 'drawing.png';
-        link.href = tempCanvas.toDataURL('image/png');
+
+        // จำลองการคลิกเพื่อดาวน์โหลด
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
+      });
+      // ฟังก์ชันแชร์รูปภาพผ่าน Web Share API
+      async function shareDrawing() {
+        try {
+          canvas.toBlob(async (blob) => {
+            if (!blob) {
+              alert("ไม่สามารถแชร์รูปได้");
+              return;
+            }
+            const file = new File([blob], "drawing.png", { type: blob.type });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                title: 'ดูรูปวาดของฉัน!',
+                text: 'ฉันวาดรูปนี้ไว้ ลองดูสิ!'
+              });
+              console.log("แชร์สำเร็จด้วยการแชร์ไฟล์");
+            } else if (navigator.share) {
+              await navigator.share({
+                title: 'ดูรูปวาดของฉัน!',
+                text: 'ฉันวาดรูปนี้ไว้ ลองดูสิ!',
+                url: window.location.href
+              });
+              console.log("แชร์สำเร็จด้วย URL");
+            } else {
+              alert("เบราว์เซอร์ของคุณไม่รองรับการแชร์");
+            }
+          }, 'image/png');
+        } catch (error) {
+          console.error("Error sharing:", error);
+          alert("เกิดข้อผิดพลาดในการแชร์: " + error.message);
+        }
+      }
+      // กำหนด event listener ให้กับปุ่ม Share
+      shareButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        shareDrawing();
+      });
+      // ฟังก์ชัน Undo และ Redo
+      function undo() {
+        if (undoStack.length > 1) {
+          redoStack.push(undoStack.pop());
+          const previousState = undoStack[undoStack.length - 1];
+          ctx.putImageData(previousState, 0, 0);
+        }
+      }
+      function redo() {
+        if (redoStack.length) {
+          const restoredState = redoStack.pop();
+          ctx.putImageData(restoredState, 0, 0);
+          undoStack.push(restoredState);
+        }
+      }
+      undoButton.addEventListener('click', undo);
+      redoButton.addEventListener('click', redo);
+      // ฟังก์ชันสำหรับเปิด/ปิด modal Reference
+      const refBtn = document.getElementById('ref-btn');
+      const refModal = document.getElementById('ref-modal');
+      const modalClose = document.getElementById('modal-close');
+      refBtn.addEventListener('click', () => {
+        refModal.style.display = "block";
+      });
+      modalClose.addEventListener('click', () => {
+        refModal.style.display = "none";
+      });
+      window.addEventListener('click', (e) => {
+        if (e.target == refModal) {
+          refModal.style.display = "none";
+        }
       });
     });
-
     function goBack() {
       window.location.href = "Drawing.html";
     }
   </script>
 </body>
+
 </html>

@@ -1,115 +1,252 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ระบาย</title>
+  <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png">
   <style>
     body {
-      font-family: TorsilpChillChill;
-      object-fit: cover;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-image: url('assets/img/colorbg.PNG');
       background-size: cover;
-      background-image: url('assets/img/colorbg.png');
     }
 
-    /* แปลง 1400px => 100vw และ 900px => (900/1400*100)vw ≈ 64.29vw */
     .frame-container {
       position: relative;
-      width: 100vw;
-      height: 64.29vw;
+      width: 890px;
+      height: 700px;
       margin: 0 auto;
       background-image: url('assets/img/frame.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      z-index: 0;
     }
 
     .paint-area {
       position: absolute;
-      width: 78%;
-      height: 68%;
+      width: 96%;
+      height: 69%;
       top: 20%;
-      left: 11%;
+      left: 2%;
       background-color: transparent;
       overflow: hidden;
-      /* ป้องกัน touch action ที่อาจรบกวนการวาด */
-      touch-action: none;
-    }
-
-    .splash {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 1;
-      pointer-events: none;
     }
 
     .controls {
       position: absolute;
-      bottom: 0;
-      left: 82%;
-      transform: translateX(-50%);
+      bottom: 20px;
+      /* ระยะจากขอบล่างของ .frame-container */
+      right: 1vw;
+      /* ระยะจากขอบขวาของ .frame-container */
+      display: flex;
+      /* ถ้ายังต้องการเรียงปุ่มในแนวนอน */
+      gap: 1vw;
     }
 
-    .controls button {
-      /* คำนวณ: 20px => (20/1400*100)vw ≈ 1.43vw, 10px ≈ 0.71vw, 16px ≈ 1.14vw, 15px ≈ 1.07vw, 2px ≈ 0.14vw */
-      padding: 1.43vw 1.43vw;
-      margin: 0.71vw;
-      font-size: 1.14vw;
+    #addImageButton {
+      padding: 0.5vw;
+      font-size: 1vw;
+      width: 7vw;
+      height: 3vw;
+      border: none;
+      background-color: hsl(39, 100%, 50%);
+      ;
+      color: white;
+      border-radius: 1.5vw;
       cursor: pointer;
-      border-radius: 1.07vw;
-      border: 0.14vw solid #1c1d1d;
-      background-color: hsl(51, 52%, 85%);
-      color: #1d1b13;
-      transition: background-color 0.3s ease;
+      box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
       font-family: 'Noto Sans Thai', sans-serif;
     }
-    .controls button:hover {
-      background-color: hsl(52, 37%, 80%);
+
+    #saveButton {
+      padding: 0.5vw;
+      font-size: 1vw;
+      width: 5vw;
+      height: 3vw;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 1.5vw;
+      cursor: pointer;
+      box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+      font-family: 'Noto Sans Thai', sans-serif;
     }
-    
-    /* ปุ่ม Go Back */
+
+    #addImageButton:hover {
+      background-color: hsl(28, 90%, 40%);
+
+    }
+
+    #saveButton:hover {
+      background-color: #2c6a2e;
+    }
+
     .back-btn {
       position: absolute;
-      /* 20px => 1.43vw, 60px => 4.29vw, 1px => 0.07vw */
-      top: 1.43vw;
-      left: 1.43vw;
-      width: 4.29vw;
-      height: 4.29vw;
-      border: 0.07vw solid grey;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      border: 1px solid grey;
       background-color: #fff;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      /* box-shadow: 0 2px 5px => 0, 0.14vw, 0.36vw (ประมาณ) */
-      box-shadow: 0 0.14vw 0.36vw rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       cursor: pointer;
       transition: all 0.2s ease-in-out;
       z-index: 1000;
     }
+
     .back-btn svg {
-      /* 30px => 2.14vw */
-      width: 2.14vw;
-      height: 2.14vw;
+      width: 30px;
+      height: 30px;
       fill: #555;
-      transform: scaleX(-1); /* พลิกให้ชี้ซ้าย */
+      transform: scaleX(-1);
       transition: fill 0.2s ease-in-out;
     }
+
     .back-btn:hover {
       background-color: #f39eb6;
     }
+
     .back-btn:hover svg {
       fill: white;
     }
+
+    /* สไตล์สำหรับแสดงบรัชบนหน้าจอ */
+    .brush-stamp {
+      position: absolute;
+      pointer-events: none;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    /* Media Queries สำหรับ iPad และโทรศัพท์ */
+    @media (max-width: 1024px) {
+      .controls {
+        gap: 15px;
+        bottom: 15px;
+        right: 15px;
+      }
+
+      #addImageButton,
+      #saveButton {
+        padding: 8px;
+        font-size: 14px;
+      }
+
+      .back-btn {
+        width: 55px;
+        height: 55px;
+        top: 15px;
+        left: 15px;
+      }
+
+      .back-btn svg {
+        width: 26px;
+        height: 26px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .controls {
+        gap: 10px;
+        bottom: 10px;
+        right: 10px;
+      }
+
+      #addImageButton,
+      #saveButton {
+        padding: 6px;
+        font-size: 13px;
+      }
+
+      .back-btn {
+        width: 50px;
+        height: 50px;
+        top: 10px;
+        left: 10px;
+      }
+
+      .back-btn svg {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    /* ---------------------- Media Queries ---------------------- */
+    /* ยกตัวอย่างปรับปุ่มและตำแหน่งบางส่วนเมื่อจอเล็กลง */
+    @media (max-width: 1024px) {
+      .controls {
+        bottom: 2vh;
+        right: 2vw;
+        gap: 2vw;
+      }
+
+      #addImageButton,
+      #saveButton {
+        padding: 1vh;
+        font-size: 1.5vh;
+        width: auto;
+        border-radius: 2vh;
+      }
+
+      .back-btn {
+        top: 1vh;
+        left: 1vh;
+        width: 7vh;
+        height: 7vh;
+      }
+
+      .back-btn svg {
+        width: 3vh;
+        height: 3vh;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .controls {
+        bottom: 2vh;
+        right: 2vw;
+        gap: 2vw;
+      }
+
+      #addImageButton,
+      #saveButton {
+        padding: 1vh;
+        font-size: 2vh;
+        border-radius: 2vh;
+      }
+
+      .back-btn {
+        top: 1vh;
+        left: 1vh;
+        width: 6vh;
+        height: 6vh;
+      }
+
+      .back-btn svg {
+        width: 2.5vh;
+        height: 2.5vh;
+      }
+    }
   </style>
 </head>
+
 <body>
   <!-- ปุ่ม Go Back -->
   <button class="back-btn" onclick="goBack()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 
+               0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 
+               32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 
+               45.3 0l160-160z" />
     </svg>
   </button>
 
@@ -122,63 +259,121 @@
   </div>
 
   <script>
-    // ฟังก์ชันสำหรับปุ่ม Go Back
     function goBack() {
-      window.location.href = "color.html"; 
+      window.location.href = "color.html";
     }
 
-    // ฟังก์ชันสร้าง splash สี เมื่อกดที่พื้นที่วาด
-    function createColorSplash(x, y) {
-      const paintArea = document.getElementById("paint-area");
-      const splash = document.createElement("div");
-      splash.className = "splash";
-      // สุ่มขนาด splash ในหน่วย px
-      const size = Math.random() * 80 + 100; // px
-      splash.style.width = `${size}px`;
-      splash.style.height = `${size}px`;
-      const color = getRandomColor();
-      splash.dataset.color = color;
-      splash.style.background = `radial-gradient(circle, ${color} 0%, ${color} 60%, transparent 100%)`;
-      // กำหนดตำแหน่ง splash ให้ตรงกับตำแหน่งที่สัมผัส (ใช้ px โดยตรง)
-      splash.style.left = `${x - size / 2}px`;
-      splash.style.top = `${y - size / 2}px`;
-      paintArea.appendChild(splash);
-    }
-
-    // ฟังก์ชันสุ่มสีแบบ Hex
+    // ฟังก์ชันสุ่มสีแบบ Hex (ไม่รวมสีขาว)
     function getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
+      let color;
+      do {
+        color = "#";
+        const letters = "0123456789ABCDEF";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+      } while (color.toUpperCase() === "#FFFFFF");
       return color;
     }
 
-    const paintArea = document.getElementById("paint-area");
+    // ฟังก์ชันสุ่มมุมหมุน (0-359°)
+    function getRandomAngle() {
+      return Math.floor(Math.random() * 360);
+    }
 
-    // ใช้ pointerdown เพื่อรองรับ mouse และ touch
-    paintArea.addEventListener("pointerdown", function (event) {
-      event.preventDefault();
+    // --- โหลดไฟล์บรัชต้นฉบับ (สีขาวบนพื้นดำ) ---
+    const brushImgOriginal = new Image();
+    brushImgOriginal.src = "assets/img/brush.png";
+
+    // brushImg: คือภาพบรัชที่ผ่านการประมวลผล alpha แล้ว
+    const brushImg = new Image();
+    let brushIsReady = false;
+
+    brushImgOriginal.onload = function () {
+      const tempCanvas = document.createElement("canvas");
+      tempCanvas.width = brushImgOriginal.width;
+      tempCanvas.height = brushImgOriginal.height;
+      const tempCtx = tempCanvas.getContext("2d");
+      tempCtx.drawImage(brushImgOriginal, 0, 0);
+      const imgData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+      const data = imgData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        if (r < 50 && g < 50 && b < 50) {
+          data[i + 3] = 0;
+        }
+      }
+      tempCtx.putImageData(imgData, 0, 0);
+      const dataURL = tempCanvas.toDataURL("image/png");
+      brushImg.src = dataURL;
+      brushImg.onload = function () {
+        brushIsReady = true;
+        console.log("Brush has been converted and loaded with alpha!");
+      };
+    };
+
+    // เมื่อคลิกใน paint-area ให้สร้าง stamp ใหม่
+    document.getElementById("paint-area").addEventListener("click", function (event) {
       const rect = this.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
-      createColorSplash(x, y);
+      createBrushStamp(x, y);
     });
 
-    // สำหรับรองรับกรณีที่อุปกรณ์ไม่รองรับ pointer events ให้เพิ่ม touchstart ด้วย
-    paintArea.addEventListener("touchstart", function (event) {
-      const touch = event.touches[0];
-      const rect = this.getBoundingClientRect();
-      const x = touch.clientX - rect.left;
-      const y = touch.clientY - rect.top;
-      createColorSplash(x, y);
-    });
+    function createBrushStamp(x, y) {
+      const paintArea = document.getElementById("paint-area");
+      const stamp = document.createElement("div");
+      stamp.className = "brush-stamp";
 
-    // เมื่อคลิกปุ่ม "เพิ่มรูปภาพ" ให้เลือกรูปและแสดงใน paint-area
+      // สุ่มขนาด, สี, มุมหมุน และมุมเอียง
+      const size = Math.random() * 120 + 200; // 100-150 px
+      const color = getRandomColor();
+      const angle = getRandomAngle();
+      const skewDeg = Math.random() * 1; // เอียง 5-20°
+
+      const left = x - size / 2;
+      const top = y - size / 2;
+
+      // เก็บข้อมูลไว้ใช้ตอนบันทึก
+      stamp.dataset.size = size;
+      stamp.dataset.x = left;
+      stamp.dataset.y = top;
+      stamp.dataset.color = color;
+      stamp.dataset.angle = angle;
+      stamp.dataset.skew = skewDeg;
+
+      stamp.style.width = size + "px";
+      stamp.style.height = size + "px";
+      stamp.style.left = left + "px";
+      stamp.style.top = top + "px";
+      stamp.style.transform = `rotate(${angle}deg) skewY(${skewDeg}deg)`;
+
+      // ประมวลผลสีให้กับภาพบรัชเพื่อแสดงผลบนหน้าจอ
+      if (brushIsReady) {
+        const offCanvas = document.createElement("canvas");
+        offCanvas.width = brushImg.width;
+        offCanvas.height = brushImg.height;
+        const offCtx = offCanvas.getContext("2d");
+        offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
+        offCtx.fillStyle = color;
+        offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+        offCtx.globalCompositeOperation = "destination-in";
+        offCtx.drawImage(brushImg, 0, 0);
+        offCtx.globalCompositeOperation = "source-over";
+        // กำหนด background-image เป็นผลลัพธ์จาก offCanvas
+        stamp.style.backgroundImage = `url(${offCanvas.toDataURL("image/png")})`;
+      } else {
+        // ถ้า brush ยังไม่พร้อม ให้ใช้ภาพบรัชต้นฉบับเป็น background
+        stamp.style.backgroundImage = "url('assets/img/brush.png')";
+      }
+
+      paintArea.appendChild(stamp);
+    }
+
+    // ปุ่มเพิ่มรูปภาพผู้ใช้
     document.getElementById("addImageButton").addEventListener("click", function () {
       const paintArea = document.getElementById("paint-area");
-      const oldImage = paintArea.querySelector("img");
+      const oldImage = paintArea.querySelector("img.user-image");
       if (oldImage) {
         paintArea.removeChild(oldImage);
       }
@@ -191,26 +386,28 @@
           const reader = new FileReader();
           reader.onload = function (e) {
             const img = document.createElement("img");
+            img.className = "user-image";
             img.src = e.target.result;
             img.style.position = "absolute";
-            img.style.width = "auto";
-            img.style.height = "auto";
-            img.style.left = "50%";
-            img.style.top = "50%";
-            img.style.transform = "translate(-50%, -50%)";
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.left = "0";
+            img.style.top = "0";
+            img.style.objectFit = "contain";
             img.style.cursor = "move";
             img.ondragstart = function () {
               return false;
             };
             paintArea.appendChild(img);
           };
+
           reader.readAsDataURL(file);
         }
       });
       input.click();
     });
 
-    // เมื่อคลิกปุ่ม "บันทึก" ให้สร้าง canvas และวาดรูปภาพและ splash ในลำดับที่ถูกต้อง
+    // ปุ่มบันทึก
     document.getElementById("saveButton").addEventListener("click", function () {
       const paintArea = document.getElementById("paint-area");
       const paintAreaStyles = getComputedStyle(paintArea);
@@ -218,35 +415,57 @@
       canvas.width = parseInt(paintAreaStyles.width);
       canvas.height = parseInt(paintAreaStyles.height);
       const ctx = canvas.getContext("2d");
+
+      // ตั้งพื้นหลังเป็นสีขาว
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       const paintAreaRect = paintArea.getBoundingClientRect();
-      const imageElement = paintArea.querySelector("img");
-      if (imageElement) {
-        const rect = imageElement.getBoundingClientRect();
+
+      // วาดรูปผู้ใช้อัปโหลด (ถ้ามี)
+      const userImage = paintArea.querySelector("img.user-image");
+      if (userImage) {
+        const rect = userImage.getBoundingClientRect();
         const x = rect.left - paintAreaRect.left;
         const y = rect.top - paintAreaRect.top;
-        ctx.drawImage(imageElement, x, y, rect.width, rect.height);
+        ctx.drawImage(userImage, x, y, rect.width, rect.height);
       }
-      const splashElements = paintArea.querySelectorAll(".splash");
-      splashElements.forEach(splash => {
-        // ดึงขนาดและตำแหน่งที่คำนวณเป็น px โดย getComputedStyle จะให้ค่าเป็น px
-        const size = parseFloat(getComputedStyle(splash).width);
-        const left = parseFloat(getComputedStyle(splash).left);
-        const top = parseFloat(getComputedStyle(splash).top);
-        const color = splash.dataset.color;
-        if (color) {
-          const x = left + size / 2;
-          const y = top + size / 2;
-          const gradient = ctx.createRadialGradient(x, y, 0, x, y, size / 2);
-          gradient.addColorStop(0, color);
-          gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
-          ctx.fillStyle = gradient;
-          ctx.beginPath();
-          ctx.arc(x, y, size / 2, 0, Math.PI * 2);
-          ctx.fill();
-        }
+
+      // ตรวจสอบว่า brushImg พร้อมหรือยัง
+      if (!brushIsReady) {
+        alert("กำลังเตรียมบรัช กรุณารอสักครู่...");
+        return;
+      }
+
+      // วาดบรัชทั้งหมดลง canvas
+      const stamps = paintArea.querySelectorAll(".brush-stamp");
+      stamps.forEach(stamp => {
+        const size = parseFloat(stamp.dataset.size);
+        const left = parseFloat(stamp.dataset.x);
+        const top = parseFloat(stamp.dataset.y);
+        const color = stamp.dataset.color;
+        const angleDeg = parseFloat(stamp.dataset.angle);
+        const skewDeg = parseFloat(stamp.dataset.skew);
+
+        const offCanvas = document.createElement("canvas");
+        offCanvas.width = brushImg.width;
+        offCanvas.height = brushImg.height;
+        const offCtx = offCanvas.getContext("2d");
+        offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
+        offCtx.fillStyle = color;
+        offCtx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+        offCtx.globalCompositeOperation = "destination-in";
+        offCtx.drawImage(brushImg, 0, 0);
+        offCtx.globalCompositeOperation = "source-over";
+
+        ctx.save();
+        ctx.translate(left + size / 2, top + size / 2);
+        ctx.rotate(angleDeg * Math.PI / 180);
+        ctx.transform(1, Math.tan(skewDeg * Math.PI / 180), 0, 1, 0, 0);
+        ctx.drawImage(offCanvas, -size / 2, -size / 2, size, size);
+        ctx.restore();
       });
+
       const link = document.createElement("a");
       link.download = "Rabyecolor.png";
       link.href = canvas.toDataURL("image/png");
@@ -254,4 +473,5 @@
     });
   </script>
 </body>
+
 </html>

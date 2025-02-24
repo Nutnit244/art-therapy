@@ -3,20 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png">
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
   <title>ระบาย</title>
-  <!-- <link rel="stylesheet" href="common/common.css"> -->
-
   <style>
     @font-face {
       font-family: 'TorsilpChillChill';
       src: url('https://example.com/fonts/TorsilpChillChill.ttf') format('truetype');
     }
-    /* สำหรับ Desktop: ใช้ฐาน 1000px => 1px ≈ 0.1vw */
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: url('assets/img/Party.png') no-repeat center center fixed;
+      background: url(assets/img/Party.png) no-repeat center center fixed;
       background-size: cover;
       display: flex;
       flex-direction: column;
@@ -24,83 +21,162 @@
       justify-content: center;
       min-height: 100vh;
     }
+    /* Header with buttons on both sides */
     .header {
-      text-align: center;
-      margin-bottom: 1.2vw; /* ลดลงจาก 1.5vw */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 40vw;
+      margin-bottom: 1.2vw;
+      padding: 0 1vw;
     }
     .header h1 {
-      font-size: 2vw;    /* ลดลงจาก 2.4vw */
+      font-size: 2vw;
       color: #fff;
-      background: #f39eb6;;
-      width: 18vw;       /* ลดลงจาก 20vw */
-      height: 4.5vw;     /* ลดลงจาก 5vw */
-      padding-top: 0.7vw;/* ลดลงจาก 0.8vw */
-      border-radius: 0.7vw;/* ลดลงจาก 0.8vw */
-      display: inline-block;
+      background: #f39eb6;
+      width: 18vw;
+      height: 4.5vw;
+      padding-top: 0.7vw;
+      border-radius: 0.7vw;
+      text-align: center;
       font-family: 'TorsilpChillChill';
+      margin: 0.3vw;
+    }
+    .header-btn {
+      background-color: #fff;
+      border: 0.1vw solid #f39eb6;
+      border-radius: 2vw;
+      padding: 0.5vw 1vw;
+      font-size: 1.5vw;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+      font-family: 'TorsilpChillChill', sans-serif;
+    }
+    .header-btn:hover {
+      background-color: #f39eb6;
+      color: #fff;
     }
     .container {
       display: flex;
       justify-content: center;
       align-items: center;
-      /* margin: 1vw auto;  ลดลงจาก 2vw */
       width: 90%;
       max-width: 1000px;
-      gap: 3vw;         /* ลดลงจาก 2vw */
+      gap: 3vw;
     }
     .vase-area {
       flex: 1;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       position: relative;
       background: url('assets/img/bg_vase.png') no-repeat center center;
       background-size: contain;
-      border-radius: 0.8vw; /* ลดลงจาก 1vw */
-      padding: 0.8vw;      /* ลดลงจาก 1vw */
-      width: 22vw;         /* ลดลงจาก 35vw */
-      height: 27vw;        /* ลดลงจาก 38vw */
+      border-radius: 0.8vw;
+      padding: 0.8vw;
+      width: 22vw;
+      height: 27vw;
     }
     .vase {
-      width: 25vw;         /* ลดลงจาก 30vw */
-      height: 20vw;        /* ลดลงจาก 25vw */
-      top: 4vw;            /* ลดลงจาก 5vw */
-      background: url('assets/img/vase2.PNG') no-repeat center center;
+      width: 25vw;
+      height: 16vw;
+      top: 3vw;
+      background: url('assets/img/vase3_1.PNG') no-repeat center center;
       background-size: contain;
       position: relative;
       overflow: hidden;
+      z-index: 100;
+      pointer-events: none;
+    }
+    /* ปุ่ม Idea (REF) อยู่ที่มุมซ้ายบนของ vase-area */
+    #ref-btn {
+      position: absolute;
+      top: 1vw;
+      left: 2.5vw;
+      z-index: 1100;
+      /* ใช้ Flexbox จัดตำแหน่งให้อยู่กึ่งกลาง */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 0.1vw solid #714937;
+      border-radius: 50%;
+      cursor: pointer;
+      overflow: hidden;
+      width: 4vw;
+      /* กำหนดขนาดปุ่มให้เล็กลง */
+      height: 4vw;
+    }
+
+    #ref-btn:hover {
+      background-color: rgba(234, 227, 227, 0.8);
+    }
+
+    #ref-btn img {
+      width: 3vw;
+      /* ลดขนาดรูปภาพ */
+      height: 3vw;
+      border-radius: 50%;
+    }
+    /* ปุ่ม Undo/Redo อยู่ที่มุมขวาบนของ vase-area เรียงแนวตั้ง */
+    .undo-redo-container {
+      position: absolute;
+      top: 1vw;
+      right: -1vw;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5vw;
+      z-index: 1100;
+    }
+    .undo-redo-container button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .undo-redo-container button img {
+      width: 2.5vw;
+      height: auto;
+      background-color: #fff;
+      border: 0.1vw solid #714937;
+      border-radius: 30%;
+    }
+    .undo-redo-container button img:hover {
+      background-color: #ebebeb;
     }
     .flower-container {
       position: absolute;
-      top: 8vw;            /* ลดลงจาก 9vw */
+      top: 8vw;
       left: 40%;
       transform: translateX(-50%);
-      width: 7vw;          /* ลดลงจาก 8vw */
-      height: 9vw;         /* ลดลงจาก 10vw */
-      pointer-events: auto;
+      width: 7vw;
+      height: 9vw;
+      pointer-events: none;
     }
     .flower-selection {
       flex: 1;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.2vw;          /* ลดลงจาก 1.5vw */
+      gap: 1.2vw;
       text-align: center;
       background-color: rgba(255, 255, 255, 0.8);
       box-shadow: 0 0.1vw 0.3vw rgba(0, 0, 0, 0.4);
       border: 0;
-      border-radius: 0.8vw; /* ลดลงจาก 1vw */
-      padding: 1.2vw;      /* ลดลงจาก 1.5vw */
-      width: 36vw;         /* ลดลงจาก 35vw */
-      height: 38vw;        /* ลดลงจาก 50vw */
+      border-radius: 0.8vw;
+      padding: 1.2vw;
+      width: 36vw;
+      height: 38vw;
       position: relative;
     }
     .flower-selection::before,
     .flower-selection::after {
       content: "";
       position: absolute;
-      left: 0.8vw;   /* ลดลงจาก 1vw */
-      right: 0.8vw;  /* ลดลงจาก 1vw */
-      height: 0.35vw; /* ลดลงจาก 0.4vw */
+      left: 0.8vw;
+      right: 0.8vw;
+      height: 0.35vw;
       background-color: #a58778;
       box-shadow: 0 0.2vw 0.3vw rgba(0, 0, 0, 0.3);
     }
@@ -116,371 +192,559 @@
       align-items: center;
     }
     .flower {
-      width: 9.5vw;      /* ลดลงจาก 12vw */
-      cursor: grab;
+      width: 9.5vw;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .flower:hover {
+      transform: scale(1.05);
     }
     .flower-name {
-      margin-top: 0.5vw; /* ยังคง 0.5vw */
-      font-size: 1.2vw;  /* ลดลงจาก 1.4vw */
+      margin-top: 0.5vw;
+      font-size: 1.2vw;
       color: #714937;
       font-family: 'TorsilpChillChill';
     }
-    /* ปุ่ม "ต่อไป" ที่อยู่ในแจกัน */
-    .next-button {
+    /* Action buttons container */
+    .action-buttons {
       position: absolute;
-      bottom: -4vw;     /* ลดลงจาก -5vw */
+      bottom: -4vw;
       left: 50%;
       transform: translateX(-50%);
       display: inline-flex;
+      gap: 1.2vw;
+    }
+    /* Save button */
+    .save-button {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 1.2vw;       /* ลดลงจาก 1.5vw */
-      width: 9vw;       /* ลดลงจาก 11vw */
-      height: 3.5vw;    /* ลดลงจาก 4vw */
-      padding: 0.8vw;   /* ลดลงจาก 1vw */
-      font-size: 1vw;   /* ลดลงจาก 1.3vw */
+      gap: 0.5vw;
+      width: 8vw;
+      height: 3.5vw;
+      padding: 0.8vw;
+      font-size: 1vw;
       font-weight: bold;
       border: none;
-      background: #ffffff;
-      color: rgb(0, 0, 0);
-      border-radius: 0.4vw; /* ลดลงจาก 0.5vw */
+      background: #67d86b;
+      color: white;
+      border-radius: 2vw;
       box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
       cursor: pointer;
       transition: all 0.2s ease-in-out;
       font-family: 'Noto Sans Thai', sans-serif;
     }
-    .next-button:hover {
-      background: #f39eb6;
+    .save-button:hover {
+      background: #5dc460;
       color: #fff;
     }
-    .next-button svg {
-      width: 1.8vw;  /* ลดลงจาก 2vw */
-      height: 1.8vw; /* ลดลงจาก 2vw */
+    /* Share button */
+    .share-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5vw;
+      width: 8vw;
+      height: 3.5vw;
+      padding: 0.8vw;
+      font-size: 1vw;
+      font-weight: bold;
+      border: none;
+      background: #2ba9f8;
+      color: white;
+      border-radius: 2vw;
+      box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
+    .share-button:hover {
+      background: #2aa2ed;
+      color: #fff;
+    }
+    .share-button svg {
+      width: 1.8vw;
+      height: 1.8vw;
       fill: currentColor;
     }
-    
-    /* ปุ่ม Go Back (ใช้ไอคอน SVG แบบเดียวกับปุ่ม "ต่อไป" แต่พลิกด้าน) */
     .back-btn {
       position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 60px;
-      height: 60px;
-      border: 1px solid grey;
+      top: 1.4vw;    
+      left: 1.4vw;   
+      width: 4.2vw;  
+      height: 4.2vw; 
+      border: 0.07vw solid grey; 
       background-color: #fff;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0.14vw 0.35vw rgba(0, 0, 0, 0.2);
       cursor: pointer;
       transition: all 0.2s ease-in-out;
+      z-index: 1000;
     }
     .back-btn svg {
-      width: 30px;  /* ปรับให้เล็กลง */
-      height: 30px; /* ปรับให้เล็กลง */
+      width: 2.1vw;
+      height: 2.1vw;
       fill: #555;
-      transform: scaleX(-1); /* พลิก SVG ให้ชี้ซ้าย */
+      transform: scaleX(-1);
       transition: fill 0.2s ease-in-out;
     }
     .back-btn:hover {
-      background-color: #f39eb6;
+      background-color: #f187b5;
     }
-    /* เมื่อ hover ปุ่ม Go Back ให้ไอคอนเปลี่ยนเป็นสีขาว */
     .back-btn:hover svg {
       fill: white;
     }
-    
-    /* Media Query สำหรับอุปกรณ์มือถือ (ใช้ฐาน 600px => 1px ≈ 0.1667vw) */
     @media (max-width: 600px) {
       .container {
         flex-direction: column;
-        gap: 1.25vw; /* ประมาณ 10px (10px/600*100) */
+        gap: 1.25vw;
       }
       .vase-area,
       .flower-selection {
         width: 90%;
-        max-width: 50vw; /* ปรับลดจาก 53.33vw */
+        max-width: 50vw;
       }
       .vase-area {
-        height: 42vw;       /* ลดลงจาก 50vw (เช่น 250pxแทน 300px) */
-        padding: 0.83vw;    /* ยังคง 0.83vw (5px) */
+        height: 42vw;
+        padding: 0.83vw;
       }
       .vase {
         width: 90%;
-        height: 35vw;       /* ลดลงจาก 30vw (เช่น 170px แทน 180px) */
+        height: 35vw;
         margin: 0 auto;
-        top: 3vw;           /* ลดลงจาก 3.33vw */
+        top: 3vw;
       }
       .flower-container {
-        width: 7vw;         /* ปรับให้สอดคล้องกับขนาด Desktop */
-        height: 9vw;        /* ปรับให้สอดคล้องกับขนาด Desktop */
-        top: 8vw;           /* ปรับให้สอดคล้องกับขนาด Desktop */
+        width: 7vw;
+        height: 9vw;
+        top: 8vw;
         left: 50%;
       }
       .flower {
-        width: 10vw;        /* ลดลงจาก 11.67vw */
+        width: 10vw;
       }
       .flower-selection {
         height: auto;
-        padding: 1vw;       /* ลดลงจาก 1.67vw */
-        grid-gap: 1vw;      /* ลดลงจาก 1.67vw */
+        padding: 1vw;
+        grid-gap: 1vw;
       }
       .flower-name {
-        font-size: 2vw;     /* ลดลงจาก 2vw (หรือปรับตามต้องการ) */
+        font-size: 2vw;
       }
       .header h1 {
-        font-size: 3vw;     /* เพิ่มเล็กลงจาก 3.33vw */
-        width: 28vw;        /* ลดลงจาก 30vw */
-        height: 7vw;        /* ลดลงจาก 7.5vw */
+        font-size: 3vw;
+        width: 28vw;
+        height: 7vw;
       }
-      .next-button {
-        bottom: -4.5vw;     /* ลดลงจาก -5.83vw */
-        width: 13vw;        /* ลดลงจาก 15vw */
-        height: 4.5vw;      /* ลดลงจาก 5.83vw */
-        font-size: 1.5vw;   /* ลดลงจาก 1.87vw */
+      .header-btn {
+        font-size: 2vw;
+        padding: 1vw 2vw;
       }
-      .next-button svg {
-        width: 2.5vw;       /* ลดลงจาก 3.33vw */
-        height: 2.5vw;      /* ลดลงจาก 3.33vw */
+      .action-buttons {
+        bottom: -4.5vw;
+        width: 13vw;
+        height: 4.5vw;
+        font-size: 1.5vw;
+      }
+      .save-button, .share-button {
+        width: 13vw;
+        height: 5vw;
+      }
+      .share-button svg {
+        width: 2.5vw;
+        height: 2.5vw;
+      }
+      .undo-redo-container button img {
+        width: 5vw;
+      }
+      .control-row {
+        top: 1vw;
+        left: 1vw;
+        right: 1vw;
       }
     }
+    /* Modal styles สำหรับ Reference */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 70vw; /* เปลี่ยนจาก 60vw เป็น 80vw เพื่อให้รูปใหญ่ขึ้น */
+      width: 70vw;
+    }
+    .modal-content {
+      display: block;
+      width: 100%;
+      border-radius: 0.5vw;
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.5vw;
+      right: 0.5vw;
+      font-size: 3vw;
+      color: black;
+      cursor: pointer;
+      border-radius: 50%;
+      padding: 0.2vw 0.5vw;
+    }
+    /* Modal styles สำหรับ Flower Meaning */
+    #meaning-btn {
+      position: absolute;
+      top: 0vw;
+      right: -3.5vw;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 0.1vw solid #714937;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 0.5vw;
+      z-index: 1100;
+    }
+    #meaning-btn:hover {
+      background-color: rgba(234, 227, 227, 0.8);
+    }
+    #meaning-btn img {
+      width: 2vw;
+      height: 2vw;
+    }
+    #meaning-content img {
+      border-radius: 0.5vw;
+    } 
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
-  <!-- <div id="common-content"></div> -->
-  
-  <!-- ปุ่ม Go Back ที่ตำแหน่งมุมบนซ้าย พร้อมไอคอน SVG พลิกด้าน -->
+  <!-- ปุ่ม Go Back -->
   <button class="back-btn" onclick="goBack()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
       <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
     </svg>
   </button>
-  
+
   <div class="header">
+    <button class="header-btn left-header-btn" onclick="goToLeftPage()">จัดสวน</button>
     <h1>งานรื่นเริง</h1>
+    <button class="header-btn right-header-btn" onclick="goToRightPage()">งานแต่ง</button>
   </div>
   <div class="container">
     <!-- พื้นที่แจกัน -->
-    <div class="vase-area">
+    <div class="vase-area" id="vaseArea">
       <div class="vase"></div>
       <div class="flower-container" id="flower-container"></div>
-      <!-- ปุ่ม "ต่อไป" ย้ายเข้ามาในส่วนของแจกัน -->
-      <a href="flower2.html">
-        <button class="next-button" onclick="nextStage()">
-          <span>ต่อไป</span>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-            <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
-          </svg>
+      
+      <!-- Control row รวมปุ่ม REF กับ Undo/Redo -->
+      <div class="control-row">
+        <!-- ปุ่ม REF อยู่ที่มุมซ้ายบนของ vase-area -->
+        <button id="ref-btn">
+          <img src="assets/img/idea.png" alt="Reference">
         </button>
-      </a>
+        <!-- ปุ่ม Undo/Redo อยู่ที่มุมขวาบนของ vase-area เรียงเป็นแนวตั้ง -->
+        <div class="undo-redo-container">
+          <button id="undoBtn">
+            <img src="assets/img/undo2.png" alt="Undo">
+          </button>
+          <button id="redoBtn">
+            <img src="assets/img/redo.png" alt="Redo">
+          </button>
+        </div>
+      </div>
+      
+      <!-- Action buttons: Save & Share -->
+      <div class="action-buttons">
+        <button class="save-button" id="saveBtn" onclick="saveImage()">
+          <span>บันทึก</span>
+        </button>
+        <button class="share-button" id="shareBtn" onclick="shareImage()">
+          <span>แชร์</span>
+        </button>
+      </div>
     </div>
-    <!-- พื้นที่แสดงดอกไม้ (ครบทั้ง 9 ชนิด) -->
+    <!-- พื้นที่แสดงดอกไม้ -->
     <div class="flower-selection">
+      <!-- ปุ่มสำหรับแสดงความหมายของดอกไม้ (Flower Meaning) อยู่ที่มุมขวาบนของตาราง -->
+      <button id="meaning-btn">
+        <img src="assets/img/flower.png" alt="Flower Meaning">
+      </button>
       <div class="flower-item">
-        <img src="assets/img/rose.png" alt="กุหลาบ" class="flower" draggable="true" id="flower1" />
+        <img src="assets/img/rose.png" alt="กุหลาบ" class="flower" id="flower1" />
         <div class="flower-name">กุหลาบ</div>
       </div>
       <div class="flower-item">
-        <img src="assets/img/sunflower.png" alt="ทานตะวัน" class="flower" draggable="true" id="flower2" />
+        <img src="assets/img/sunflower.png" alt="ทานตะวัน" class="flower" id="flower2" />
         <div class="flower-name">ทานตะวัน</div>
       </div>
       <div class="flower-item">
-        <img src="assets/img/tulip.png" alt="ทิวลิป" class="flower" draggable="true" id="flower3" />
+        <img src="assets/img/tulip.png" alt="ทิวลิป" class="flower" id="flower3" />
         <div class="flower-name">ทิวลิป</div>
       </div>
       <div class="flower-item">
-        <!-- <img src="assets/img/daffodil.png" alt="ดารารัตน์" class="flower" draggable="true" id="flower4" />
+        <!-- <img src="assets/img/daffodil.png" alt="ดารารัตน์" class="flower" id="flower4" />
         <div class="flower-name">ดารารัตน์</div> -->
       </div>
       <div class="flower-item">
-        <!-- <img src="assets/img/lilac.png" alt="ไลแลค" class="flower" draggable="true" id="flower5" />
+        <!-- <img src="assets/img/lilac.png" alt="ไลแลค" class="flower" id="flower5" />
         <div class="flower-name">ไลแลค</div> -->
       </div>
       <div class="flower-item">
-        <!-- <img src="assets/img/lily.png" alt="ลิลลี่" class="flower" draggable="true" id="flower6" />
+        <!-- <img src="assets/img/lily.png" alt="ลิลลี่" class="flower" id="flower6" />
         <div class="flower-name">ลิลลี่</div> -->
       </div>
       <div class="flower-item">
-        <!-- <img src="assets/img/orchid.png" alt="กล้วยไม้" class="flower" draggable="true" id="flower7" />
+        <!-- <img src="assets/img/orchid.png" alt="กล้วยไม้" class="flower" id="flower7" />
         <div class="flower-name">กล้วยไม้</div> -->
       </div>
       <div class="flower-item">
-        <!-- <img src="assets/img/carnation.png" alt="คาร์เนชั่น" class="flower" draggable="true" id="flower8" />
+        <!-- <img src="assets/img/carnation.png" alt="คาร์เนชั่น" class="flower" id="flower8" />
         <div class="flower-name">คาร์เนชั่น</div> -->
       </div>
       <div class="flower-item">
-        <!-- <img src="assets/img/hydrangea.png" alt="ไฮเดรนเยีย" class="flower" draggable="true" id="flower9" />
+        <!-- <img src="assets/img/hydrangea.png" alt="ไฮเดรนเยีย" class="flower" id="flower9" />
         <div class="flower-name">ไฮเดรนเยีย</div> -->
       </div>
     </div>
   </div>
   
+  <!-- Modal สำหรับแสดงรูป Reference -->
+  <div id="ref-modal" class="modal">
+    <div class="modal-container">
+      <span class="modal-close" id="modal-close">&times;</span>
+      <img class="modal-content" id="ref-img" src="assets/img/floweridea-03.png" alt="Reference Image">
+    </div>
+  </div>
+  
+  <!-- Modal สำหรับแสดงความหมายของดอกไม้ -->
+  <div id="meaning-modal" class="modal">
+    <div class="modal-container">
+      <span class="modal-close" id="meaning-modal-close">&times;</span>
+      <div class="modal-content" id="meaning-content" style="text-align:center; padding:1vw;">
+        <img src="assets/img/flowermean-01.png" alt="ความหมายของดอกไม้" style="max-width:100%; height:auto;">
+      </div>
+    </div>
+  </div>
+  
   <script>
-    // ฟังก์ชัน include HTML สำหรับ common-content
-    // function includeHTML() {
-    //   fetch('common/common.html')
-    //     .then(response => response.text())
-    //     .then(data => {
-    //       document.getElementById('common-content').innerHTML = data;
-    //     });
-    // }
-    // window.onload = includeHTML;
-
+    // ประกาศตัวแปรเก็บดอกไม้ที่ถูกเพิ่มและลบ
+    let addedFlowers = [];
+    let removedFlowers = [];
+    
+    // Mapping สำหรับตำแหน่งของดอกไม้ในแจกัน (หน่วยพิกเซล)
+    const flowerPositions = {
+      'flower1': { left: 30, top: -110 },
+      'flower2': { left: -35, top: -150 },
+      'flower3': { left: 2, top: -200 },
+      'flower4': { left: -35, top: -100 },
+      'flower5': { left: -10, top: -180 },
+      'flower6': { left: 25, top: -100 },
+      'flower7': { left: -20, top: -170 },
+      'flower8': { left: -16, top: -130 },
+      'flower9': { left: 26, top: -110 }
+    };
+    // Mapping สำหรับขนาดของดอกไม้ในแจกัน
+    const flowerSizes = {
+      'flower1': "13vw",
+      'flower2': "15vw",
+      'flower3': "15vw",
+      'flower4': "14vw",
+      'flower5': "15vw",
+      'flower6': "14vw",
+      'flower7': "14vw",
+      'flower8': "15vw",
+      'flower9': "13vw"
+    };
+  
     const flowerContainer = document.getElementById('flower-container');
-    const flowerSelection = document.querySelector('.flower-selection');
-    let draggedFlower = null;
-    let touchClone = null;
-    let isTouchDragging = false;
-    
-    // กำหนด event ให้กับดอกไม้ทั้งหมด
-    document.querySelectorAll('.flower').forEach(setupFlowerEvents);
-    
-    function setupFlowerEvents(flower) {
-      // การลากด้วยเมาส์
-      flower.addEventListener('dragstart', event => {
-        draggedFlower = event.target;
-        event.dataTransfer.setData('text', event.target.id);
+    // เพิ่ม event ให้กับดอกไม้ทุกดอก
+    document.querySelectorAll('.flower').forEach(flower => {
+      flower.addEventListener('click', () => {
+        createFlowerClone(flower);
       });
-    
-      // การลากด้วยสัมผัส
-      flower.addEventListener('touchstart', event => {
-        event.preventDefault();
-        draggedFlower = event.target;
-        isTouchDragging = true;
-        startTouchDrag(event.touches[0], flower);
-      });
-    
-      // สิ้นสุดการลากด้วยสัมผัส
-      flower.addEventListener('touchend', event => {
-        if (isTouchDragging) {
-          isTouchDragging = false;
-          completeTouchDrag(event.changedTouches[0]);
-        }
-      });
-    }
-    
-    // ฟังก์ชันเริ่มการลากด้วยสัมผัส
-    function startTouchDrag(touch, flower) {
-      touchClone = flower.cloneNode(true);
-      touchClone.style.position = 'absolute';
-      touchClone.style.zIndex = 1000;
-      touchClone.style.pointerEvents = 'none';
-      document.body.appendChild(touchClone);
-      updateTouchClonePosition(touch);
-    }
-    
-    // อัปเดตตำแหน่งโคลนในระหว่างลาก
-    document.addEventListener('touchmove', event => {
-      if (isTouchDragging && touchClone) {
-        event.preventDefault();
-        updateTouchClonePosition(event.touches[0]);
-      }
     });
-    
-    function updateTouchClonePosition(touch) {
-      touchClone.style.left = `${touch.clientX - touchClone.offsetWidth / 2}px`;
-      touchClone.style.top = `${touch.clientY - touchClone.offsetHeight / 2}px`;
-    }
-    
-    // สิ้นสุดการลากด้วยสัมผัส
-    function completeTouchDrag(touch) {
-      const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
-    
-      if (dropTarget && flowerContainer.contains(dropTarget)) {
-        // วางดอกไม้ในแจกัน
-        createFlowerClone(draggedFlower, touch);
-      } else if (dropTarget && flowerSelection.contains(dropTarget)) {
-        // ลบดอกไม้เมื่อกลับไปยังพื้นที่เลือก
-        if (draggedFlower.parentNode === flowerContainer) {
-          flowerContainer.removeChild(draggedFlower);
-        }
-      }
-    
-      if (touchClone) {
-        touchClone.remove();
-        touchClone = null;
-      }
-      draggedFlower = null;
-    }
-    
-    // สร้างโคลนของดอกไม้ในแจกัน
-    function createFlowerClone(flower, touch) {
+  
+    function createFlowerClone(flower) {
+      const vaseArea = document.querySelector('.vase-area');
+      const designWidth = 220;
+      const designHeight = 270;
+      const offset = 5;
       const clone = flower.cloneNode(true);
       clone.style.position = 'absolute';
       clone.style.zIndex = 10;
-    
-      const rect = flowerContainer.getBoundingClientRect();
-      const left = Math.max(0, Math.min(rect.width - 40, touch.clientX - rect.left - 20));
-      const top = Math.max(0, Math.min(rect.height - 40, touch.clientY - rect.top - 20));
-    
-      clone.style.left = `${left}px`;
-      clone.style.top = `${top}px`;
-    
-      clone.id = `${flower.id}-${Date.now()}`;
-      clone.setAttribute('draggable', true);
-    
-      setupFlowerEvents(clone);
-    
+      const originalId = flower.id.split('-')[0];
+      let pos = flowerPositions[originalId] || { left: 0, top: 0 };
+      const leftPercent = ((pos.left + offset) / designWidth) * 100;
+      const topPercent = (pos.top / designHeight) * 100;
+      clone.style.left = leftPercent + '%';
+      clone.style.top = topPercent + '%';
+      clone.style.width = flowerSizes[originalId] || "12vw";
+      clone.id = `${originalId}-${Date.now()}`;
+      // เมื่อคลิกที่ clone ให้ลบออก และอัพเดท addedFlowers ให้ตรงกัน
+      clone.addEventListener('click', () => {
+        // ลบ clone จาก addedFlowers ถ้ามี
+        addedFlowers = addedFlowers.filter(item => item !== clone);
+        clone.remove();
+      });
       flowerContainer.appendChild(clone);
+      // บันทึก clone ที่เพิ่มเข้าไปใน addedFlowers
+      addedFlowers.push(clone);
+    }
+  
+    function undoFlower() {
+      if (addedFlowers.length > 0) {
+        const lastFlower = addedFlowers.pop();
+        // นำ flower ที่ถูก undo ไปเก็บไว้ใน removedFlowers เพื่อให้สามารถ redo ได้
+        removedFlowers.push(lastFlower);
+        lastFlower.remove();
+      }
+    }
+  
+    function redoFlower() {
+      if (removedFlowers.length > 0) {
+        const flowerToRedo = removedFlowers.pop();
+        // คืน flower กลับมาที่ flowerContainer
+        flowerContainer.appendChild(flowerToRedo);
+        addedFlowers.push(flowerToRedo);
+      }
+    }
+  
+    document.getElementById('undoBtn').addEventListener('click', undoFlower);
+    document.getElementById('redoBtn').addEventListener('click', redoFlower);
+  
+    function goBack() {
+      window.location.href = 'flower.html';
     }
     
-    // รองรับการวางด้วยเมาส์ในพื้นที่แจกัน
-    flowerContainer.addEventListener('dragover', event => {
-      event.preventDefault();
-    });
-    
-    flowerContainer.addEventListener('drop', event => {
-      event.preventDefault();
-      const flowerId = event.dataTransfer.getData('text');
-      const flower = document.getElementById(flowerId);
-      if (flowerSelection.contains(flower)) {
-        createFlowerClone(flower, event);
+    function saveImage() {
+      const vaseArea = document.getElementById('vaseArea');
+      const refBtn = document.getElementById('ref-btn');
+      const undoRedoContainer = document.querySelector('.undo-redo-container');
+      refBtn.style.display = "none";
+      undoRedoContainer.style.display = "none";
+      
+      const logo = document.createElement('img');
+      logo.src = "assets/img/Tinylogo.png";
+      logo.style.position = "absolute";
+      
+      if (window.matchMedia("(max-width: 1024px)").matches) {
+        // สำหรับอุปกรณ์ที่มีความกว้างหน้าจอไม่เกิน 1024px
+        logo.style.top = "1.5vw";
+        logo.style.right = "9vw";
+        logo.style.width = "5vw";
+      } else {
+        logo.style.top = "1vw";
+        logo.style.right = "3vw";
+        logo.style.width = "4vw";
       }
-    });
-    
-    // รองรับการลากกลับไปยังพื้นที่เลือกด้วยเมาส์
-    flowerSelection.addEventListener('dragover', event => {
-      event.preventDefault();
-    });
-    
-    flowerSelection.addEventListener('drop', event => {
-      event.preventDefault();
-      const flowerId = event.dataTransfer.getData('text');
-      const flowerClone = document.getElementById(flowerId);
-    
-      if (flowerContainer.contains(flowerClone)) {
-        flowerContainer.removeChild(flowerClone);
-      }
-    });
-    
-    // รองรับการลากกลับไปยังพื้นที่เลือกด้วยสัมผัส
-    flowerContainer.addEventListener('touchend', event => {
-      if (draggedFlower) {
-        const dropTarget = document.elementFromPoint(
-          event.changedTouches[0].clientX,
-          event.changedTouches[0].clientY
-        );
-    
-        if (dropTarget && flowerSelection.contains(dropTarget)) {
-          if (draggedFlower.parentNode === flowerContainer) {
-            flowerContainer.removeChild(draggedFlower);
+      
+      logo.style.height = "auto";
+      logo.style.zIndex = "300";
+      logo.style.border = "none";
+      logo.style.boxShadow = "none";
+      logo.style.display = "block";
+      
+      vaseArea.appendChild(logo);
+      
+      html2canvas(vaseArea, { 
+        backgroundColor: "transparent", 
+        scale: window.devicePixelRatio || 2, 
+        useCORS: true 
+      }).then(canvas => {
+        // กำหนดค่า crop (ปรับเป็นพิกเซลตามที่เหมาะสม)
+        const cropPixels = 5;
+        const croppedCanvas = document.createElement('canvas');
+        const ctx = croppedCanvas.getContext('2d');
+        const cropX = cropPixels;
+        const cropY = cropPixels;
+        const cropWidth = canvas.width - cropPixels * 2;
+        const cropHeight = canvas.height - cropPixels * 2;
+        croppedCanvas.width = cropWidth;
+        croppedCanvas.height = cropHeight;
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(canvas, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+        
+        const dataURL = croppedCanvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'vase_image.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        vaseArea.removeChild(logo);
+        refBtn.style.display = "";
+        undoRedoContainer.style.display = "";
+      });
+    }
+  
+    function shareImage() {
+      const vaseArea = document.getElementById('vaseArea');
+      html2canvas(vaseArea).then(canvas => {
+        canvas.toBlob(blob => {
+          const file = new File([blob], 'vase_image.png', { type: blob.type });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({
+              files: [file],
+              title: 'จัดดอกไม้',
+              text: 'ดูการจัดดอกไม้ของฉัน!'
+            }).catch(error => console.error('Error sharing', error));
+          } else {
+            alert('Sharing is not supported on this device.');
           }
-        }
+        });
+      });
+    }
     
-        if (touchClone) {
-          touchClone.remove();
-          touchClone = null;
-        }
-        draggedFlower = null;
+    // Modal Reference
+    const refBtn = document.getElementById('ref-btn');
+    const refModal = document.getElementById('ref-modal');
+    const modalClose = document.getElementById('modal-close');
+  
+    refBtn.addEventListener('click', () => {
+      refModal.style.display = "block";
+    });
+    modalClose.addEventListener('click', () => {
+      refModal.style.display = "none";
+    });
+    window.addEventListener('click', (e) => {
+      if (e.target === refModal) {
+        refModal.style.display = "none";
       }
     });
     
-    // ฟังก์ชันสำหรับปุ่ม Go Back
-    function goBack() {
-      window.location.href = "flower.html"; // เปลี่ยนเส้นทางไปยัง flower.html
+    // Modal Flower Meaning
+    const meaningBtn = document.getElementById('meaning-btn');
+    const meaningModal = document.getElementById('meaning-modal');
+    const meaningModalClose = document.getElementById('meaning-modal-close');
+  
+    meaningBtn.addEventListener('click', () => {
+      meaningModal.style.display = "block";
+    });
+    meaningModalClose.addEventListener('click', () => {
+      meaningModal.style.display = "none";
+    });
+    window.addEventListener('click', (e) => {
+      if (e.target === meaningModal) {
+        meaningModal.style.display = "none";
+      }
+    });
+    
+    function goToLeftPage() {
+      window.location.href = 'flower2.html';
+    }
+    function goToRightPage() {
+      window.location.href = 'flower3.html';
     }
   </script>
-  <!-- <script src="common/common.js"></script> -->
+  
 </body>
 </html>
