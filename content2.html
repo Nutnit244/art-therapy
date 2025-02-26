@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png" />
   <title>ระบาย</title>
-  <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
+  <link rel="stylesheet" href="common/common.css" />
   <style>
-    /* ---------------------- ตั้งค่าพื้นฐาน ---------------------- */
-    /* กำหนด overflow เป็น hidden เพื่อป้องกัน scroll ธรรมดา แต่รองรับการสัมผัสด้วย -webkit-overflow-scrolling */
-    body, html {
+    /* ---------------------- สไตล์พื้นฐานสำหรับทุก section ---------------------- */
+    body {
       margin: 0;
-      padding: 0;
-      font-family: TorsilpChillChill, sans-serif;
-      overflow: hidden;
-      -webkit-overflow-scrolling: touch;
+      font-family: TorsilpChillChill;
+      overflow-x: hidden;
+      overflow-y: auto;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       background-attachment: fixed;
     }
-    /* ---------------------- Container หลักของทุก Section ---------------------- */
+    .section1,
+    .section2,
+    .section3,
+    .section4,
+    .section5,
+    .section6,
+    .section7,
+    .section8 {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: transparent;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .visible {
+      opacity: 1;
+    }
+    .fade-lines p {
+      opacity: 0;
+      transform: translateY(1vw);
+      transition: opacity 1s ease, transform 1s ease;
+      margin: 0.5vw 0;
+    }
+    .fade-lines p.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* ---------------------- สไตล์ใหม่ของ Section 1 (แบบ absolute overlay) ---------------------- */
     .sections-container {
       position: relative;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      /* เพิ่ม touch-action เพื่อช่วยให้ gesture สัมผัสทำงานได้อย่างราบรื่น */
-      touch-action: pan-y;
     }
-    /* ---------------------- Transition สำหรับแต่ละ Section ---------------------- */
     .section {
       position: absolute;
       top: 0;
@@ -38,21 +66,11 @@
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      opacity: 0;
-      transform: translateY(100%);
-      transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    /* Section ที่มีคลาส active จะแสดง */
-    .section.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    /* ---------------------- เนื้อหาภายในแต่ละ Section ---------------------- */
-    /* --- Section 1 --- */
     .section1 {
       position: relative;
     }
-    .section1 .text1 {
+    .text1 {
       font-size: 3.5vw;
       text-align: center;
       z-index: 3;
@@ -72,6 +90,19 @@
       opacity: 1;
       transform: translateX(-50%) translateY(-1.4vw);
     }
+    .clouds {
+      position: absolute;
+      top: 2vw;
+      left: -13.9vw;
+      width: 100vw;
+      opacity: 0.8;
+      z-index: 1;
+      animation: moveClouds 50s linear infinite;
+    }
+    @keyframes moveClouds {
+      0% { left: 5.56vw; }
+      100% { left: 100vw; }
+    }
     .skipbutton {
       position: absolute;
       bottom: 1.39vw;
@@ -90,19 +121,6 @@
       background-color: #f187b5;
       color: white;
     }
-    .clouds {
-      position: absolute;
-      top: 2vw;
-      left: -13.9vw;
-      width: 100vw;
-      opacity: 0.8;
-      z-index: 1;
-      animation: moveClouds 50s linear infinite;
-    }
-    @keyframes moveClouds {
-      0% { left: 5.56vw; }
-      100% { left: 100vw; }
-    }
     @media screen and (max-width: 1179px) {
       .pcolor {
         bottom: -20vw;
@@ -112,43 +130,22 @@
         transform: translateX(-50%) translateY(-5vw);
       }
     }
-    /* --- Section 2 --- */
+    
+    /* ---------------------- ส่วน CSS ของ Section 2 - 8 (คงเดิม) ---------------------- */
+    /* Section 2 */
     .section2 {
-      position: absolute;
-      flex-direction: row;
+      display: flex;
+      align-items: center;
       justify-content: space-between;
-      opacity: 0;
-      transform: translateY(1.39vw);
+      flex-direction: row;
+      transform: translateY(1vw);
       transition: opacity 1s ease, transform 1s ease;
     }
-    .section2.active {
-      opacity: 1;
+    .section2.visible {
       transform: translateY(0);
     }
-    .text {
-      position: absolute;
-      margin-left: 10%;
-      width: 50%;
-      z-index: 3;
-    }
-    .text-title {
-      font-size: 2.8vw;
-      text-align: center;
-      color: #714937;
-      font-family: 'TorsilpChillChill';
-      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
-      margin-bottom: 0.5vw;
-    }
-    .text-body {
-      font-size: 1.7vw;
-      text-align: center;
-      color: #714937;
-      font-family: 'TorsilpChillChill';
-      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
-      margin-top: 0.5vw;
-    }
     .frame {
-      position: absolute;
+        position: absolute;
       top: 0;
       left: 60vw;
       transform: translateX(-50%);
@@ -157,7 +154,7 @@
       z-index: 2;
     }
     .frame img {
-      width: 100%;
+        width: 100%;
       height: 100%;
       object-fit: contain;
       display: none;
@@ -165,9 +162,30 @@
     .frame img.active {
       display: block;
     }
-    /* --- Section 3 --- */
-    .section3 .Texts3 {
-      font-size: 2.1vw;
+
+    .text-title {
+      font-size: 2.8vw;
+      text-align: center;
+      color: #714937;
+      font-family: 'TorsilpChillChill';
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.5vw;
+    }
+    .text {
+        font-size: 1.7vw;
+      text-align: center;
+      color: #714937;
+      font-family: 'TorsilpChillChill';
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+      margin-top: 0.5vw;
+      margin-left: 10%;
+    }
+    /* Section 3 */
+    .section3 {
+      flex-direction: column;
+    }
+    .Texts3 {
+        font-size: 2.1vw;
       text-align: center;
       margin-top: 2.78vw; 
       z-index: 2;
@@ -177,14 +195,14 @@
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
     .frame-large {
-      position: absolute;
+        position: absolute;
       width: 100%;
       height: 100%;
       background: url('assets/img/frame.png') no-repeat center center/contain;
       z-index: 2;
     }
     .cards-container {
-      display: grid;
+        display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2.78vw;
       margin-top: 0.69vw;
@@ -192,13 +210,13 @@
       z-index: 2;
     }
     .card {
-      width: 10.42vw;
+        width: 10.42vw;
       height: 10.42vw;
       perspective: 69.44vw;
       cursor: pointer;
     }
     .card-inner {
-      width: 100%;
+        width: 100%;
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
@@ -209,7 +227,7 @@
     }
     .card-front,
     .card-back {
-      position: absolute;
+        position: absolute;
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
@@ -233,12 +251,45 @@
       background: linear-gradient(135deg, #f3ec78, #87CEFA);
       transform: rotateY(180deg);
     }
-    /* --- Section 4 --- */
-    .section4 .frame-f2 {
+    .clouds1 {
+      position: absolute;
+      bottom: 55%;
+      left: 0;
+      width: 100%;
+      height: 45%;
+      background: url('assets/img/clouds.png') no-repeat center center;
+      background-size: cover;
+      z-index: 1;
+    }
+    .clouds2 {
+      position: absolute;
+      width: 100%;
+      right: 50%;
+      bottom: 20%;
+      height: 100%;
+      background: url('assets/img/cloud1.png') no-repeat center center;
+      z-index: 1;
+    }
+    .clouds22 {
+      position: absolute;
+      left: 70%;
+      top: 30%;
+      width: 100%;
+      height: 80%;
+      background: url('assets/img/cloud1.png') no-repeat center center/contain;
+      z-index: 1;
+    }
+    /* Section 4 */
+    .section4 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .frame-f2 {
       background: url('assets/img/F2.png') no-repeat center center/contain;
       width: 80%;
       height: 100%;
-      right: 30%;
+      right: 25%;
       position: absolute;
       z-index: 1;
     }
@@ -248,11 +299,11 @@
       height: 40%;
       position: absolute;
       top: 15%;
-      left: 25%;
+      left: 30%;
       z-index: 2;
     }
     .text4 {
-      font-size: 2.5vw;
+        font-size: 2.5vw;
       color: #714937;
       text-align: left;
       position: absolute;
@@ -261,8 +312,30 @@
       font-family: TorsilpChillChill;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
-    /* --- Section 5 --- */
-    .section5 .cloud5 {
+    .clouds4 {
+      position: absolute;
+      width: 100%;
+      left: 50%;
+      top: 20%;
+      height: 80%;
+      background: url('assets/img/cloud1.png') no-repeat center center;
+      z-index: 1;
+    }
+    .clouds41 {
+      position: absolute;
+      width: 100%;
+      bottom: 40%;
+      height: 80%;
+      right: 55%;
+      background: url('assets/img/cloud1.png') no-repeat center center;
+      z-index: 0;
+    }
+    /* Section 5 */
+    .section5 {
+      flex-direction: column;
+      text-align: center;
+    }
+    .cloud5 {
       position: absolute;
       bottom: 25%;
       width: 100%;
@@ -274,22 +347,21 @@
       position: relative;
       z-index: 2;
       font-family: TorsilpChillChill;
-      top: 5%;
+      top: 10%;
       font-size: 2.5vw;
       color: #714937;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
-    .texts5 p {
-      margin: 0.69vw 0;
+    /* Section 6 */
+    .section6 {
+      flex-direction: column;
     }
-    /* --- Section 6 --- */
-    .section6 .emoji-container {
+    .emoji-container {
       width: 100%;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      margin-bottom: 1.39vw;
-      position: relative;
+      margin-bottom: 20px;
     }
     .emoji {
       object-fit: contain;
@@ -298,58 +370,54 @@
       position: absolute;
     }
     .emoji.hidden {
-      opacity: 0;
+      display: none;
     }
-    /* ปรับตำแหน่งอิโมจิให้เลื่อนลงมา */
     #emoji-yellow {
-      top: 10vw;
-      left: 65%;
-      width: 20.83vw;
-      height: 20.83vw;
-    }
-    #emoji-green {
-      top: 15vw;
-      left: 18%;
-      width: 17.36vw;
-      height: 17.36vw;
+      top: 10%;
+      left: 62%;
+      width: 18vw;
+      height: 18vw;
     }
     #emoji-red {
-      bottom: -7vw;
+      bottom: 15%;
       left: 70%;
-      width: 17.36vw;
-      height: 17.36vw;
+      width: 15vw;
+      height: 15vw;
     }
     #emoji-blue {
-      bottom: -12vw;
+      bottom: 12%;
       left: 10%;
-      width: 24.31vw;
-      height: 24.31vw;
+      width: 20vw;
+      height: 20vw;
+    }
+    #emoji-green {
+      top: 10%;
+      left: 20%;
+      width: 15vw;
+      height: 15vw;
     }
     .text6 {
-      font-size: 2.3vw;
-      color: #714937;
-      text-align: center;
-      margin-top: 1.39vw;
-      z-index: 2;
-      font-family: TorsilpChillChill;
-      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
-      font-weight: normal;
-    }
-    .text6 p {
-      margin: 0.69vw 0;
-    }
-    /* --- Section 7 --- */
-    .section7 .text7 {
       font-size: 2.5vw;
-      line-height: 1.74vw;
       color: #714937;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+      text-align: center;
+      margin-top: 20px;
+      z-index: 2;
+    }
+    /* Section 7 */
+    .section7 {
+      flex-direction: column;
+    }
+    .text7 {
+      font-size: 2.5vw;
+      line-height: 1.3vw;
+      color: #714937;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
       text-align: center;
       z-index: 2;
-      font-family: TorsilpChillChill;
-      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
     .clouds7 {
-      position: absolute;
+        position: absolute;
       width: 150vw;
       left: 20%;
       top: 45%;
@@ -358,7 +426,7 @@
       z-index: 1;
     }
     .clouds71 {
-      position: absolute;
+        position: absolute;
       width: 150vw;
       bottom: 40%;
       height: 80%;
@@ -366,237 +434,311 @@
       background: url('assets/img/cloud1.png') no-repeat center center;
       z-index: 0;
     }
-    /* --- Section 8 --- */
-    .section8 .littlebg {
+    /* Section 8 */
+    .section8 {
+      flex-direction: column;
+      background: url('assets/img/Bg8.png') no-repeat center center/cover;
+    }
+    .littlebg {
       position: absolute;
       width: 100%;
       height: 100%;
       background: url('assets/img/Bg8.png') no-repeat center center/cover;
       z-index: 1;
     }
-    .section8 .text8 {
+    .text8 {
       position: absolute;
-      bottom: 15%;
-      left: 8%;
-      font-size: 2.08vw;
+      bottom: 20%;
+      left: 10%;
+      font-size: 2vw;
+      color: #714937;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
       text-align: center;
       line-height: 1.5;
       z-index: 2;
-      font-family: TorsilpChillChill;
-      color: #714937;
-      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
-    .section8 .brush {
+    .brush {
       position: absolute;
       bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: 50vw;
-      background: url('assets/img/rainbow.png') no-repeat center center;
-      background-size: contain;
-      z-index: 10;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: url('assets/img/rainbow.png') no-repeat center/cover;
+      z-index: 1;
     }
     .section8.active .brush {
       animation: brushStroke 3s linear forwards;
     }
     @keyframes brushStroke {
-      0% { transform: translateX(5vw); }
-      100% { transform: translateX(20vw); }
-    }
-    .underline {
-      border-bottom: 0.35vw solid #714937;
-    }
-    /* ---------- เอฟเฟคข้อความทีละบรรทัดใน section (ยกเว้น section1) ---------- */
-    .section:not(.section1) p {
-      opacity: 0;
-      transform: translateY(1.39vw);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-    .section:not(.section1) p.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    /* ---------- Media Query สำหรับอุปกรณ์ที่มีความกว้าง <= 375px ---------- */
-    @media screen and (max-width: 375px) {
-      .section1 .text1 {
-        font-size: 8vw;
+      0% {
+        transform: translateX(5vw);
       }
-      .pcolor {
-        bottom: -26.67vw;
-      }
-      .pcolor.show {
-        transform: translateX(-50%) translateY(-4vw);
-      }
-      .skipbutton {
-        bottom: 2.67vw;
-        right: 2.67vw;
-        padding: 1.33vw 2.67vw;
-        font-size: 3.2vw;
-        border-radius: 0.8vw;
-      }
-      .text-title {
-        font-size: 8vw;
-      }
-      .text-body {
-        font-size: 5vw;
-      }
-      .frame img {
-        max-width: 80vw;
-        height: auto;
-      }
-      .clouds7,
-      .clouds71 {
-        height: 20vw;
-      }
-      
-      @media screen and (max-width: 745px) { 
-        .clouds7,
-        .clouds71 {
-          height: 20vw;
-        }
+      100% {
+        transform: translateX(20vw);
       }
     }
   </style>
 </head>
 <body>
+  <div id="common-content"></div>
+  
+  <!-- ======================= New Section 1 ======================= -->
   <div class="sections-container">
-    <button class="skipbutton">ข้าม</button>
-    <!-- ==================== Section 1 (Typewriter Effect + pcolor Image) ==================== -->
     <section class="section section1 active" id="section1">
       <div class="text1" id="typewriter"></div>
-      <img src="assets/img/pcolor.PNG" alt="pcolor" class="pcolor" id="pcolor">
+      <img src="assets/img/pcolor.png" alt="pcolor" class="pcolor" id="pcolor">
       <img src="assets/img/clouds.png" alt="clouds" class="clouds">
-    </section>
-    
-    <!-- ==================== Section 2 ==================== -->
-    <section class="section section2" id="section2">
-      <div class="text" id="text-content">
-        <h1 class="text-title">"ศิลปะบำบัด"</h1>
-        <div class="text-body">
-          <p id="line-2">เป็นวิธีการเยียวยาด้วยการนำเทคนิคทางศิลปะที่ทำให้ได้แสดงออกมา</p>
-          <p id="line-3">เพื่อช่วยผู้คนให้ผ่อนคลายและเปิดรับกับสภาวะอารมณ์</p>
-          <p id="line-4">ของตัวเอง ดูแล จัดการความเครียด ความเศร้า</p>
-          <p id="line-5">และทำความเข้าใจกับประสบการณ์และความรู้สึกต่าง ๆ ที่เป็นปัญหา</p>
-          <p id="line-6">ผ่านการสร้างสรรค์งานศิลปะ</p>
-        </div>
-      </div>
-      <div class="frame">
-        <img src="assets/img/C1 1.png" alt="Image 1" id="frame-image-1">
-        <img src="assets/img/C1 2.png" alt="Image 2" id="frame-image-2">
-        <img src="assets/img/C1 3.png" alt="Image 3" id="frame-image-3">
-        <img src="assets/img/C1 4.png" alt="Image 4" id="frame-image-4">
-        <img src="assets/img/C1 5.png" alt="Image 5" id="frame-image-5">
-      </div>
-    </section>
-    
-    <!-- ==================== Section 3 ==================== -->
-    <section class="section section3" id="section3">
-      <div class="frame-large"></div>
-      <h1 class="Texts3">ลายเส้นสื่ออารมณ์อย่างไรบ้าง?</h1>
-      <div class="cards-container">
-        <div class="card">
-          <div class="card-inner">
-            <div class="card-front"><img src="assets/img/แนวนอน.png" alt="เส้นแนวนอน"></div>
-            <div class="card-back">สื่อถึงความสงบ</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-inner">
-            <div class="card-front"><img src="assets/img/หยัก.png" alt="เส้นหยัก"></div>
-            <div class="card-back">สื่อถึงความไม่แน่นอน</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-inner">
-            <div class="card-front"><img src="assets/img/ขด.png" alt="เส้นขด"></div>
-            <div class="card-back">สื่อถึงความซับซ้อน</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-inner">
-            <div class="card-front"><img src="assets/img/คลื่น.png" alt="เส้นคลื่น"></div>
-            <div class="card-back">สื่อถึงความผ่อนคลาย</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-inner">
-            <div class="card-front"><img src="assets/img/ตรง.png" alt="เส้นตรง"></div>
-            <div class="card-back">สื่อถึงความมั่นคง</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-inner">
-            <div class="card-front"><img src="assets/img/โค้ง.png" alt="เส้นโค้ง"></div>
-            <div class="card-back">สื่อถึงความอ่อนโยน</div>
-          </div>
-        </div>
-      </div>
-      <div class="clouds3"></div>
-      <div class="clouds31"></div>
-    </section>
-    
-    <!-- ==================== Section 4 ==================== -->
-    <section class="section section4" id="section4">
-      <div class="frame-f2"></div>
-      <div class="palette-p"></div>
-      <div class="text4">
-        <p>ไม่จำเป็นต้องเป็นคน<br>ที่วาดรูปเป็นเท่านั้น</p>
-      </div>
-      <div class="clouds4"></div>
-      <div class="clouds41"></div>
-    </section>
-    
-    <!-- ==================== Section 5 ==================== -->
-    <section class="section section5" id="section5">
-      <div class="cloud5"></div>
-      <div class="texts5">
-        <p>เพราะ ศิลปะบำบัด</p>
-        <p>เป็นศิลปะที่เน้นการแสดงออกของแต่ละบุคคลไม่ใช่</p>
-        <p>เพียงการแสดงความสวยงามจากโลกภายนอกเท่านั้น</p>
-      </div>
-    </section>
-    
-    <!-- ==================== Section 6 ==================== -->
-    <section class="section section6" id="section6">
-      <div class="emoji-container">
-        <img src="assets/img/เหลือง.png" class="emoji" id="emoji-yellow" alt="Yellow Emoji">
-        <img src="assets/img/แดง.png" class="emoji hidden" id="emoji-red" alt="Red Emoji">
-        <img src="assets/img/ฟ้า.png" class="emoji hidden" id="emoji-blue" alt="Blue Emoji">
-        <img src="assets/img/เขียว.png" class="emoji hidden" id="emoji-green" alt="Green Emoji">
-      </div>
-      <div class="text6">
-        <p class="fade-in">ศิลปะบำบัดจะช่วยให้คุณ</p>
-        <p class="fade-in hidden">ได้แสดงออกทางอารมณ์</p>
-        <p class="fade-in hidden">ความรู้สึก และการเข้าใจตนเอง</p>
-        <p class="fade-in hidden">ผ่านเหตุการณ์ต่างๆ ได้มากขึ้น</p>
-      </div>
-    </section>
-    
-    <!-- ==================== Section 7 ==================== -->
-    <section class="section section7" id="section7">
-      <div class="text7">
-        <p>มุ่งเน้นให้ได้ </p>
-        <p>แสดงออกถึงอารมณ์ </p>
-        <p>และ ความรู้สึกภายใน </p>
-      </div>
-      <div class="clouds7"></div>
-      <div class="clouds71"></div>
-    </section>
-    
-    <!-- ==================== Section 8 ==================== -->
-    <section class="section section8" id="section8">
-      <div class="littlebg"></div>
-      <div class="text8">
-        โดยผ่านจินตนาการของตนเอง<br>
-        ได้อย่างไม่มีข้อจำกัด
-      </div>
-      <div class="brush"></div>
+      <button class="skipbutton" onclick="window.location.href='art3.html'">ข้าม</button>
     </section>
   </div>
   
+  <!-- ======================= Section 2 ======================= -->
+  <!-- ส่วนของ Section 2 ที่มีการแยกหัวข้อและเนื้อหา -->
+<div class="section2 fade-lines" id="section2">
+    <!-- <div class="clouds2"></div>
+    <div class="clouds22"></div> -->
+    <div class="text fade-lines" id="text-content">
+      <!-- หัวข้อ -->
+      <h1 class="text-title">ศิลปะบำบัด</h1>
+      <!-- เนื้อหา -->
+      <div class="text-body">
+        <p id="line-1">เป็นวิธีการเยียวยาด้วยการนำเทคนิคทางศิลปะที่ทำให้ได้แสดงออกมา</p>
+        <p id="line-2">เพื่อช่วยผู้คนให้ผ่อนคลายและเปิดรับกับสภาวะอารมณ์</p>
+        <p id="line-3">ของตัวเอง ดูแล จัดการความเครียด ความเศร้า</p>
+        <p id="line-4">และทำความเข้าใจกับประสบการณ์และความรู้สึกต่าง ๆ ที่เป็นปัญหา</p>
+        <p id="line-5">ผ่านการสร้างสรรค์งานศิลปะ</p>
+      </div>
+    </div>
+    <div class="frame">
+      <img src="assets/img/C1 1.png" alt="Image 1" id="frame-image-1" />
+      <img src="assets/img/C1 2.png" alt="Image 2" id="frame-image-2" />
+      <img src="assets/img/C1 3.png" alt="Image 3" id="frame-image-3" />
+      <img src="assets/img/C1 4.png" alt="Image 4" id="frame-image-4" />
+      <img src="assets/img/C1 5.png" alt="Image 5" id="frame-image-5" />
+    </div>
+  </div>
+  
+  <!-- ======================= Section 3 ======================= -->
+  <div class="section3 fade-lines" id="section3">
+    <div class="frame-large"></div>
+    <h1 class="Texts3">ลายเส้นสื่ออารมณ์อย่างไรบ้าง?</h1>
+    <div class="cards-container">
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="assets/img/แนวนอน.png" alt="เส้นแนวนอน" />
+          </div>
+          <div class="card-back">สื่อถึงความสงบ</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="assets/img/หยัก.png" alt="เส้นหยัก" />
+          </div>
+          <div class="card-back">สื่อถึงความไม่แน่นอน</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="assets/img/ขด.png" alt="เส้นขด" />
+          </div>
+          <div class="card-back">สื่อถึงความซับซ้อน</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="assets/img/คลื่น.png" alt="เส้นคลื่น" />
+          </div>
+          <div class="card-back">สื่อถึงความผ่อนคลาย</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="assets/img/ตรง.png" alt="เส้นตรง" />
+          </div>
+          <div class="card-back">สื่อถึงความมั่นคง</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="assets/img/โค้ง.png" alt="เส้นโค้ง" />
+          </div>
+          <div class="card-back">สื่อถึงความอ่อนโยน</div>
+        </div>
+      </div>
+    </div>
+    <div class="clouds3"></div>
+    <div class="clouds31"></div>
+  </div>
+  
+  <!-- ======================= Section 4 ======================= -->
+  <div class="section4 fade-lines" id="section4">
+    <div class="frame-f2"></div>
+    <div class="palette-p"></div>
+    <div class="text4 fade-lines">
+      <p>ไม่จำเป็นต้องเป็นคน</p>
+      <p>ที่วาดรูปเป็นเท่านั้น</p>
+    </div>
+    <!-- <div class="clouds4"></div>
+    <div class="clouds41"></div> -->
+  </div>
+  
+  <!-- ======================= Section 5 ======================= -->
+  <div class="section5 fade-lines">
+    <div class="cloud5"></div>
+    <div class="texts5 fade-lines">
+      <p>เพราะ ศิลปะบำบัด</p>
+      <p>เป็นศิลปะที่เน้นการแสดงออกของแต่ละบุคคลไม่ใช่</p>
+      <p>เพียงการแสดงความสวยงามจากโลกภายนอกเท่านั้น</p>
+    </div>
+  </div>
+  
+  <!-- ======================= Section 6 ======================= -->
+  <div class="section6 fade-lines">
+    <div class="emoji-container">
+      <img src="assets/img/เหลือง.png" class="emoji hidden" id="emoji-yellow" alt="Yellow Emoji" />
+      <img src="assets/img/แดง.png" class="emoji hidden" id="emoji-red" alt="Red Emoji" />
+      <img src="assets/img/ฟ้า.png" class="emoji hidden" id="emoji-blue" alt="Blue Emoji" />
+      <img src="assets/img/เขียว.png" class="emoji hidden" id="emoji-green" alt="Green Emoji" />
+    </div>
+    <div class="text6 fade-lines">
+      <p>ศิลปะบำบัดจะช่วยให้คุณ</p>
+      <p>ได้แสดงออกทางอารมณ์</p>
+      <p>ความรู้สึก และการเข้าใจตนเอง</p>
+      <p>ผ่านเหตุการณ์ต่างๆ ได้มากขึ้น</p>
+    </div>
+  </div>
+  
+  <!-- ======================= Section 7 ======================= -->
+  <div class="section7 fade-lines">
+    <div class="text7 fade-lines">
+      <p>มุ่งเน้นให้ได้</p><br>
+      <p>แสดงออกถึงอารมณ์</p><br>
+      <p>และความรู้สึกภายใน</p>
+    </div>
+    <div class="clouds7"></div>
+    <div class="clouds71"></div>
+  </div>
+  
+  <!-- ======================= Section 8 ======================= -->
+  <div class="section8 fade-lines" id="section8">
+    <div class="littlebg"></div>
+    <div class="text8 fade-lines">
+      <p>โดยผ่านจินตนาการของตนเอง</p>
+      <p>ได้อย่างไม่มีข้อจำกัด</p>
+    </div>
+    <div class="brush"></div>
+  </div>
+  
   <script>
+    // Observer สำหรับ fade in ทุก section
+    const sections = document.querySelectorAll(
+      '.section1, .section2, .section3, .section4, .section5, .section6, .section7, .section8'
+    );
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // ถ้าเป็น Section 8 ให้เพิ่มคลาส active เพื่อให้แอนิเมชันของ brush ทำงาน
+          if (entry.target.id === 'section8') {
+            entry.target.classList.add('active');
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+
+    // Observer สำหรับ container ที่มีข้อความหลายบรรทัด (.fade-lines)
+    const fadeLinesObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const lines = entry.target.querySelectorAll("p");
+          lines.forEach((line, index) => {
+            setTimeout(() => {
+              line.classList.add("show");
+            }, index * 1000);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll(".fade-lines").forEach(container => {
+      fadeLinesObserver.observe(container);
+    });
+
+    // Section 2: สลับรูปและแสดงข้อความทีละบรรทัด
+    const section2 = document.querySelector('.section2');
+    const textLines2 = document.querySelectorAll('#text-content p');
+    const images = document.querySelectorAll('.frame img');
+    const observer2 = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          textLines2.forEach((line, index) => {
+            setTimeout(() => {
+              line.classList.add('show');
+              images.forEach(img => img.classList.remove('active'));
+              if (images[index]) {
+                images[index].classList.add('active');
+              }
+            }, index * 1000);
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+    observer2.observe(section2);
+
+    // Section 3: ให้การ์ดเปิดได้เพียงใบเดียว
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.card');
+      let activeCard = null;
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          if (activeCard && activeCard !== card) {
+            activeCard.classList.remove('flipped');
+          }
+          card.classList.toggle('flipped');
+          activeCard = card.classList.contains('flipped') ? card : null;
+        });
+      });
+    });
+
+    // Section 6: แสดงอิโมจิและข้อความทีละคู่อย่างสอดคล้องกัน
+    const section6 = document.querySelector('.section6');
+    const textLines6 = section6.querySelectorAll('.text6 p');
+    const emojis = [
+      document.getElementById("emoji-yellow"),
+      document.getElementById("emoji-red"),
+      document.getElementById("emoji-blue"),
+      document.getElementById("emoji-green")
+    ];
+    const section6Observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          textLines6.forEach((line, index) => {
+            setTimeout(() => {
+              line.classList.add("show");
+              if (emojis[index]) {
+                emojis[index].classList.remove("hidden");
+                emojis[index].style.opacity = "1";
+              }
+            }, index * 1000);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    section6Observer.observe(section6);
+
+    // Section 1: Typewriter Effect สำหรับ Section 1 ใหม่
     document.addEventListener("DOMContentLoaded", () => {
-      /* ========= Typewriter Effect สำหรับ Section 1 ========= */
       const textToType = "ทุกสิ่งรอบตัวพาคุณเข้าสู่โลก\nที่มีเพียงคุณและศิลปะ";
       const typewriterEl = document.getElementById("typewriter");
       let i = 0;
@@ -617,144 +759,8 @@
       setTimeout(() => {
         document.getElementById("pcolor").classList.add("show");
       }, 1000);
-
-      /* ========= กำหนด event listener ให้กับปุ่ม "ข้าม" ========= */
-      const skipButton = document.querySelector('.skipbutton');
-      if (skipButton) {
-        skipButton.addEventListener('click', (e) => {
-          e.stopPropagation();
-          window.location.href = "Drawing.html";
-        });
-      }
-
-      /* ========= ฟังก์ชันสำหรับค่อยๆ แสดงข้อความทีละบรรทัดใน section (ยกเว้น section1) ========= */
-      function animateParagraphs(sectionId) {
-        const section = document.getElementById(sectionId);
-        if (section.getAttribute('data-animated')) return;
-        const paragraphs = section.querySelectorAll("p");
-        paragraphs.forEach((p, index) => {
-          setTimeout(() => {
-            p.classList.add("show");
-          }, index * 1000);
-        });
-        section.setAttribute('data-animated', 'true');
-      }
-
-      /* ========= ฟังก์ชันสำหรับ Section 6 (แอนิเมทอิโมจิ) ========= */
-      function fadeInEmojis() {
-        const emojis = [
-          document.getElementById("emoji-yellow"),
-          document.getElementById("emoji-red"),
-          document.getElementById("emoji-blue"),
-          document.getElementById("emoji-green"),
-        ];
-        emojis.forEach((emoji, index) => {
-          setTimeout(() => {
-            emoji.classList.remove("hidden");
-            emoji.style.opacity = "1";
-          }, index * 900);
-        });
-      }
-
-      /* ========= ฟังก์ชันสลับ Section ========= */
-      let currentSection = 1;
-      const totalSections = document.querySelectorAll(".section").length;
-      let isScrolling = false;
-      function switchSection(nextSection) {
-        if (isScrolling || nextSection < 1 || nextSection > totalSections) return;
-        isScrolling = true;
-        document.getElementById("section" + currentSection).classList.remove("active");
-        document.getElementById("section" + nextSection).classList.add("active");
-        
-        if (nextSection !== 1) {
-          animateParagraphs("section" + nextSection);
-        }
-        if (nextSection === 6) {
-          fadeInEmojis();
-        }
-        if (nextSection === 8) {
-          setTimeout(() => {
-            const brush = document.querySelector(".section8.active .brush");
-            if (brush) {
-              brush.addEventListener("animationend", function onAnimationEnd() {
-                brush.removeEventListener("animationend", onAnimationEnd);
-                window.location.href = "Drawing.html";
-              });
-            } else {
-              setTimeout(() => {
-                window.location.href = "Drawing.html";
-              }, 10000);
-            }
-          }, 100);
-        }
-        currentSection = nextSection;
-        setTimeout(() => { isScrolling = false; }, 1000);
-      }
-      
-      /* ========= สลับ Section ด้วย event wheel ========= */
-      window.addEventListener("wheel", (event) => {
-        if (event.deltaY > 0) {
-          switchSection(currentSection + 1);
-        } else {
-          switchSection(currentSection - 1);
-        }
-      }, { passive: false });
-      
-      /* ========= รองรับการสัมผัสบนมือถือ/iPad ========= */
-      let touchStartY = 0;
-      let touchEndY = 0;
-      function handleTouchStart(event) {
-        // ใช้ clientY เพื่อความแม่นยำ
-        touchStartY = event.changedTouches[0].clientY;
-      }
-      function handleTouchEnd(event) {
-        touchEndY = event.changedTouches[0].clientY;
-        handleGesture();
-      }
-      function handleGesture() {
-        const swipeThreshold = 50;
-        if (touchStartY - touchEndY > swipeThreshold) {
-          switchSection(currentSection + 1);
-        } else if (touchEndY - touchStartY > swipeThreshold) {
-          switchSection(currentSection - 1);
-        }
-      }
-      window.addEventListener('touchstart', handleTouchStart, false);
-      window.addEventListener('touchend', handleTouchEnd, false);
-      
-      /* 
-      หมายเหตุ: เราได้ลบ global listener สำหรับ 'touchmove' 
-      เนื่องจากการกำหนด e.preventDefault() บน window ทั้งหมดอาจขัดกับการทำงานของ gesture บนอุปกรณ์บางรุ่น
-      */
-      
-      /* ========= Slideshow สำหรับ Section 2 ========= */
-      const images = document.querySelectorAll(".section2 .frame img");
-      let currentImageIndex = 0;
-      images.forEach((img) => img.classList.remove("active"));
-      if (images.length > 0) {
-        images[0].classList.add("active");
-      }
-      setInterval(() => {
-        images[currentImageIndex].classList.remove("active");
-        currentImageIndex = (currentImageIndex + 1) % images.length;
-        images[currentImageIndex].classList.add("active");
-      }, 1000);
-
-      /* ========= การพลิกการ์ดใน Section 3 ========= */
-      const cards = document.querySelectorAll(".card");
-      cards.forEach((card) => {
-        card.addEventListener("click", () => {
-          if (!card.classList.contains("flipped")) {
-            cards.forEach((otherCard) => {
-              otherCard.classList.remove("flipped");
-            });
-            card.classList.add("flipped");
-          } else {
-            card.classList.remove("flipped");
-          }
-        });
-      });
     });
   </script>
+  <script src="common/common.js"></script>
 </body>
 </html>
