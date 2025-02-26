@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,26 +8,15 @@
   <!-- <link rel="stylesheet" href="common/common.css" /> -->
 
   <style>
-    @font-face {
-      font-family: 'TorsilpChillChill';
-      src: url('assets/TorsilpChillChill.ttf') format('truetype');
-    }
-
-    @font-face {
-      font-family: "Noto Sans Thai";
-      src: url("assets/NotoSansThai-VariableFont_wdth,wght.ttf") format("truetype");
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    body,
-    html {
+    /* ป้องกันการเลื่อนแนวนอน */
+    html, body {
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      max-width: 100%;
       height: 250vh;
+      box-sizing: border-box;
     }
-
     body::after {
       content: '';
       display: block;
@@ -36,8 +24,11 @@
       /* เพิ่มพื้นที่ว่างเพื่อให้เลื่อนได้ไกลขึ้น */
     }
 
+    /* พื้นหลังหลักที่ไม่ให้เลื่อนด้านซ้ายขวา */
     .background {
       position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       background-image: url('assets/img/bg.png');
@@ -48,9 +39,9 @@
 
     .clouds {
       position: fixed;
-      top: 0%;
+      top: 0;
       left: 0;
-      width: 100vw;
+      width: 100%;
       height: 20vw;
       background-image: url('assets/img/clouds.png');
       background-repeat: no-repeat;
@@ -62,8 +53,8 @@
 
     .flower1 {
       position: fixed;
-      bottom: 0%;
-      width: 100vw;
+      bottom: 0;
+      width: 100%;
       height: 50vw;
       background-image: url('assets/img/flower1.png');
       background-repeat: no-repeat;
@@ -75,7 +66,7 @@
     .flower2 {
       position: fixed;
       top: -10vw;
-      width: 100vw;
+      width: 100%;
       height: 50vw;
       background-image: url('assets/img/flower2.png');
       background-repeat: no-repeat;
@@ -88,8 +79,8 @@
 
     .flower3 {
       position: fixed;
-      top: -13vw;
-      width: 100vw;
+      top: -15vw;
+      width: 100%;
       height: 60vw;
       background-image: url('assets/img/flower3.png');
       background-repeat: no-repeat;
@@ -165,8 +156,8 @@
       position: fixed;
       top: 50%;
       left: 50%;
-      width: 0%;
-      height: 0%;
+      width: 0;
+      height: 0;
       background-color: white;
       border-radius: 50%;
       transform: translate(-50%, -50%);
@@ -213,7 +204,7 @@
       transition: opacity 0.5s ease;
     }
 
-    /* สไตล์สำหรับ Popup (Desktop) */
+    /* Popup สำหรับ Desktop */
     #popup-overlay {
       position: fixed;
       top: 0;
@@ -233,9 +224,7 @@
       border-radius: 1vw;
       text-align: center;
       width: 60vw;
-      /* ปรับความกว้างให้กว้างขึ้น */
       max-width: 500px;
-      /* จำกัดความกว้างสูงสุด */
       font-family: 'TorsilpChillChill', sans-serif;
     }
 
@@ -268,24 +257,20 @@
       background: #e37daa;
     }
 
-    /* Responsive สำหรับหน้าจอ Tablets (ไม่เกิน 768px) */
+    /* Responsive สำหรับ Tablets */
     @media (max-width: 768px) {
       #popup {
         width: 60vw;
-        /* ปรับความกว้าง Popup ให้กว้างขึ้นเล็กน้อย */
         padding: 1.5vw;
         border-radius: 0.8vw;
       }
-
       #popup h2 {
         font-size: 2vw;
       }
-
       #popup p,
       #popup ul {
         font-size: 1.8vw;
       }
-
       #popup button {
         margin-top: 1vw;
         padding: 1vw 1.5vw;
@@ -294,24 +279,20 @@
       }
     }
 
-    /* Responsive สำหรับหน้าจอ Mobile (ไม่เกิน 480px) */
+    /* Responsive สำหรับ Mobile */
     @media (max-width: 480px) {
       #popup {
         width: 60vw;
-        /* บนหน้าจอเล็ก Popup จะกว้างขึ้นเพื่อความอ่านง่าย */
         padding: 2vw;
         border-radius: 1vw;
       }
-
       #popup h2 {
         font-size: 3vw;
       }
-
       #popup p,
       #popup ul {
         font-size: 2.5vw;
       }
-
       #popup button {
         margin-top: 1.5vw;
         padding: 1.5vw 2vw;
@@ -320,61 +301,34 @@
       }
     }
 
-
-
-
+    /* ปรับขนาดสำหรับหน้าจอขนาดกลางและ landscape */
     @media (max-width: 1024px) {
       .clouds {
         height: 60vh;
       }
-
       .flower1 {
         height: 50vw;
       }
-
       .flower2 {
-        position: fixed;
         top: -15vw;
-        width: 100vw;
         height: 50vw;
-        background-image: url(assets/img/flower2.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        z-index: -3;
-        transform: translateY(100px);
-        opacity: 0;
-        transition: transform 1s ease-out, opacity 1s ease-out;
       }
-
       .flower3 {
-        position: fixed;
         top: -10vw;
-        width: 100vw;
         height: 60vw;
-        background-image: url(assets/img/flower3.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        z-index: -5;
-        transform: translateY(100px);
-        opacity: 0;
-        transition: transform 1s ease-out, opacity 1s ease-out;
       }
-
       .logo {
         width: 80vw;
         left: 50vw;
         top: 4vw;
       }
-
       .house,
       .doorclose {
         width: 100vw;
       }
-
       .door-text {
         font-size: 1.2rem;
       }
-
       .subtitle {
         font-size: 1rem;
       }
@@ -385,36 +339,29 @@
       .clouds {
         height: 60vh;
       }
-
       .flower1 {
         height: 50vw;
       }
-
       .flower2 {
         height: 50vw;
         top: -9vw;
       }
-
       .flower3 {
         height: 60vw;
         top: -9vw;
       }
-
       .logo {
         width: 80vw;
         left: 50vw;
         top: 4vw;
       }
-
       .house,
       .doorclose {
         width: 100vw;
       }
-
       .door-text {
         font-size: 0.8rem;
       }
-
       .subtitle {
         font-size: 0.9rem;
       }
@@ -424,25 +371,20 @@
       .clouds {
         height: 50vh;
       }
-
       .flower1 {
         height: 80vh;
       }
-
       .flower2 {
         top: 4vw;
         height: 50vw;
       }
-
       .flower3 {
         top: 6vw;
         height: 60vw;
       }
-
       .logo {
         top: 10vw;
       }
-
       .house,
       .doorclose {
         width: 100vw;
@@ -450,21 +392,17 @@
         height: 60vw;
         left: 55vw;
       }
-
       .door-text {
         font-size: 1rem;
         left: 70%;
       }
-
       .subtitle {
         font-size: 1rem;
         padding: 5px 10px;
       }
-
       .video-container video {
         object-fit: cover;
       }
-
       /* ป้องกันการ scroll */
       .no-scroll {
         overflow: hidden !important;
@@ -472,19 +410,14 @@
     }
   </style>
 </head>
-
 <body>
-  <!-- ส่วนโหลด HTML จากไฟล์ common -->
-  <!-- <div id="common-content"></div> -->
-
+  <!-- Popup ก่อนเข้าชม -->
   <div id="popup-overlay">
     <div id="popup">
       <h2>ก่อนเข้าชม</h2>
       <p><b>คำแนะนำ</b> : หมุนหน้าจอในแนวนอนเพื่ออรรถรส </p>
       <img src="assets/img/rotate.png" alt="Rotate Screen" style="display: block; width: 10%; margin: 0 auto;">
-      <p>เว็บไซต์นี้เป็นเพียงการให้ความรู้และทดลองทำกิจกรรมที่เกี่ยวข้องกับศิลปะบำบัด ไม่ได้เป็นการช่วยบำบัดแต่อย่างใด
-      </p>
-
+      <p>เว็บไซต์นี้เป็นเพียงการให้ความรู้และทดลองทำกิจกรรมที่เกี่ยวข้องกับศิลปะบำบัด ไม่ได้เป็นการช่วยบำบัดแต่อย่างใด</p>
       <ul style="text-align: center;">
         "ขอให้ทุกท่านเพลิดเพลินกับเว็บไซต์ของเรา"
       </ul>
@@ -492,6 +425,7 @@
     </div>
   </div>
 
+  <!-- องค์ประกอบพื้นหลัง -->
   <div class="background"></div>
   <div class="clouds"></div>
   <div class="flower3"></div>
@@ -508,16 +442,6 @@
   <div class="subtitle" id="subtitle"></div>
 
   <script>
-    // // โหลดเนื้อหา common.html
-    // function includeHTML() {
-    //   fetch('common/common.html')
-    //     .then(response => response.text())
-    //     .then(data => {
-    //       document.getElementById('common-content').innerHTML = data;
-    //     });
-    // }
-    // window.onload = includeHTML;
-
     // ปิดการ scroll จนกว่าปิด Popup
     document.body.style.overflow = 'hidden';
 
@@ -539,33 +463,15 @@
       if (scrollPos > 4500 && !videoContainer.style.display) {
         videoContainer.style.display = "flex";
         video.play();
+        hasScrolledToVideo = true;
       }
 
       // เชื่อมตำแหน่งเลื่อนกับตำแหน่งวิดีโอ
       if (videoContainer.style.display === "flex") {
-        const videoDuration = video.duration || 5; // ความยาววิดีโอ (default 5 วินาที)
+        const videoDuration = video.duration || 5; // default 5 วินาที
         const scrollFraction = scrollPos / maxScroll;
         const videoTime = videoDuration * scrollFraction;
         video.currentTime = videoTime;
-
-        // เมื่อเลื่อนกลับจนถึงจุดเริ่มต้น (scrollPos === 0)
-        if (scrollPos === 0) {
-          video.pause(); // หยุดวิดีโอ
-          videoContainer.style.display = "none"; // ซ่อนวิดีโอ
-
-          // แสดงแสงสีขาว
-          lightOverlay.style.display = "block";
-          lightOverlay.style.opacity = 1;
-          lightOverlay.style.width = "300%";
-          lightOverlay.style.height = "300%";
-
-          // จางแสงสีขาวหลังเวลาที่กำหนด
-          setTimeout(() => {
-            lightOverlay.style.opacity = 0;
-            lightOverlay.style.width = "0%";
-            lightOverlay.style.height = "0%";
-          }, 800);
-        }
       }
     });
 
@@ -658,67 +564,40 @@
       }
     });
 
-    // เพิ่ม Event Listener เฉพาะที่ประตู
-    document.querySelector('.doorclose').addEventListener('click', function () {
-      const lightOverlay = document.querySelector('.light-overlay');
-      const videoContainer = document.querySelector('.video-container');
-
-      this.style.backgroundImage = "url('assets/img/door open.png')";
-
-      setTimeout(() => {
-        this.style.backgroundImage = "url('assets/img/door open light.png')";
-        setTimeout(() => {
-          lightOverlay.style.opacity = 1;
-          lightOverlay.style.width = "300%";
-          lightOverlay.style.height = "300%";
-          setTimeout(() => {
-            lightOverlay.style.display = "none";
-            videoContainer.style.display = "flex"; // แสดงวิดีโอ
-          }, 800);
-        }, 350);
-      }, 350);
-    });
-
     // ป้องกันการคลิกนอกประตูทำให้แสงแสดง
     document.body.addEventListener('click', function () {
       const lightOverlay = document.querySelector('.light-overlay');
-      // ซ่อนแสงสีขาวเมื่อคลิกที่อื่น
       lightOverlay.style.opacity = 0;
       lightOverlay.style.width = "0%";
       lightOverlay.style.height = "0%";
     });
 
     /***ซับไตเติล***/
-    const subtitle = document.getElementById('subtitle'); // อ้างอิง subtitle
+    const subtitle = document.getElementById('subtitle');
 
-    // ข้อความต่างๆ ที่จะแสดงตามตำแหน่งการเลื่อน
     const subtitles = [
       { scroll: 800, text: 'ในเมืองเล็กๆ ท่ามกลางภูเขาและแม่น้ำ มีสถานที่เงียบสงบ' },
       { scroll: 1000, text: 'บ้านหลังนี้ถูกโอบล้อมด้วยดอกไม้และธรรมชาติ' },
       { scroll: 1400, text: 'ที่นี่ไม่มีใครคาดหวังความสมบูรณ์แบบ ทุกอย่างเกี่ยวกับการเป็นตัวเองและการแสดงออกผ่านศิลปะ' }
     ];
 
-    // ข้อความซับไตเติลใหม่ที่จะแสดงขณะเล่นวิดีโอ
     const videoSubtitles = [
       { time: 0, text: 'เมื่อมาสถานที่นี้ให้ความรู้สึกเหมือนเวลาหยุด ปัญหาหลากหลายอย่างที่คุณได้พบเจอในชีวิตประจำวัน' },
       { time: 2, text: 'ความกดดันจากงาน ความสัมพันธ์ที่ซับซ้อน หรือความเครียดที่สะสม' },
       { time: 4, text: 'เสมือนกับว่าปัญหาเริ่มจางหายไป' }
     ];
 
-    let hasScrolledToVideo = false; // สถานะตรวจสอบว่าเคยเลื่อนถึงวิดีโอหรือยัง
+    let hasScrolledToVideo = false;
 
-    // ฟังก์ชันอัปเดตข้อความ Subtitle
     function updateSubtitle(scrollPos) {
-      // หากยังไม่เคยเลื่อนถึงวิดีโอ
       if (!hasScrolledToVideo) {
         for (let i = 0; i < subtitles.length; i++) {
           const current = subtitles[i];
           const next = subtitles[i + 1];
-
           if (scrollPos >= current.scroll && (!next || scrollPos < next.scroll)) {
             if (subtitle.textContent !== current.text) {
-              subtitle.textContent = current.text; // อัปเดตข้อความ
-              subtitle.style.opacity = 1; // แสดงข้อความ
+              subtitle.textContent = current.text;
+              subtitle.style.opacity = 1;
               subtitle.style.visibility = 'visible';
               console.log(`แสดงข้อความ: ${current.text}`);
             }
@@ -726,20 +605,16 @@
           }
         }
       }
-
-      // ซ่อนข้อความก่อนถึงจุดเริ่มต้น
       if (scrollPos < 200) {
         subtitle.style.opacity = 0;
         subtitle.style.visibility = 'hidden';
       }
     }
 
-    // ฟังก์ชันอัปเดตข้อความซับไตเติลตามเวลาในวิดีโอ
     function updateVideoSubtitle(videoTime) {
       for (let i = 0; i < videoSubtitles.length; i++) {
         const current = videoSubtitles[i];
         const next = videoSubtitles[i + 1];
-
         if (videoTime >= current.time && (!next || videoTime < next.time)) {
           if (subtitle.textContent !== current.text) {
             subtitle.textContent = current.text;
@@ -752,21 +627,16 @@
       }
     }
 
-    // Event Listener สำหรับ Scroll
     window.addEventListener('scroll', function () {
       const scrollPos = window.scrollY;
-      console.log(`scrollPos: ${scrollPos}`);
-
       const maxScroll = document.body.scrollHeight - window.innerHeight;
 
-      // แสดงวิดีโอเมื่อเลื่อนถึงตำแหน่งที่กำหนด
       if (scrollPos > 4500 && !videoContainer.style.display) {
         videoContainer.style.display = "flex";
         video.play();
         hasScrolledToVideo = true;
       }
 
-      // เชื่อมตำแหน่งเลื่อนกับตำแหน่งวิดีโอ
       if (videoContainer.style.display === "flex") {
         const videoDuration = video.duration || 5;
         const scrollFraction = scrollPos / maxScroll;
@@ -776,30 +646,26 @@
         updateSubtitle(scrollPos);
       }
 
-      // ซ่อนข้อความปกติเมื่อเลื่อนย้อนกลับหลังจากถึงวิดีโอ
       if (hasScrolledToVideo && scrollPos < 4500) {
         subtitle.style.opacity = 0;
         subtitle.style.visibility = 'hidden';
       }
     });
 
-    // เพิ่ม Event Listener สำหรับวิดีโอ
     video.addEventListener('timeupdate', function () {
       const videoTime = video.currentTime;
       updateVideoSubtitle(videoTime);
     });
 
-    // ซ่อนซับไตเติลเมื่อวิดีโอหยุด
     video.addEventListener('pause', function () {
       subtitle.style.opacity = 0;
       subtitle.style.visibility = 'hidden';
     });
 
     video.addEventListener('ended', function () {
-      window.location.href = 'content2.html'; // เมื่อวิดีโอเล่นจบ ไปยัง content2.html
+      window.location.href = 'content2.html';
     });
   </script>
   <!-- <script src="common/common.js"></script> -->
 </body>
-
 </html>
