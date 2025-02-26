@@ -1,35 +1,54 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
   <title>ระบาย</title>
   <style>
-   
     @font-face {
       font-family: 'TORSILPCHILLCHILL';
       src: url('assets/TORSILPCHILLCHILL.TTF') format('truetype');
       font-weight: normal;
       font-style: normal;
     }
+
     @font-face {
       font-family: 'TorsilpRajun2024';
       src: url('assets/TorsilpRajun2024.TTF') format('truetype');
       font-weight: normal;
       font-style: normal;
     }
-    body, html {
+
+    @font-face {
+      font-family: "Noto Sans Thai";
+      src: url("assets/NotoSansThai-VariableFont_wdth,wght.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body,
+    html {
       margin: 0;
       padding: 0;
       overflow-x: hidden;
       font-family: 'TORSILPCHILLCHILL', sans-serif;
       scroll-behavior: smooth;
     }
+
     /* ซ่อน scrollbar */
-    ::-webkit-scrollbar { display: none; }
-    html { scrollbar-width: none; }
-    body { -ms-overflow-style: none; }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    html {
+      scrollbar-width: none;
+    }
+
+    body {
+      -ms-overflow-style: none;
+    }
 
     /* --------------------------------------------------
        Sections 1-4 (เหมือนเดิม)
@@ -39,6 +58,7 @@
       width: 100%;
       background-color: #f4e9dd;
     }
+
     /* Section 1: UI Animation */
     #ui-animation {
       height: 101vh;
@@ -49,6 +69,7 @@
       padding: 0 3vw;
       position: relative;
     }
+
     #ui-animation .decorations img {
       position: absolute;
       top: 50%;
@@ -59,9 +80,11 @@
       transition: transform 1s ease-out;
       will-change: transform;
     }
+
     #ui-animation .decorations img.active {
       transform: translate(-50%, -50%) scale(1.5);
     }
+
     #ui-animation .textdraw-container {
       text-align: center;
       z-index: 2;
@@ -73,10 +96,12 @@
       will-change: opacity, transform;
       position: relative;
     }
+
     #ui-animation .textdraw-container.active {
       opacity: 1;
       transform: translateY(0);
     }
+
     #ui-animation .title-draw {
       font-size: 2.5vw;
       font-weight: normal;
@@ -85,11 +110,13 @@
       font-family: "TorsilpRajun2024", sans-serif;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     #ui-animation .textdraw {
       font-size: 2vw;
       color: #714937;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     #ui-animation .palette {
       opacity: 0;
       width: 45vw;
@@ -101,15 +128,18 @@
       bottom: -3vw;
       will-change: opacity, transform;
     }
+
     #ui-animation .palette.active {
       opacity: 1;
       transform: translateY(0);
     }
+
     #ui-animation .palette:hover {
       transform: translateY(0) scale(1.2);
       transition: transform 0.5s ease-in-out;
       cursor: pointer;
     }
+
     #ui-animation .buttondraw-container {
       opacity: 0;
       margin-top: 2vw;
@@ -121,10 +151,12 @@
       will-change: opacity, transform;
       position: relative;
     }
+
     #ui-animation .buttondraw-container.active {
       opacity: 1;
       transform: translateY(0);
     }
+
     #ui-animation .draw-button {
       padding: 1vw 2vw;
       background-color: #f39eb6;
@@ -137,22 +169,26 @@
       box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
       font-family: 'Noto Sans Thai', sans-serif;
     }
+
     #ui-animation .draw-button:hover {
       background-color: #e37daa;
       color: white;
     }
+
     /* Section 2: Flower and Vase Animation */
     #flower-animation {
       height: 105vh;
       position: relative;
       overflow: hidden;
     }
+
     #flower-animation .containerflower {
       position: relative;
       width: 100%;
       height: 100%;
     }
-    #flower-animation .flower-left, 
+
+    #flower-animation .flower-left,
     #flower-animation .flower-right {
       position: absolute;
       background-size: contain;
@@ -163,6 +199,7 @@
       visibility: hidden;
       will-change: left, visibility;
     }
+
     #flower-animation .flower-left {
       top: 50%;
       left: 148vw;
@@ -170,6 +207,7 @@
       background-image: url('assets/img/flower_left.png');
       z-index: 2;
     }
+
     #flower-animation .flower-right {
       top: 50%;
       left: 167vw;
@@ -177,16 +215,20 @@
       background-image: url('assets/img/flower_right.png');
       z-index: 2;
     }
+
     #flower-animation .flower-left.slide-left,
     #flower-animation .flower-right.slide-right {
       visibility: visible;
     }
+
     #flower-animation .flower-left.slide-left {
       left: 140vw;
     }
+
     #flower-animation .flower-right.slide-right {
       left: 180vw;
     }
+
     #flower-animation .vase {
       position: absolute;
       width: 105vw;
@@ -202,9 +244,11 @@
       transition: transform 0.6s ease-in-out, opacity 1s ease-in-out;
       will-change: opacity, transform;
     }
+
     #flower-animation .vase.show {
       opacity: 1;
     }
+
     #flower-animation .contentflower {
       position: absolute;
       top: 25%;
@@ -216,9 +260,11 @@
       transition: opacity 1s ease-in-out;
       will-change: opacity;
     }
+
     #flower-animation .contentflower.show {
       opacity: 1;
     }
+
     #flower-animation .title-flower {
       font-size: 2.5vw;
       font-weight: normal;
@@ -231,6 +277,7 @@
       will-change: opacity, transform;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     #flower-animation .text-flower {
       font-size: 2vw;
       color: #714937;
@@ -240,6 +287,7 @@
       will-change: opacity, transform;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     #flower-animation .button-container {
       position: absolute;
       top: 55%;
@@ -250,9 +298,11 @@
       transition: opacity 1s ease-in-out;
       will-change: opacity;
     }
+
     #flower-animation .button-container.active {
       opacity: 1;
     }
+
     #flower-animation .button-container button {
       padding: 1vw 2vw;
       background-color: #f39eb6;
@@ -265,102 +315,123 @@
       box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.1);
       font-family: 'Noto Sans Thai', sans-serif;
     }
+
     #flower-animation .button-container button:hover {
       background-color: #e37daa;
       color: white;
     }
+
     /* สำหรับมือถือ (max-width: 768px) */
-/* สำหรับมือถือทั่วไป (max-width: 768px) – ค่าเดิมที่มีอยู่ */
-@media (max-width: 768px) {
-  #flower-animation .flower-left {
-    top: 45%;
-    left: 140vw;  /* ค่าเดิม */
-    width: 311vw;
-    visibility: hidden;
-  }
-  #flower-animation .flower-right {
-    top: 45%;
-    left: 180vw;
-    width: 320vw;
-    visibility: hidden;
-  }
-  #flower-animation .flower-left.slide-left {
-    left: 132vw;
-    visibility: visible;
-  }
-  #flower-animation .flower-right.slide-right {
-    left: 188vw;
-    visibility: visible;
-  }
-}
+    /* สำหรับมือถือทั่วไป (max-width: 768px) – ค่าเดิมที่มีอยู่ */
+    @media (max-width: 768px) {
+      #flower-animation .flower-left {
+        top: 45%;
+        left: 140vw;
+        /* ค่าเดิม */
+        width: 311vw;
+        visibility: hidden;
+      }
 
-/* สำหรับ iPhone 12, 15, XR (max-width: 428px)
+      #flower-animation .flower-right {
+        top: 45%;
+        left: 180vw;
+        width: 320vw;
+        visibility: hidden;
+      }
+
+      #flower-animation .flower-left.slide-left {
+        left: 132vw;
+        visibility: visible;
+      }
+
+      #flower-animation .flower-right.slide-right {
+        left: 188vw;
+        visibility: visible;
+      }
+    }
+
+    /* สำหรับ iPhone 12, 15, XR (max-width: 428px)
    ปรับให้ตำแหน่งในสถานะ hidden อยู่ใกล้กับตำแหน่งที่แสดงมากขึ้น */
-@media (max-width: 428px) {
-  #flower-animation .flower-left {
-    top: 45%;
-    left: 150vw;  /* ปรับเพิ่มเล็กน้อยเพื่อให้ตำแหน่ง hidden ใกล้กับ slide */
-    width: 420vw;  /* ปรับขนาดให้เหมาะสมกับหน้าจอเล็ก */
-    visibility: hidden;
-  }
-  #flower-animation .flower-right {
-    top: 45%;
-    left: 160vw;  /* ปรับให้ตรงกับดีไซน์ */
-    width: 420vw;
-    visibility: hidden;
-  }
-  #flower-animation .flower-left.slide-left {
-    left: 142vw;  /* ค่าแสดงผล เมื่อมีคลาส slide */
-    visibility: visible;
-  }
-  #flower-animation .flower-right.slide-right {
-    left: 168vw;
-    visibility: visible;
-  }
- 
-}
+    @media (max-width: 428px) {
+      #flower-animation .flower-left {
+        top: 45%;
+        left: 150vw;
+        /* ปรับเพิ่มเล็กน้อยเพื่อให้ตำแหน่ง hidden ใกล้กับ slide */
+        width: 420vw;
+        /* ปรับขนาดให้เหมาะสมกับหน้าจอเล็ก */
+        visibility: hidden;
+      }
 
-/* สำหรับ iPad Pro (min-width: 1025px ถึง max-width: 1366px)
+      #flower-animation .flower-right {
+        top: 45%;
+        left: 160vw;
+        /* ปรับให้ตรงกับดีไซน์ */
+        width: 420vw;
+        visibility: hidden;
+      }
+
+      #flower-animation .flower-left.slide-left {
+        left: 142vw;
+        /* ค่าแสดงผล เมื่อมีคลาส slide */
+        visibility: visible;
+      }
+
+      #flower-animation .flower-right.slide-right {
+        left: 168vw;
+        visibility: visible;
+      }
+
+    }
+
+    /* สำหรับ iPad Pro (min-width: 1025px ถึง max-width: 1366px)
    ปรับตำแหน่งในสถานะ hidden และตำแหน่งแสดงผลให้เหมาะสมกับหน้าจอขนาดใหญ่ */
-@media (min-width: 1025px) and (max-width: 1366px) {
-  #flower-animation .flower-left {
-    top: 50%;
-    left: 140vw;  /* ค่า hidden ที่ใกล้เคียงกับตำแหน่งแสดง */
-    width: 300vw;
-    visibility: hidden;
-  }
-  #flower-animation .flower-right {
-    top: 50%;
-    left: 150vw;
-    width: 300vw;
-    visibility: hidden;
-  }
-  #flower-animation .flower-left.slide-left {
-    left: 127vw;  /* เมื่อมีคลาส slide ให้เลื่อนเข้ามา */
-    visibility: visible;
-  }
-  #flower-animation .flower-right.slide-right {
-    left: 165vw;
-    visibility: visible;
-  }
-  #flower-animation .vase {
+    @media (min-width: 1025px) and (max-width: 1366px) {
+      #flower-animation .flower-left {
+        top: 50%;
+        left: 140vw;
+        /* ค่า hidden ที่ใกล้เคียงกับตำแหน่งแสดง */
+        width: 300vw;
+        visibility: hidden;
+      }
+
+      #flower-animation .flower-right {
+        top: 50%;
+        left: 150vw;
+        width: 300vw;
+        visibility: hidden;
+      }
+
+      #flower-animation .flower-left.slide-left {
+        left: 127vw;
+        /* เมื่อมีคลาส slide ให้เลื่อนเข้ามา */
+        visibility: visible;
+      }
+
+      #flower-animation .flower-right.slide-right {
+        left: 165vw;
+        visibility: visible;
+      }
+
+      #flower-animation .vase {
         width: 113vw;
         height: 66vw;
         bottom: 2vh;
       }
-}
+    }
 
     /* Section 3: Interactive Animation */
     #interactive-animation {
       height: 102vh;
       position: relative;
     }
+
     #interactive-animation .containerdrop {
       position: relative;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
     }
+
     #interactive-animation .color-item {
       position: absolute;
       top: 0;
@@ -374,14 +445,39 @@
       z-index: 1;
       will-change: opacity;
     }
-    #interactive-animation .color-item:nth-child(1) { transition-delay: 0s; }
-    #interactive-animation .color-item:nth-child(2) { transition-delay: 0.2s; }
-    #interactive-animation .color-item:nth-child(3) { transition-delay: 0.4s; }
-    #interactive-animation .color-item:nth-child(4) { transition-delay: 0.6s; }
-    #interactive-animation .color-item:nth-child(5) { transition-delay: 0.8s; }
-    #interactive-animation .color-item:nth-child(6) { transition-delay: 1s; }
-    #interactive-animation .color-item:nth-child(7) { transition-delay: 1.2s; }
-    #interactive-animation .color-item.active { opacity: 1; }
+
+    #interactive-animation .color-item:nth-child(1) {
+      transition-delay: 0s;
+    }
+
+    #interactive-animation .color-item:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    #interactive-animation .color-item:nth-child(3) {
+      transition-delay: 0.4s;
+    }
+
+    #interactive-animation .color-item:nth-child(4) {
+      transition-delay: 0.6s;
+    }
+
+    #interactive-animation .color-item:nth-child(5) {
+      transition-delay: 0.8s;
+    }
+
+    #interactive-animation .color-item:nth-child(6) {
+      transition-delay: 1s;
+    }
+
+    #interactive-animation .color-item:nth-child(7) {
+      transition-delay: 1.2s;
+    }
+
+    #interactive-animation .color-item.active {
+      opacity: 1;
+    }
+
     #interactive-animation .textdrop-container {
       text-align: center;
       position: relative;
@@ -389,6 +485,7 @@
       top: 3vw;
       right: -42px;
     }
+
     #interactive-animation .textdrop-overlay {
       position: absolute;
       top: 28vh;
@@ -405,10 +502,12 @@
       will-change: opacity, transform;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     #interactive-animation .textdrop-overlay.active {
       opacity: 1;
       transform: translate(-50%, -50%);
     }
+
     #interactive-animation .secondary-text {
       position: absolute;
       top: 34vh;
@@ -424,10 +523,12 @@
       will-change: opacity, transform;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     #interactive-animation .secondary-text.active {
       opacity: 1;
       transform: translate(-50%, -50%);
     }
+
     #interactive-animation .buttondrop-and-image {
       position: absolute;
       bottom: 2vh;
@@ -443,30 +544,36 @@
       transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
       will-change: opacity, transform;
     }
+
     #interactive-animation .buttondrop-and-image.active {
       opacity: 1;
       transform: translateX(-20%);
     }
+
     #interactive-animation .buttondrop-and-image img {
       width: 35vw;
       height: auto;
       transition: transform 0.6s ease-in-out;
       cursor: pointer;
     }
+
     #interactive-animation .buttondrop-and-image img:hover {
       transform: scale(1.2);
     }
+
     #interactive-animation .buttondrop-and-image .text-container {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     #interactive-animation .buttondrop-and-image p {
       font-size: 1.5vw;
       color: #333;
       margin: 0 0 1vw 0;
       white-space: nowrap;
     }
+
     #interactive-animation .buttondrop-and-image button {
       background-color: #f77e39;
       border: none;
@@ -479,20 +586,24 @@
       transition: background-color 0.6s, border-radius 0.6s;
       font-family: 'Noto Sans Thai', sans-serif;
     }
+
     #interactive-animation .buttondrop-and-image button:hover {
       background-color: #ea7938;
       color: white;
     }
+
     /* Section 4: Line Animation */
     #line-animation {
       height: 105vh;
       position: relative;
     }
+
     #line-animation .line-container {
       position: relative;
       width: 100%;
       height: 100vh;
     }
+
     #line-animation img.line {
       position: absolute;
       top: 50%;
@@ -504,10 +615,12 @@
       transition: opacity 1s ease, transform 1s ease;
       will-change: opacity, transform;
     }
+
     #line-animation img.line.show {
       opacity: 0.6;
       transform: translate(-50%, -50%) translateY(0);
     }
+
     #line-animation .main-title {
       position: absolute;
       top: 20vh;
@@ -523,9 +636,11 @@
       will-change: opacity;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     #line-animation .main-title.active {
       opacity: 1;
     }
+
     #line-animation .final-text {
       position: absolute;
       bottom: 55%;
@@ -537,12 +652,14 @@
       font-size: 2vw;
       will-change: opacity;
     }
+
     #line-animation .final-text p {
       margin: 0.5vw 0;
       font-size: 1.5vw;
       color: #714937;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     #line-animation .final-button {
       position: absolute;
       bottom: 20%;
@@ -551,6 +668,7 @@
       transition: opacity 1s ease;
       will-change: opacity;
     }
+
     #line-animation .final-button button {
       padding: 1vw 2vw;
       background-color: #f39eb6;
@@ -563,10 +681,12 @@
       transition: background-color 1s, color 1s;
       font-family: 'Noto Sans Thai', sans-serif;
     }
+
     #line-animation .final-button button:hover {
       background-color: #e37daa;
       color: white;
     }
+
     #line-animation .final-icon {
       position: absolute;
       bottom: -1%;
@@ -575,18 +695,20 @@
       transition: opacity 1s ease;
       will-change: opacity;
     }
+
     #line-animation .final-icon img {
       width: 40vw;
       height: auto;
     }
+
     #line-animation .final-icon:hover {
       transform: scale(1.1);
       transition: transform 0.6s ease;
       cursor: pointer;
     }
-  
   </style>
 </head>
+
 <body>
   <!-- --------------------------------------------------
        Sections 1-4: (UI, Flower, Interactive, Line Animations)
@@ -683,41 +805,41 @@
     </div>
   </section>
 
- 
 
-  
-  
+
+
+
   <!-- <img src="img/flower1.png" class="flowers" alt="Flower Decoration"> -->
 
   <script>
     // Sections 1-4
-    const uiSection       = document.querySelector('#ui-animation');
+    const uiSection = document.querySelector('#ui-animation');
     const uiDecorationImg = document.querySelector("#ui-animation .decorations img");
     const uiTextContainer = document.querySelector("#ui-animation .textdraw-container");
-    const uiPalette       = document.querySelector("#ui-animation .palette");
-    const uiButtonCont    = document.querySelector("#ui-animation .buttondraw-container");
+    const uiPalette = document.querySelector("#ui-animation .palette");
+    const uiButtonCont = document.querySelector("#ui-animation .buttondraw-container");
 
-    const flowerSection   = document.querySelector('#flower-animation');
-    const flowerLeft      = document.querySelector("#flower-animation .flower-left");
-    const flowerRight     = document.querySelector("#flower-animation .flower-right");
-    const vase            = document.querySelector("#flower-animation .vase");
-    const flowerContent   = document.querySelector("#flower-animation .contentflower");
-    const flowerTitle     = document.querySelector("#flower-animation .title-flower");
-    const flowerText      = document.querySelector("#flower-animation .text-flower");
-    const flowerBtnCont   = document.querySelector("#flower-animation .button-container");
+    const flowerSection = document.querySelector('#flower-animation');
+    const flowerLeft = document.querySelector("#flower-animation .flower-left");
+    const flowerRight = document.querySelector("#flower-animation .flower-right");
+    const vase = document.querySelector("#flower-animation .vase");
+    const flowerContent = document.querySelector("#flower-animation .contentflower");
+    const flowerTitle = document.querySelector("#flower-animation .title-flower");
+    const flowerText = document.querySelector("#flower-animation .text-flower");
+    const flowerBtnCont = document.querySelector("#flower-animation .button-container");
 
     const interactiveSection = document.querySelector('#interactive-animation');
-    const colorItems         = document.querySelectorAll("#interactive-animation .color-item");
-    const textOverlay        = document.querySelector("#interactive-animation .textdrop-overlay");
-    const secondaryText      = document.querySelector("#interactive-animation .secondary-text");
-    const btnImgContainer    = document.querySelector("#interactive-animation .buttondrop-and-image");
+    const colorItems = document.querySelectorAll("#interactive-animation .color-item");
+    const textOverlay = document.querySelector("#interactive-animation .textdrop-overlay");
+    const secondaryText = document.querySelector("#interactive-animation .secondary-text");
+    const btnImgContainer = document.querySelector("#interactive-animation .buttondrop-and-image");
 
-    const lineSection     = document.querySelector('#line-animation');
-    const lines           = document.querySelectorAll("#line-animation img.line");
-    const mainTitle       = document.querySelector("#line-animation .main-title");
-    const finalText       = document.querySelector("#line-animation .final-text");
-    const finalButton     = document.querySelector("#line-animation .final-button");
-    const finalIcon       = document.querySelector("#line-animation .final-icon");
+    const lineSection = document.querySelector('#line-animation');
+    const lines = document.querySelectorAll("#line-animation img.line");
+    const mainTitle = document.querySelector("#line-animation .main-title");
+    const finalText = document.querySelector("#line-animation .final-text");
+    const finalButton = document.querySelector("#line-animation .final-button");
+    const finalIcon = document.querySelector("#line-animation .final-icon");
 
     function isSectionInView(section) {
       const rect = section.getBoundingClientRect();
@@ -809,43 +931,43 @@
     const nextBtn = document.getElementById('nextBtn');
     const scrollArrow = document.getElementById('scrollArrow');
 
-          // จัดการเหตุการณ์ wheel สำหรับเปลี่ยนหน้า
-          let isScrolling = false;
-      const delayScroll = 1500; // หน่วงเวลา 1.5 วินาที
-      const scrollThreshold = 50; // ตรวจจับเมื่อ scroll อยู่ใกล้ขอบ (50px)
+    // จัดการเหตุการณ์ wheel สำหรับเปลี่ยนหน้า
+    let isScrolling = false;
+    const delayScroll = 1500; // หน่วงเวลา 1.5 วินาที
+    const scrollThreshold = 50; // ตรวจจับเมื่อ scroll อยู่ใกล้ขอบ (50px)
 
-      function smoothScroll(targetY) {
-        window.scrollTo({
-          top: targetY,
-          behavior: "smooth",
-        });
-      }
-
-      window.addEventListener("wheel", function (event) {
-        if (isScrolling) return;
-
-        const maxScroll = document.body.scrollHeight - window.innerHeight;
-
-        // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
-        if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
-          isScrolling = true;
-          smoothScroll(maxScroll);
-          setTimeout(() => {
-            window.location.href = "end.html"; // เปลี่ยนไปหน้า end.html
-          }, delayScroll);
-        }
-        // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
-        else if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
-          isScrolling = true;
-          smoothScroll(0);
-          setTimeout(() => {
-            window.location.href = "content2.html"; // เปลี่ยนไปหน้า color.html
-          }, delayScroll);
-        }
+    function smoothScroll(targetY) {
+      window.scrollTo({
+        top: targetY,
+        behavior: "smooth",
       });
+    }
 
-          /****************** จัดการเหตุการณ์ Touch สำหรับ iPad/มือถือ ******************/
-          let touchStartY = 0;
+    window.addEventListener("wheel", function (event) {
+      if (isScrolling) return;
+
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+      // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
+      if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
+        isScrolling = true;
+        smoothScroll(maxScroll);
+        setTimeout(() => {
+          window.location.href = "end.html"; // เปลี่ยนไปหน้า end.html
+        }, delayScroll);
+      }
+      // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
+      else if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
+        isScrolling = true;
+        smoothScroll(0);
+        setTimeout(() => {
+          window.location.href = "content2.html"; // เปลี่ยนไปหน้า color.html
+        }, delayScroll);
+      }
+    });
+
+    /****************** จัดการเหตุการณ์ Touch สำหรับ iPad/มือถือ ******************/
+    let touchStartY = 0;
     let touchEndY = 0;
 
     window.addEventListener("touchstart", (e) => {
@@ -882,4 +1004,5 @@
 
   </script>
 </body>
+
 </html>

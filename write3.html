@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,14 @@
       font-weight: normal;
       font-style: normal;
     }
+
+    @font-face {
+      font-family: "Noto Sans Thai";
+      src: url("assets/NotoSansThai-VariableFont_wdth,wght.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -22,16 +31,20 @@
       height: 100vh;
       position: relative;
     }
+
     /* ปรับโครงสร้างให้ใช้ Flexbox จัดวางในแนวแถว */
     .content-wrapper {
       position: absolute;
       top: 55%;
-      left: 40vw;  /* ปรับตำแหน่งแนวนอนตามที่ต้องการ */
+      left: 40vw;
+      /* ปรับตำแหน่งแนวนอนตามที่ต้องการ */
       transform: translateY(-50%);
       display: flex;
       align-items: center;
-      gap: 2vw;  /* ช่องว่างระหว่างรูปกับปุ่ม */
+      gap: 2vw;
+      /* ช่องว่างระหว่างรูปกับปุ่ม */
     }
+
     .container {
       position: relative;
       width: 35vw;
@@ -40,42 +53,56 @@
       border-radius: 1.5vw;
       box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.1);
     }
+
     .container img {
       max-width: 100%;
       max-height: 100%;
       border-radius: 1vw;
     }
+
     /* ปุ่ม Go Back ด้วยไอคอน SVG */
     .back-btn {
       position: absolute;
-      top: 1.4vw;    /* 20px ≈ 1.4vw */
-      left: 1.4vw;   /* 20px ≈ 1.4vw */
-      width: 4.2vw;   /* 60px ≈ 4.2vw */
-      height: 4.2vw;  /* 60px ≈ 4.2vw */
+      top: 1.4vw;
+      /* 20px ≈ 1.4vw */
+      left: 1.4vw;
+      /* 20px ≈ 1.4vw */
+      width: 4.2vw;
+      /* 60px ≈ 4.2vw */
+      height: 4.2vw;
+      /* 60px ≈ 4.2vw */
       border: none;
       background-color: #fff;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 0.14vw 0.35vw rgba(0, 0, 0, 0.2); /* 2px ≈ 0.14vw, 5px ≈ 0.35vw */
+      box-shadow: 0 0.14vw 0.35vw rgba(0, 0, 0, 0.2);
+      /* 2px ≈ 0.14vw, 5px ≈ 0.35vw */
       cursor: pointer;
       transition: all 0.2s ease-in-out;
       z-index: 1000;
     }
+
     .back-btn svg {
-      width: 2.1vw;   /* 30px ≈ 2.1vw */
-      height: 2.1vw;  /* 30px ≈ 2.1vw */
+      width: 2.1vw;
+      /* 30px ≈ 2.1vw */
+      height: 2.1vw;
+      /* 30px ≈ 2.1vw */
       fill: #555;
-      transform: scaleX(-1); /* พลิกให้ชี้ซ้าย */
+      transform: scaleX(-1);
+      /* พลิกให้ชี้ซ้าย */
       transition: fill 0.2s ease-in-out;
     }
+
     .back-btn:hover {
       background-color: #f39eb6;
     }
+
     .back-btn:hover svg {
       fill: white;
     }
+
     /* จัดวางปุ่มไอคอนในแนวตั้ง */
     .action-buttons {
       display: flex;
@@ -83,14 +110,17 @@
       gap: 1.5vh;
       margin-left: 3vw;
     }
-    .save-btn, .share-btn {
+
+    .save-btn,
+    .share-btn {
       border: none;
       background-color: transparent;
       cursor: pointer;
       padding: 0;
     }
+
     /* กำหนดขนาดให้กับไอคอนในแต่ละปุ่ม */
-    .save-btn img, 
+    .save-btn img,
     .share-btn img {
       background-color: #fff;
       border-radius: 50%;
@@ -98,16 +128,19 @@
       height: 4vw;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
-    .save-btn img:hover, 
+
+    .save-btn img:hover,
     .share-btn img:hover {
       background-color: #f6f2f2;
     }
   </style>
 </head>
+
 <body>
   <button class="back-btn" onclick="goBack()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+      <path
+        d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
     </svg>
   </button>
 
@@ -199,4 +232,5 @@
     }
   </script>
 </body>
+
 </html>

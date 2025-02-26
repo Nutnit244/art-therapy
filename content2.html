@@ -7,17 +7,37 @@
   <title>ระบาย</title>
   <link rel="stylesheet" href="common/common.css" />
   <style>
-     @font-face {
+    @font-face {
       font-family: 'TORSILPCHILLCHILL';
       src: url('assets/TORSILPCHILLCHILL.TTF') format('truetype');
       font-weight: normal;
       font-style: normal;
     }
+
+    @font-face {
+      font-family: 'TorsilpRajun2024';
+      src: url('assets/TorsilpRajun2024.TTF') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: "Noto Sans Thai";
+      src: url("assets/NotoSansThai-VariableFont_wdth,wght.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+    /* ป้องกันไม่ให้เลื่อนไปด้านขวา */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     /* ---------------------- สไตล์พื้นฐานสำหรับทุก section ---------------------- */
     body {
-      margin: 0;
       font-family: TorsilpChillChill;
-      overflow-x: hidden;
       overflow-y: auto;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       background-attachment: fixed;
@@ -151,7 +171,7 @@
       transform: translateY(0);
     }
     .frame {
-        position: absolute;
+      position: absolute;
       top: 0;
       left: 60vw;
       transform: translateX(-50%);
@@ -160,7 +180,7 @@
       z-index: 2;
     }
     .frame img {
-        width: 100%;
+      width: 100%;
       height: 100%;
       object-fit: contain;
       display: none;
@@ -168,7 +188,6 @@
     .frame img.active {
       display: block;
     }
-
     .text-title {
       font-size: 2.8vw;
       text-align: center;
@@ -178,7 +197,7 @@
       margin-bottom: 0.5vw;
     }
     .text {
-        font-size: 1.7vw;
+      font-size: 1.7vw;
       text-align: center;
       color: #714937;
       font-family: 'TorsilpChillChill';
@@ -191,7 +210,7 @@
       flex-direction: column;
     }
     .Texts3 {
-        font-size: 2.1vw;
+      font-size: 2.1vw;
       text-align: center;
       margin-top: 2.78vw; 
       z-index: 2;
@@ -201,14 +220,14 @@
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
     .frame-large {
-        position: absolute;
+      position: absolute;
       width: 100%;
       height: 100%;
       background: url('assets/img/frame.png') no-repeat center center/contain;
       z-index: 2;
     }
     .cards-container {
-        display: grid;
+      display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2.78vw;
       margin-top: 0.69vw;
@@ -216,13 +235,13 @@
       z-index: 2;
     }
     .card {
-        width: 10.42vw;
+      width: 10.42vw;
       height: 10.42vw;
       perspective: 69.44vw;
       cursor: pointer;
     }
     .card-inner {
-        width: 100%;
+      width: 100%;
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
@@ -233,7 +252,7 @@
     }
     .card-front,
     .card-back {
-        position: absolute;
+      position: absolute;
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
@@ -309,13 +328,13 @@
       z-index: 2;
     }
     .text4 {
-        font-size: 2.5vw;
+      font-size: 2.5vw;
       color: #714937;
       text-align: left;
       position: absolute;
       right: 20%;
       z-index: 2;
-      font-family: TorsilpChillChill;
+      font-family: 'TorsilpChillChill';
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
     .clouds4 {
@@ -423,7 +442,7 @@
       z-index: 2;
     }
     .clouds7 {
-        position: absolute;
+      position: absolute;
       width: 150vw;
       left: 20%;
       top: 45%;
@@ -432,7 +451,7 @@
       z-index: 1;
     }
     .clouds71 {
-        position: absolute;
+      position: absolute;
       width: 150vw;
       bottom: 40%;
       height: 80%;
@@ -499,14 +518,9 @@
   </div>
   
   <!-- ======================= Section 2 ======================= -->
-  <!-- ส่วนของ Section 2 ที่มีการแยกหัวข้อและเนื้อหา -->
-<div class="section2 fade-lines" id="section2">
-    <!-- <div class="clouds2"></div>
-    <div class="clouds22"></div> -->
+  <div class="section2 fade-lines" id="section2">
     <div class="text fade-lines" id="text-content">
-      <!-- หัวข้อ -->
       <h1 class="text-title">ศิลปะบำบัด</h1>
-      <!-- เนื้อหา -->
       <div class="text-body">
         <p id="line-1">เป็นวิธีการเยียวยาด้วยการนำเทคนิคทางศิลปะที่ทำให้ได้แสดงออกมา</p>
         <p id="line-2">เพื่อช่วยผู้คนให้ผ่อนคลายและเปิดรับกับสภาวะอารมณ์</p>
@@ -578,8 +592,6 @@
         </div>
       </div>
     </div>
-    <div class="clouds3"></div>
-    <div class="clouds31"></div>
   </div>
   
   <!-- ======================= Section 4 ======================= -->
@@ -587,11 +599,9 @@
     <div class="frame-f2"></div>
     <div class="palette-p"></div>
     <div class="text4 fade-lines">
-      <p>ไม่จำเป็นต้องเป็นคน</p>
-      <p>ที่วาดรูปเป็นเท่านั้น</p>
+      <p>ไม่จำเป็นต้องเป็นคนที่</p>
+      <p>วาดรูปเป็นเท่านั้น</p>
     </div>
-    <!-- <div class="clouds4"></div>
-    <div class="clouds41"></div> -->
   </div>
   
   <!-- ======================= Section 5 ======================= -->
@@ -599,8 +609,8 @@
     <div class="cloud5"></div>
     <div class="texts5 fade-lines">
       <p>เพราะ ศิลปะบำบัด</p>
-      <p>เป็นศิลปะที่เน้นการแสดงออกของแต่ละบุคคลไม่ใช่</p>
-      <p>เพียงการแสดงความสวยงามจากโลกภายนอกเท่านั้น</p>
+      <p>เป็นศิลปะที่เน้นการแสดงออกของแต่ละบุคคล</p>
+      <p>ไม่ใช่เพียงการแสดงความสวยงามจากโลกภายนอกเท่านั้น</p>
     </div>
   </div>
   
@@ -650,7 +660,6 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          // ถ้าเป็น Section 8 ให้เพิ่มคลาส active เพื่อให้แอนิเมชันของ brush ทำงาน
           if (entry.target.id === 'section8') {
             entry.target.classList.add('active');
           }

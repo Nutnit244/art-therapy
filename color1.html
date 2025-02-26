@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ระบาย</title>
   <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png">
   <style>
-     @font-face {
+    @font-face {
       font-family: 'TORSILPCHILLCHILL';
       src: url('assets/TORSILPCHILLCHILL.TTF') format('truetype');
       font-weight: normal;
       font-style: normal;
     }
-    
+
+    @font-face {
+      font-family: "Noto Sans Thai";
+      src: url("assets/NotoSansThai-VariableFont_wdth,wght.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -24,7 +32,8 @@
     /* ใช้ vw สำหรับความกว้างของ container พร้อม aspect-ratio (890:700) */
     .frame-container {
       width: 80vw;
-      max-width: 890px; /* เพื่อจำกัดความกว้างสูงสุด */
+      max-width: 890px;
+      /* เพื่อจำกัดความกว้างสูงสุด */
       aspect-ratio: 890 / 700;
       margin: 0 auto;
       background-image: url('assets/img/frame.png');
@@ -92,11 +101,11 @@
     /* ปุ่ม Go Back ด้วยไอคอน SVG */
     .back-btn {
       position: absolute;
-      top: 1.4vw;    
-      left: 1.4vw;   
-      width: 4.2vw;  
-      height: 4.2vw; 
-      border: 0.07vw solid grey; 
+      top: 1.4vw;
+      left: 1.4vw;
+      width: 4.2vw;
+      height: 4.2vw;
+      border: 0.07vw solid grey;
       background-color: #fff;
       border-radius: 50%;
       display: flex;
@@ -107,6 +116,7 @@
       transition: all 0.2s ease-in-out;
       z-index: 1000;
     }
+
     .back-btn svg {
       width: 2.1vw;
       height: 2.1vw;
@@ -114,9 +124,11 @@
       transform: scaleX(-1);
       transition: fill 0.2s ease-in-out;
     }
+
     .back-btn:hover {
       background-color: #f187b5;
     }
+
     .back-btn:hover svg {
       fill: white;
     }
@@ -136,17 +148,20 @@
         bottom: 1vw;
         right: 2vw;
       }
+
       #addImageButton,
       #saveButton {
         padding: 0.8vw;
         font-size: 1vw;
       }
+
       .back-btn {
         top: 1.5vw;
         left: 1.5vw;
         width: 6vw;
         height: 6vw;
       }
+
       .back-btn svg {
         width: 2.5vw;
         height: 2.5vw;
@@ -154,6 +169,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- ปุ่ม Go Back -->
   <button class="back-btn" onclick="goBack()">
@@ -384,4 +400,5 @@
     });
   </script>
 </body>
+
 </html>

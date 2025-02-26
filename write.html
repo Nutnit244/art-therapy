@@ -7,158 +7,166 @@
   <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png">
   <title>ระบาย</title>
   <!-- <link rel="stylesheet" href="common/common.css" />  -->
-    <style>
-        @font-face {
-            font-family: 'TORSILPCHILLCHILL';
-            src: url('assets/TORSILPCHILLCHILL.TTF') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
+  <style>
+    @font-face {
+      font-family: 'TORSILPCHILLCHILL';
+      src: url('assets/TORSILPCHILLCHILL.TTF') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f4e9dd;
-            overflow-x: hidden;
-            height: 105vh;
-            font-family: 'TORSILPCHILLCHILL', sans-serif;
-        }
+    @font-face {
+      font-family: "Noto Sans Thai";
+      src: url("assets/NotoSansThai-VariableFont_wdth,wght.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
 
-        .line-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-        }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f4e9dd;
+      overflow-x: hidden;
+      height: 105vh;
+      font-family: 'TORSILPCHILLCHILL', sans-serif;
+    }
 
-        img.line {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100vw;
-            height: auto;
-            transform: translate(-50%, -50%) translateY(5vw);
-            opacity: 0;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
+    .line-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+    }
 
-        img.line.show {
-            opacity: 0.6;
-            transform: translate(-50%, -50%) translateY(0);
-        }
+    img.line {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: auto;
+      transform: translate(-50%, -50%) translateY(5vw);
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
 
-        .main-title {
-            position: absolute;
-            top: 20vh;
-            left: 40vw;
-            transform: translate(-50%, -50%);
-            color: #714937;
-            font-size: 3vw;
-            font-weight: normal;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            font-family: "TorsilpRajun2024", sans-serif;
-            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
-        }
+    img.line.show {
+      opacity: 0.6;
+      transform: translate(-50%, -50%) translateY(0);
+    }
 
-        .main-title.active {
-            opacity: 1;
-        }
+    .main-title {
+      position: absolute;
+      top: 20vh;
+      left: 40vw;
+      transform: translate(-50%, -50%);
+      color: #714937;
+      font-size: 3vw;
+      font-weight: normal;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      font-family: "TorsilpRajun2024", sans-serif;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
 
-        .final-text {
-            position: absolute;
-            bottom: 55%;
-            left: 22%;
-            text-align: center;
-            transform: scale(1.5);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            font-size: 2vw;
-        }
+    .main-title.active {
+      opacity: 1;
+    }
 
-        .final-text p {
-            margin: 0.5vw 0;
-            font-size: 1.5vw;
-            color: #714937
-        }
+    .final-text {
+      position: absolute;
+      bottom: 55%;
+      left: 22%;
+      text-align: center;
+      transform: scale(1.5);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      font-size: 2vw;
+    }
 
-        .final-button {
-            position: absolute;
-            bottom: 20%;
-            left: 43%;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
+    .final-text p {
+      margin: 0.5vw 0;
+      font-size: 1.5vw;
+      color: #714937
+    }
 
-        .final-button button {
-            padding: 1vw 2vw;
-            background-color:#f39eb6;
-            border: none;
-            border-radius: 3vw;
-            font-size: 1.4vw;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.2);
-            font-family: 'Noto Sans Thai', sans-serif;
-        }
+    .final-button {
+      position: absolute;
+      bottom: 20%;
+      left: 43%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
 
-        .final-button button:hover {
-            background-color: #e37daa;
-            color: white;
-        }
+    .final-button button {
+      padding: 1vw 2vw;
+      background-color: #f39eb6;
+      border: none;
+      border-radius: 3vw;
+      font-size: 1.4vw;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.2);
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
 
-        .final-icon {
-            position: absolute;
-            bottom: -1%;
-            right: 3%;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
+    .final-button button:hover {
+      background-color: #e37daa;
+      color: white;
+    }
 
-        .final-icon img {
-            width: 40vw;
-            height: auto;
-        }
+    .final-icon {
+      position: absolute;
+      bottom: -1%;
+      right: 3%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
 
-        .final-icon:hover {
-            transform: scale(1.1);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-    </style>
+    .final-icon img {
+      width: 40vw;
+      height: auto;
+    }
+
+    .final-icon:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
-    <!-- <div id="common-content"></div> -->
+  <!-- <div id="common-content"></div> -->
 
-    <div class="line-container">
-        <img src="assets/img/line1.png" alt="Line 1" class="line">
-        <img src="assets/img/line2.png" alt="Line 2" class="line">
-        <img src="assets/img/line3.png" alt="Line 3" class="line">
-        <img src="assets/img/line4.png" alt="Line 4" class="line">
-        <img src="assets/img/line5.png" alt="Line 5" class="line">
-    </div>
+  <div class="line-container">
+    <img src="assets/img/line1.png" alt="Line 1" class="line">
+    <img src="assets/img/line2.png" alt="Line 2" class="line">
+    <img src="assets/img/line3.png" alt="Line 3" class="line">
+    <img src="assets/img/line4.png" alt="Line 4" class="line">
+    <img src="assets/img/line5.png" alt="Line 5" class="line">
+  </div>
 
-    <div class="main-title">"การเขียนระบาย"</div>
+  <div class="main-title">"การเขียนระบาย"</div>
 
-    <div class="final-text">
-        <p>ช่วยระบายความรู้สึกนึกคิดที่ไม่สามารถพูดออกมาได้</p>
-        <p>สื่อสารแทนคำพูด</p>
-    </div>
+  <div class="final-text">
+    <p>ช่วยระบายความรู้สึกนึกคิดที่ไม่สามารถพูดออกมาได้</p>
+    <p>สื่อสารแทนคำพูด</p>
+  </div>
 
-    <div class="final-button">
-        <a href="write2.html">
-        <button>มาระบายความรู้สึกกับเรา👈🏼</button>
-        </a>
-    </div>
+  <div class="final-button">
+    <a href="write2.html">
+      <button>มาระบายความรู้สึกกับเรา👈🏼</button>
+    </a>
+  </div>
 
-    <div class="final-icon">
-        <a href="write2.html">
-            <img src="assets/img/iconbook.png" alt="Icon">
-        </a>
-    </div>
+  <div class="final-icon">
+    <a href="write2.html">
+      <img src="assets/img/iconbook.png" alt="Icon">
+    </a>
+  </div>
 
-    <script>
-       // โหลด common content และ common.js เมื่อหน้าเพจโหลดเสร็จ
+  <script>
+    // โหลด common content และ common.js เมื่อหน้าเพจโหลดเสร็จ
     // function includeHTML() {
     //   fetch('common/common.html')
     //     .then(response => response.text())
@@ -171,79 +179,79 @@
     // }
     // window.onload = includeHTML;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const lines = document.querySelectorAll('img.line');
-            const mainTitle = document.querySelector('.main-title');
-            const finalText = document.querySelector('.final-text');
-            const finalButton = document.querySelector('.final-button');
-            const finalIcon = document.querySelector('.final-icon');
+    document.addEventListener('DOMContentLoaded', () => {
+      const lines = document.querySelectorAll('img.line');
+      const mainTitle = document.querySelector('.main-title');
+      const finalText = document.querySelector('.final-text');
+      const finalButton = document.querySelector('.final-button');
+      const finalIcon = document.querySelector('.final-icon');
 
-            const handleScroll = () => {
-                const scrollY = window.scrollY;
-                const triggerPoint = 0;
+      const handleScroll = () => {
+        const scrollY = window.scrollY;
+        const triggerPoint = 0;
 
-                lines.forEach((line, index) => {
-                    const lineTrigger = triggerPoint + index * 1.5;
-                    if (scrollY > lineTrigger) {
-                        line.classList.add('show');
-                    } else {
-                        line.classList.remove('show');
-                    }
-                });
-
-                const finalTrigger = triggerPoint + (lines.length - 1) * 1.5;
-                if (scrollY > finalTrigger) {
-                    mainTitle.classList.add('active');
-                    finalText.style.opacity = '1';
-                    finalButton.style.opacity = '1';
-                    finalIcon.style.opacity = '1';
-                } else {
-                    mainTitle.classList.remove('active');
-                    finalText.style.opacity = '0';
-                    finalButton.style.opacity = '0';
-                    finalIcon.style.opacity = '0';
-                }
-            };
-
-            window.addEventListener('scroll', handleScroll);
+        lines.forEach((line, index) => {
+          const lineTrigger = triggerPoint + index * 1.5;
+          if (scrollY > lineTrigger) {
+            line.classList.add('show');
+          } else {
+            line.classList.remove('show');
+          }
         });
-         // จัดการเหตุการณ์ wheel สำหรับเปลี่ยนหน้า
-      let isScrolling = false;
-      const delayScroll = 1500; // หน่วงเวลา 1.5 วินาที
-      const scrollThreshold = 50; // ตรวจจับเมื่อ scroll อยู่ใกล้ขอบ (50px)
 
-      function smoothScroll(targetY) {
-        window.scrollTo({
-          top: targetY,
-          behavior: "smooth",
-        });
-      }
-
-      window.addEventListener("wheel", function (event) {
-        if (isScrolling) return;
-
-        const maxScroll = document.body.scrollHeight - window.innerHeight;
-
-        // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
-        if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
-          isScrolling = true;
-          smoothScroll(maxScroll);
-          setTimeout(() => {
-            window.location.href = "end.html"; // เปลี่ยนไปหน้า end.html
-          }, delayScroll);
+        const finalTrigger = triggerPoint + (lines.length - 1) * 1.5;
+        if (scrollY > finalTrigger) {
+          mainTitle.classList.add('active');
+          finalText.style.opacity = '1';
+          finalButton.style.opacity = '1';
+          finalIcon.style.opacity = '1';
+        } else {
+          mainTitle.classList.remove('active');
+          finalText.style.opacity = '0';
+          finalButton.style.opacity = '0';
+          finalIcon.style.opacity = '0';
         }
-        // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
-        else if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
-          isScrolling = true;
-          smoothScroll(0);
-          setTimeout(() => {
-            window.location.href = "color.html"; // เปลี่ยนไปหน้า color.html
-          }, delayScroll);
-        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+    });
+    // จัดการเหตุการณ์ wheel สำหรับเปลี่ยนหน้า
+    let isScrolling = false;
+    const delayScroll = 1500; // หน่วงเวลา 1.5 วินาที
+    const scrollThreshold = 50; // ตรวจจับเมื่อ scroll อยู่ใกล้ขอบ (50px)
+
+    function smoothScroll(targetY) {
+      window.scrollTo({
+        top: targetY,
+        behavior: "smooth",
       });
+    }
 
-          /****************** จัดการเหตุการณ์ Touch สำหรับ iPad/มือถือ ******************/
-          let touchStartY = 0;
+    window.addEventListener("wheel", function (event) {
+      if (isScrolling) return;
+
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+      // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
+      if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
+        isScrolling = true;
+        smoothScroll(maxScroll);
+        setTimeout(() => {
+          window.location.href = "end.html"; // เปลี่ยนไปหน้า end.html
+        }, delayScroll);
+      }
+      // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
+      else if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
+        isScrolling = true;
+        smoothScroll(0);
+        setTimeout(() => {
+          window.location.href = "color.html"; // เปลี่ยนไปหน้า color.html
+        }, delayScroll);
+      }
+    });
+
+    /****************** จัดการเหตุการณ์ Touch สำหรับ iPad/มือถือ ******************/
+    let touchStartY = 0;
     let touchEndY = 0;
 
     window.addEventListener("touchstart", (e) => {
@@ -280,6 +288,7 @@
 
   </script>
   <!-- <script src="common/common.js"></script> -->
-   
+
 </body>
+
 </html>
