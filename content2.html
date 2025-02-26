@@ -7,11 +7,13 @@
   <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
   <style>
     /* ---------------------- ตั้งค่าพื้นฐาน ---------------------- */
+    /* กำหนด overflow เป็น hidden เพื่อป้องกัน scroll ธรรมดา แต่รองรับการสัมผัสด้วย -webkit-overflow-scrolling */
     body, html {
       margin: 0;
       padding: 0;
       font-family: TorsilpChillChill, sans-serif;
-      overflow: hidden; /* ปิด scroll ธรรมดา */
+      overflow: hidden;
+      -webkit-overflow-scrolling: touch;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       background-attachment: fixed;
     }
@@ -21,6 +23,8 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
+      /* เพิ่ม touch-action เพื่อช่วยให้ gesture สัมผัสทำงานได้อย่างราบรื่น */
+      touch-action: pan-y;
     }
     /* ---------------------- Transition สำหรับแต่ละ Section ---------------------- */
     .section {
@@ -96,14 +100,9 @@
       animation: moveClouds 50s linear infinite;
     }
     @keyframes moveClouds {
-      0% {
-        left: 5.56vw;
-      }
-      100% {
-        left: 100vw;
-      }
+      0% { left: 5.56vw; }
+      100% { left: 100vw; }
     }
-
     @media screen and (max-width: 1179px) {
       .pcolor {
         bottom: -20vw;
@@ -113,7 +112,6 @@
         transform: translateX(-50%) translateY(-5vw);
       }
     }
-
     /* --- Section 2 --- */
     .section2 {
       position: absolute;
@@ -167,7 +165,6 @@
     .frame img.active {
       display: block;
     }
-    
     /* --- Section 3 --- */
     .section3 .Texts3 {
       font-size: 2.1vw;
@@ -292,6 +289,7 @@
       justify-content: space-around;
       align-items: center;
       margin-bottom: 1.39vw;
+      position: relative;
     }
     .emoji {
       object-fit: contain;
@@ -302,29 +300,30 @@
     .emoji.hidden {
       opacity: 0;
     }
+    /* ปรับตำแหน่งอิโมจิให้เลื่อนลงมา */
     #emoji-yellow {
-      top: 10%;
+      top: 10vw;
       left: 65%;
       width: 20.83vw;
       height: 20.83vw;
     }
+    #emoji-green {
+      top: 15vw;
+      left: 18%;
+      width: 17.36vw;
+      height: 17.36vw;
+    }
     #emoji-red {
-      bottom: 15%;
+      bottom: -7vw;
       left: 70%;
       width: 17.36vw;
       height: 17.36vw;
     }
     #emoji-blue {
-      bottom: 12%;
-      left: 7%;
+      bottom: -12vw;
+      left: 10%;
       width: 24.31vw;
       height: 24.31vw;
-    }
-    #emoji-green {
-      top: 10%;
-      left: 18%;
-      width: 17.36vw;
-      height: 17.36vw;
     }
     .text6 {
       font-size: 2.3vw;
@@ -355,7 +354,7 @@
       left: 20%;
       top: 45%;
       height: 50%;
-      background: url('assets/img/cloud1.PNG') no-repeat center center;
+      background: url('assets/img/cloud1.png') no-repeat center center;
       z-index: 1;
     }
     .clouds71 {
@@ -364,7 +363,7 @@
       bottom: 40%;
       height: 80%;
       right: 22%;
-      background: url('assets/img/cloud1.PNG') no-repeat center center;
+      background: url('assets/img/cloud1.png') no-repeat center center;
       z-index: 0;
     }
     /* --- Section 8 --- */
@@ -380,11 +379,11 @@
       bottom: 15%;
       left: 8%;
       font-size: 2.08vw;
-      color: #714937;
       text-align: center;
       line-height: 1.5;
       z-index: 2;
       font-family: TorsilpChillChill;
+      color: #714937;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
     .section8 .brush {
@@ -401,17 +400,12 @@
       animation: brushStroke 3s linear forwards;
     }
     @keyframes brushStroke {
-      0% {
-        transform: translateX(5vw);
-      }
-      100% {
-        transform: translateX(20vw);
-      }
+      0% { transform: translateX(5vw); }
+      100% { transform: translateX(20vw); }
     }
     .underline {
       border-bottom: 0.35vw solid #714937;
     }
-
     /* ---------- เอฟเฟคข้อความทีละบรรทัดใน section (ยกเว้น section1) ---------- */
     .section:not(.section1) p {
       opacity: 0;
@@ -422,7 +416,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-
     /* ---------- Media Query สำหรับอุปกรณ์ที่มีความกว้าง <= 375px ---------- */
     @media screen and (max-width: 375px) {
       .section1 .text1 {
@@ -458,18 +451,16 @@
       
       @media screen and (max-width: 745px) { 
         .clouds7,
-      .clouds71 {
-        height: 20vw;
+        .clouds71 {
+          height: 20vw;
+        }
       }
     }
-  }
-    
-    
   </style>
 </head>
 <body>
   <div class="sections-container">
-    <a href="Drawing.html"><button class="skipbutton">ข้าม</button></a>
+    <button class="skipbutton">ข้าม</button>
     <!-- ==================== Section 1 (Typewriter Effect + pcolor Image) ==================== -->
     <section class="section section1 active" id="section1">
       <div class="text1" id="typewriter"></div>
@@ -632,7 +623,7 @@
       if (skipButton) {
         skipButton.addEventListener('click', (e) => {
           e.stopPropagation();
-          window.location.href = "art3.html";
+          window.location.href = "Drawing.html";
         });
       }
 
@@ -697,9 +688,7 @@
           }, 100);
         }
         currentSection = nextSection;
-        setTimeout(() => {
-          isScrolling = false;
-        }, 1000);
+        setTimeout(() => { isScrolling = false; }, 1000);
       }
       
       /* ========= สลับ Section ด้วย event wheel ========= */
@@ -715,12 +704,11 @@
       let touchStartY = 0;
       let touchEndY = 0;
       function handleTouchStart(event) {
-        console.log("touchstart", event.changedTouches[0].screenY);
-        touchStartY = event.changedTouches[0].screenY;
+        // ใช้ clientY เพื่อความแม่นยำ
+        touchStartY = event.changedTouches[0].clientY;
       }
       function handleTouchEnd(event) {
-        console.log("touchend", event.changedTouches[0].screenY);
-        touchEndY = event.changedTouches[0].screenY;
+        touchEndY = event.changedTouches[0].clientY;
         handleGesture();
       }
       function handleGesture() {
@@ -734,10 +722,10 @@
       window.addEventListener('touchstart', handleTouchStart, false);
       window.addEventListener('touchend', handleTouchEnd, false);
       
-      // ป้องกัน default scroll behavior บนอุปกรณ์สัมผัส
-      window.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-      }, { passive: false });
+      /* 
+      หมายเหตุ: เราได้ลบ global listener สำหรับ 'touchmove' 
+      เนื่องจากการกำหนด e.preventDefault() บน window ทั้งหมดอาจขัดกับการทำงานของ gesture บนอุปกรณ์บางรุ่น
+      */
       
       /* ========= Slideshow สำหรับ Section 2 ========= */
       const images = document.querySelectorAll(".section2 .frame img");
