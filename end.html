@@ -38,7 +38,7 @@
       font-weight: n;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       overflow-y: scroll;
-      height: 600vh; /* เพิ่มพื้นที่เลื่อน */
+      height: 400vh; /* เพิ่มพื้นที่เลื่อน */
     }
 
     #ui-container {
@@ -145,22 +145,6 @@
   </div>
 
   <script>
-    // เมื่อโหลดหน้าแล้ว ให้ include HTML จาก common
-    // document.addEventListener("DOMContentLoaded", function () {
-    //   includeHTML();
-    // });
-
-    // function includeHTML() {
-    //   fetch('common/common.html')
-    //     .then(response => response.text())
-    //     .then(data => {
-    //       document.getElementById('common-content').innerHTML = data;
-    //       // โหลดสคริปต์ common.js หลังจาก include เสร็จ
-    //       const script = document.createElement('script');
-    //       script.src = 'common/common.js';
-    //       document.body.appendChild(script);
-    //     });
-    // }
 
     let isRedirecting = false;
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,8 +28,10 @@
       font-weight: normal;
       font-style: normal;
     }
+
     /* ป้องกันไม่ให้เลื่อนไปด้านขวา */
-    html, body {
+    html,
+    body {
       overflow-x: hidden;
       max-width: 100%;
       margin: 0;
@@ -42,6 +45,7 @@
       background: url('assets/img/bg.png') no-repeat center center/cover;
       background-attachment: fixed;
     }
+
     .section1,
     .section2,
     .section3,
@@ -60,20 +64,23 @@
       opacity: 0;
       transition: opacity 1s ease;
     }
+
     .visible {
       opacity: 1;
     }
+
     .fade-lines p {
       opacity: 0;
       transform: translateY(1vw);
       transition: opacity 1s ease, transform 1s ease;
       margin: 0.5vw 0;
     }
+
     .fade-lines p.show {
       opacity: 1;
       transform: translateY(0);
     }
-    
+
     /* ---------------------- สไตล์ใหม่ของ Section 1 (แบบ absolute overlay) ---------------------- */
     .sections-container {
       position: relative;
@@ -81,6 +88,7 @@
       height: 100vh;
       overflow: hidden;
     }
+
     .section {
       position: absolute;
       top: 0;
@@ -93,9 +101,11 @@
       flex-direction: column;
       text-align: center;
     }
+
     .section1 {
       position: relative;
     }
+
     .text1 {
       font-size: 3.5vw;
       text-align: center;
@@ -103,19 +113,25 @@
       color: #714937;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     .pcolor {
       position: absolute;
-      bottom: -9.7vw;
+      bottom: 0vw;
+      /* เปลี่ยนจาก -9.7vw เป็น 0 เพื่อให้แสดงส่วนท้ายเต็ม */
       left: 50%;
       transform: translateX(-50%);
       opacity: 0;
       transition: opacity 1s ease, transform 1s ease;
       z-index: 2;
+      width: 110vw;
     }
+
     .pcolor.show {
       opacity: 1;
-      transform: translateX(-50%) translateY(-1.4vw);
+      /* ลบ translateY ที่ดันขึ้นไป เพราะตอนนี้เราแสดงเต็มแล้ว */
+      transform: translateX(-50%);
     }
+
     .clouds {
       position: absolute;
       top: 2vw;
@@ -125,10 +141,17 @@
       z-index: 1;
       animation: moveClouds 50s linear infinite;
     }
+
     @keyframes moveClouds {
-      0% { left: 5.56vw; }
-      100% { left: 100vw; }
+      0% {
+        left: 5.56vw;
+      }
+
+      100% {
+        left: 100vw;
+      }
     }
+
     .skipbutton {
       position: absolute;
       bottom: 1.39vw;
@@ -143,20 +166,23 @@
       z-index: 100;
       font-family: 'Noto Sans Thai', sans-serif;
     }
+
     .skipbutton:hover {
       background-color: #f187b5;
       color: white;
     }
+
     @media screen and (max-width: 1179px) {
       .pcolor {
         bottom: -20vw;
         width: 189vw;
       }
+
       .pcolor.show {
         transform: translateX(-50%) translateY(-5vw);
       }
     }
-    
+
     /* ---------------------- ส่วน CSS ของ Section 2 - 8 (คงเดิม) ---------------------- */
     /* Section 2 */
     .section2 {
@@ -167,9 +193,11 @@
       transform: translateY(1vw);
       transition: opacity 1s ease, transform 1s ease;
     }
+
     .section2.visible {
       transform: translateY(0);
     }
+
     .frame {
       position: absolute;
       top: 0;
@@ -179,15 +207,18 @@
       height: 100%;
       z-index: 2;
     }
+
     .frame img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: none;
     }
+
     .frame img.active {
       display: block;
     }
+
     .text-title {
       font-size: 2.8vw;
       text-align: center;
@@ -196,6 +227,7 @@
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
       margin-bottom: 0.5vw;
     }
+
     .text {
       font-size: 1.7vw;
       text-align: center;
@@ -205,20 +237,23 @@
       margin-top: 0.5vw;
       margin-left: 10%;
     }
+
     /* Section 3 */
     .section3 {
       flex-direction: column;
     }
+
     .Texts3 {
       font-size: 2.1vw;
       text-align: center;
-      margin-top: 2.78vw; 
+      margin-top: 2.78vw;
       z-index: 2;
       font-family: TorsilpChillChill;
       font-weight: normal;
       color: #714937;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     .frame-large {
       position: absolute;
       width: 100%;
@@ -226,6 +261,7 @@
       background: url('assets/img/frame.png') no-repeat center center/contain;
       z-index: 2;
     }
+
     .cards-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -234,12 +270,14 @@
       position: relative;
       z-index: 2;
     }
+
     .card {
       width: 10.42vw;
       height: 10.42vw;
       perspective: 69.44vw;
       cursor: pointer;
     }
+
     .card-inner {
       width: 100%;
       height: 100%;
@@ -247,9 +285,11 @@
       transform-style: preserve-3d;
       transition: transform 0.6s;
     }
+
     .card.flipped .card-inner {
       transform: rotateY(180deg);
     }
+
     .card-front,
     .card-back {
       position: absolute;
@@ -260,22 +300,25 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      box-shadow: 0 0.56vw 0.83vw rgba(0,0,0,0.2);
+      box-shadow: 0 0.56vw 0.83vw rgba(0, 0, 0, 0.2);
       border: 0.07vw solid #BEBEBE;
       font-size: 0.97vw;
       text-align: center;
       font-family: 'TorsilpChillChill';
     }
+
     .card-front img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       border-radius: 50%;
     }
+
     .card-back {
       background: linear-gradient(135deg, #f3ec78, #87CEFA);
       transform: rotateY(180deg);
     }
+
     .clouds1 {
       position: absolute;
       bottom: 55%;
@@ -286,6 +329,7 @@
       background-size: cover;
       z-index: 1;
     }
+
     .clouds2 {
       position: absolute;
       width: 100%;
@@ -295,6 +339,7 @@
       background: url('assets/img/cloud1.png') no-repeat center center;
       z-index: 1;
     }
+
     .clouds22 {
       position: absolute;
       left: 70%;
@@ -304,12 +349,14 @@
       background: url('assets/img/cloud1.png') no-repeat center center/contain;
       z-index: 1;
     }
+
     /* Section 4 */
     .section4 {
       display: flex;
       align-items: center;
       justify-content: center;
     }
+
     .frame-f2 {
       background: url('assets/img/F2.png') no-repeat center center/contain;
       width: 80%;
@@ -318,6 +365,7 @@
       position: absolute;
       z-index: 1;
     }
+
     .palette-p {
       background: url('assets/img/P.png') no-repeat center center/contain;
       width: 25%;
@@ -327,6 +375,7 @@
       left: 30%;
       z-index: 2;
     }
+
     .text4 {
       font-size: 2.5vw;
       color: #714937;
@@ -337,6 +386,7 @@
       font-family: 'TorsilpChillChill';
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     .clouds4 {
       position: absolute;
       width: 100%;
@@ -346,6 +396,7 @@
       background: url('assets/img/cloud1.png') no-repeat center center;
       z-index: 1;
     }
+
     .clouds41 {
       position: absolute;
       width: 100%;
@@ -355,11 +406,13 @@
       background: url('assets/img/cloud1.png') no-repeat center center;
       z-index: 0;
     }
+
     /* Section 5 */
     .section5 {
       flex-direction: column;
       text-align: center;
     }
+
     .cloud5 {
       position: absolute;
       bottom: 25%;
@@ -368,6 +421,7 @@
       background: url('assets/img/clouds.png') no-repeat center center/contain;
       z-index: 1;
     }
+
     .texts5 {
       position: relative;
       z-index: 2;
@@ -377,10 +431,12 @@
       color: #714937;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
+
     /* Section 6 */
     .section6 {
       flex-direction: column;
     }
+
     .emoji-container {
       width: 100%;
       display: flex;
@@ -388,39 +444,46 @@
       align-items: center;
       margin-bottom: 20px;
     }
+
     .emoji {
       object-fit: contain;
       opacity: 0;
       transition: opacity 1s ease;
       position: absolute;
     }
+
     .emoji.hidden {
       display: none;
     }
+
     #emoji-yellow {
       top: 10%;
-      left: 62%;
+      left: 65%;
       width: 18vw;
       height: 18vw;
     }
+
     #emoji-red {
       bottom: 15%;
       left: 70%;
       width: 15vw;
       height: 15vw;
     }
+
     #emoji-blue {
       bottom: 12%;
       left: 10%;
       width: 20vw;
       height: 20vw;
     }
+
     #emoji-green {
       top: 10%;
       left: 20%;
       width: 15vw;
       height: 15vw;
     }
+
     .text6 {
       font-size: 2.5vw;
       color: #714937;
@@ -429,10 +492,12 @@
       margin-top: 20px;
       z-index: 2;
     }
+
     /* Section 7 */
     .section7 {
       flex-direction: column;
     }
+
     .text7 {
       font-size: 2.5vw;
       line-height: 1.3vw;
@@ -441,29 +506,50 @@
       text-align: center;
       z-index: 2;
     }
+
     .clouds7 {
       position: absolute;
       width: 150vw;
       left: 20%;
-      top: 45%;
+      top: -8%;
       height: 50%;
-      background: url('assets/img/cloud1.png') no-repeat center center;
+      background: url('assets/img/cloud1.PNG') no-repeat center center;
       z-index: 1;
     }
+
     .clouds71 {
       position: absolute;
       width: 150vw;
       bottom: 40%;
       height: 80%;
       right: 22%;
-      background: url('assets/img/cloud1.png') no-repeat center center;
+      background: url('assets/img/cloud1.PNG') no-repeat center center;
       z-index: 0;
     }
+
+    .people {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+      z-index: 2;
+      width: 110vw;
+      /* ปรับความกว้างตามที่ต้องการ */
+    }
+
+    .people.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-0.5vw);
+    }
+
     /* Section 8 */
     .section8 {
       flex-direction: column;
       background: url('assets/img/Bg8.png') no-repeat center center/cover;
     }
+
     .littlebg {
       position: absolute;
       width: 100%;
@@ -471,6 +557,7 @@
       background: url('assets/img/Bg8.png') no-repeat center center/cover;
       z-index: 1;
     }
+
     .text8 {
       position: absolute;
       bottom: 20%;
@@ -482,6 +569,7 @@
       line-height: 1.5;
       z-index: 2;
     }
+
     .brush {
       position: absolute;
       bottom: 0;
@@ -491,32 +579,36 @@
       background: url('assets/img/rainbow.png') no-repeat center/cover;
       z-index: 1;
     }
+
     .section8.active .brush {
       animation: brushStroke 3s linear forwards;
     }
+
     @keyframes brushStroke {
       0% {
         transform: translateX(5vw);
       }
+
       100% {
         transform: translateX(20vw);
       }
     }
   </style>
 </head>
+
 <body>
   <div id="common-content"></div>
-  
+
   <!-- ======================= New Section 1 ======================= -->
   <div class="sections-container">
     <section class="section section1 active" id="section1">
       <div class="text1" id="typewriter"></div>
-      <img src="assets/img/pcolor.PNG" alt="pcolor" class="pcolor" id="pcolor">
+      <img src="assets/img/brush4.PNG" alt="pcolor" class="pcolor" id="pcolor">
       <img src="assets/img/clouds.png" alt="clouds" class="clouds">
       <button class="skipbutton" onclick="window.location.href='Drawing.html'">ข้าม</button>
     </section>
   </div>
-  
+
   <!-- ======================= Section 2 ======================= -->
   <div class="section2 fade-lines" id="section2">
     <div class="text fade-lines" id="text-content">
@@ -537,7 +629,7 @@
       <img src="assets/img/C1 5.png" alt="Image 5" id="frame-image-5" />
     </div>
   </div>
-  
+
   <!-- ======================= Section 3 ======================= -->
   <div class="section3 fade-lines" id="section3">
     <div class="frame-large"></div>
@@ -593,7 +685,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- ======================= Section 4 ======================= -->
   <div class="section4 fade-lines" id="section4">
     <div class="frame-f2"></div>
@@ -603,7 +695,7 @@
       <p>วาดรูปเป็นเท่านั้น</p>
     </div>
   </div>
-  
+
   <!-- ======================= Section 5 ======================= -->
   <div class="section5 fade-lines">
     <div class="cloud5"></div>
@@ -613,7 +705,7 @@
       <p>ไม่ใช่เพียงการแสดงความสวยงามจากโลกภายนอกเท่านั้น</p>
     </div>
   </div>
-  
+
   <!-- ======================= Section 6 ======================= -->
   <div class="section6 fade-lines">
     <div class="emoji-container">
@@ -629,7 +721,7 @@
       <p>ผ่านเหตุการณ์ต่างๆ ได้มากขึ้น</p>
     </div>
   </div>
-  
+
   <!-- ======================= Section 7 ======================= -->
   <div class="section7 fade-lines">
     <div class="text7 fade-lines">
@@ -639,8 +731,9 @@
     </div>
     <div class="clouds7"></div>
     <div class="clouds71"></div>
+    <img src="assets/img/people1.PNG" alt="People Image" class="people" id="people7">
   </div>
-  
+
   <!-- ======================= Section 8 ======================= -->
   <div class="section8 fade-lines" id="section8">
     <div class="littlebg"></div>
@@ -650,7 +743,7 @@
     </div>
     <div class="brush"></div>
   </div>
-  
+
   <script>
     // Observer สำหรับ fade in ทุก section
     const sections = document.querySelectorAll(
@@ -776,7 +869,7 @@
       }, 1000);
     });
 
-    
+
     // จัดการเหตุการณ์ wheel สำหรับเปลี่ยนหน้า
     let isScrolling = false;
     const delayScroll = 1500; // หน่วงเวลา 1.5 วินาที
@@ -848,6 +941,20 @@
       }
     }
 
+    // ตัวอย่างเพิ่ม class show ให้กับ .people เมื่อ Section 7 ปรากฏ
+    const section7 = document.querySelector('.section7');
+    const peopleImage = document.getElementById('people7');
+    const section7Observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          peopleImage.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    section7Observer.observe(section7);
+
   </script>
 </body>
+
 </html>
