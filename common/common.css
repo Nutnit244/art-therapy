@@ -1,107 +1,178 @@
+/* --------------------- กล่องเมนูหลัก --------------------- */
+.floating-menu {
+  position: fixed;
+  top: 2vw;           
+  right: 7vw;         
+  width: 16.5vw;        
+  background-color: #fff;
+  border: 0.05vw solid #ccc;  
+  border-radius: 0.31vw;       
+  box-shadow: 0 0.21vw 0.42vw rgba(0, 0, 0, 0.1); 
+  overflow: hidden;
+  z-index: 9999;
+  font-family: "TorsilpChillChill", sans-serif;
+}
 
- /* --------------------- กล่องเมนูหลัก --------------------- */
- .floating-menu {
-    position: fixed;
-    top: 20px;
-    right: 100px;          /* เว้นระยะจากขอบขวา เพื่อให้ปุ่มสามขีดลอยด้านขวาสุดได้ */
-    width: 270px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    overflow: hidden;
-    z-index: 9999;
-    font-family: "TorsilpChillChill", sans-serif; /* หรือฟอนต์อื่น */
-  }
+/* รายการเมนูหลัก */
+.floating-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  /* รายการเมนูหลัก */
-  .floating-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+/* เมนูย่อยซ่อนอยู่ก่อน */
+.submenu {
+  display: none;
+}
 
-  /* เมนูย่อยซ่อนอยู่ก่อน */
-  .submenu {
-    display: none;
-  }
+/* ถ้า li มีคลาส .open => โชว์เมนูย่อย */
+.has-submenu.open .submenu {
+  display: block;
+}
 
-  /* ถ้า li มีคลาส .open => โชว์เมนูย่อย */
-  .has-submenu.open .submenu {
-    display: block;
-  }
+/* สไตล์ li */
+.floating-menu li {
+  border-bottom: 0.05vw solid #eee; /* 1px */
+  padding: 0.42vw 0.63vw;          
+}
 
-  /* สไตล์ li */
-  .floating-menu li {
-    border-bottom: 1px solid #eee;
-    padding: 8px 12px;
-  }
+/* เอาเส้นขอบล่างรายการสุดท้ายออก */
+.floating-menu li:last-child {
+  border-bottom: none;
+}
 
-  /* เอาเส้นขอบล่างรายการสุดท้ายออก */
-  .floating-menu li:last-child {
-    border-bottom: none;
-  }
+/* ลิงก์ในเมนู */
+.floating-menu li a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+}
 
-  /* ลิงก์ในเมนู */
-  .floating-menu li a {
-    text-decoration: none;
-    color: #000;
-    display: block;
-  }
+.floating-menu p {
+  font-family: TorsilpChillChill;
+  font-weight: bold;
+  background-color: #e0e0e0;
+  padding: 0.6vw;
+  margin: 0.1vw;
+}
 
-  .floating-menu p {
-        font-family: TorsilpChillChill;
-        font-weight: bold;
-        background-color: #e0e0e0;
-        padding: 10px;
-        margin: 0;
-  }
+/* hover เปลี่ยนพื้นหลัง */
+.floating-menu li:hover {
+  background-color: #f2f2f2;
+}
 
-  /* hover เปลี่ยนพื้นหลัง */
-  .floating-menu li:hover {
-    background-color: #f2f2f2;
-  }
+/* เมนูย่อยเยื้องขวาเล็กน้อย */
+.submenu li {
+  padding-left: 1.25vw;  
+}
 
-  /* เมนูย่อยเยื้องขวาเล็กน้อย */
-  .submenu li {
-    padding-left: 24px;
-  }
+/* ลูกศรข้าง Workshops */
+.arrow {
+  margin-left: 0.26vw;     
+}
 
-  /* ลูกศรข้าง Workshops */
-  .arrow {
-    margin-left: 5px;
-  }
+/* คลาสสำหรับ "ซ่อน" เมนู (display: none) */
+.hidden {
+  display: none !important;
+}
 
-  /* คลาสสำหรับ "ซ่อน" เมนู (display: none) */
-  .hidden {
-    display: none !important;
-  }
+/* --------------------- ปุ่มกลม (Hamburger + Sound) --------------------- */
+.icon-buttons {
+  position: fixed;
+  top: 1.5vw;           
+  right: 2vw;        
+  display: flex;
+  flex-direction: column;  
+  gap: 0.52vw;            
+  z-index: 99999;          
+}
 
-  /* --------------------- ปุ่มกลม (Hamburger + Sound) --------------------- */
+.circle-button {
+  width: 4vw;        
+  height: 4vw;        
+  border-radius: 50%;
+  border: 0.05vw solid grey;  
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.21vw 0.42vw rgba(0, 0, 0, 0.1); 
+}
+
+.circle-button img {
+  width: 3vw;         
+  height: 3vw;        
+}
+
+
+/* มือถือ */
+@media screen and (max-width: 1000px) {
   .icon-buttons {
     position: fixed;
-    top: 20px;
-    right: 35px;   /* ชิดขวาสุดของจอ */
+    top: 1.5vw;           
+    right: 1.5vw;         
     display: flex;
-    flex-direction: column;  /* เรียงปุ่มบน-ล่าง */
-    gap: 10px;
-    z-index: 99999; /* ให้อยู่เหนือเมนู */
+    flex-direction: column;  
+    gap: 0.52vw;            
+    z-index: 99999;         
   }
-
+  
+  .floating-menu {
+    position: fixed;
+    top: 2vw;           
+    right: 7vw;       
+    width: 22vw;        
+  }
   .circle-button {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    border: 1px solid grey;
-    background-color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 4.2vw;      
+    height: 4.2vw;        
   }
-
   .circle-button img {
-    width: 45px;
-    height: 45px;
+    width: 4vw;         
+    height: 4vw;       
   }
+  .floating-menu p {
+    font-size: 1.4vw;
+    
+  }
+  .floating-menu li {
+    font-size: 1.4vw;
+  }
+  
+}
+
+/* ไอแพด */
+@media screen and (min-width: 1024px) and (max-width: 1400px) {
+  .icon-buttons {
+    position: fixed;
+    top: 1.5vw;           
+    right: 3vw;         
+    display: flex;
+    flex-direction: column;  
+    gap: 1vw;             
+    z-index: 99999;         
+  }
+  
+  .floating-menu {
+    position: fixed;
+    top: 2vw;          
+    right: 10vw;     
+    width: 25vw;       
+  }
+  .circle-button {
+    width: 5.5vw;      
+    height: 5.5vw;        
+  }
+  .circle-button img {
+    width: 4.5vw;         
+    height: 4.5vw;       
+  }
+  .floating-menu p {
+    font-size: 1.6vw;
+    
+  }
+  .floating-menu li {
+    font-size: 1.6vw;
+  }
+}
