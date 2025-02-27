@@ -17,7 +17,7 @@
   box-shadow: 0 0.21vw 0.42vw rgba(0, 0, 0, 0.1); 
   overflow: hidden;
   z-index: 9999;
-  font-family: "MN Tonkatsu Italic", sans-serif;
+  font-family: "MN Tonkatsu Italic";
 }
 
 /* รายการเมนูหลัก */
@@ -56,7 +56,7 @@
 }
 
 .floating-menu p {
-  font-family: "MN Tonkatsu Italic", sans-serif;
+  font-family: "MN Tonkatsu Italic";
   font-weight: bold;
   background-color: #e0e0e0;
   padding: 0.6vw;
