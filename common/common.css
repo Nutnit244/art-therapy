@@ -1,4 +1,11 @@
 /* --------------------- กล่องเมนูหลัก --------------------- */
+@font-face {
+  font-family: 'TORSILPCHILLCHILL';
+  src: url('assets/TORSILPCHILLCHILL.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .floating-menu {
   position: fixed;
   top: 2vw;           

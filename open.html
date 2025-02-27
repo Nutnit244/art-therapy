@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,8 +9,25 @@
   <!-- <link rel="stylesheet" href="common/common.css" /> -->
 
   <style>
+    @font-face {
+      font-family: 'Noto Sans Thai';
+      src: url('assets/NotoSansThaiVariableFont_wdth.wght.ttf') format('truetype');
+      font-weight: 100 900;
+      /* หากเป็น Variable Font */
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'TorsilpChillChill';
+      src: url('assets/TorsilpChillChill.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+
     /* ป้องกันการเลื่อนแนวนอน */
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       overflow-x: hidden;
@@ -17,6 +35,7 @@
       height: 250vh;
       box-sizing: border-box;
     }
+
     body::after {
       content: '';
       display: block;
@@ -264,13 +283,16 @@
         padding: 1.5vw;
         border-radius: 0.8vw;
       }
+
       #popup h2 {
         font-size: 2vw;
       }
+
       #popup p,
       #popup ul {
         font-size: 1.8vw;
       }
+
       #popup button {
         margin-top: 1vw;
         padding: 1vw 1.5vw;
@@ -286,13 +308,16 @@
         padding: 2vw;
         border-radius: 1vw;
       }
+
       #popup h2 {
         font-size: 3vw;
       }
+
       #popup p,
       #popup ul {
         font-size: 2.5vw;
       }
+
       #popup button {
         margin-top: 1.5vw;
         padding: 1.5vw 2vw;
@@ -306,29 +331,36 @@
       .clouds {
         height: 60vh;
       }
+
       .flower1 {
         height: 50vw;
       }
+
       .flower2 {
         top: -15vw;
         height: 50vw;
       }
+
       .flower3 {
         top: -10vw;
         height: 60vw;
       }
+
       .logo {
         width: 80vw;
         left: 50vw;
         top: 4vw;
       }
+
       .house,
       .doorclose {
         width: 100vw;
       }
+
       .door-text {
         font-size: 1.2rem;
       }
+
       .subtitle {
         font-size: 1rem;
       }
@@ -339,29 +371,36 @@
       .clouds {
         height: 60vh;
       }
+
       .flower1 {
         height: 50vw;
       }
+
       .flower2 {
         height: 50vw;
         top: -9vw;
       }
+
       .flower3 {
         height: 60vw;
         top: -9vw;
       }
+
       .logo {
         width: 80vw;
         left: 50vw;
         top: 4vw;
       }
+
       .house,
       .doorclose {
         width: 100vw;
       }
+
       .door-text {
         font-size: 0.8rem;
       }
+
       .subtitle {
         font-size: 0.9rem;
       }
@@ -371,20 +410,25 @@
       .clouds {
         height: 50vh;
       }
+
       .flower1 {
         height: 80vh;
       }
+
       .flower2 {
         top: 4vw;
         height: 50vw;
       }
+
       .flower3 {
         top: 6vw;
         height: 60vw;
       }
+
       .logo {
         top: 10vw;
       }
+
       .house,
       .doorclose {
         width: 100vw;
@@ -392,17 +436,21 @@
         height: 60vw;
         left: 55vw;
       }
+
       .door-text {
         font-size: 1rem;
         left: 70%;
       }
+
       .subtitle {
         font-size: 1rem;
         padding: 5px 10px;
       }
+
       .video-container video {
         object-fit: cover;
       }
+
       /* ป้องกันการ scroll */
       .no-scroll {
         overflow: hidden !important;
@@ -410,6 +458,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Popup ก่อนเข้าชม -->
   <div id="popup-overlay">
@@ -417,7 +466,8 @@
       <h2>ก่อนเข้าชม</h2>
       <p><b>คำแนะนำ</b> : หมุนหน้าจอในแนวนอนเพื่ออรรถรส </p>
       <img src="assets/img/rotate.png" alt="Rotate Screen" style="display: block; width: 10%; margin: 0 auto;">
-      <p>เว็บไซต์นี้เป็นเพียงการให้ความรู้และทดลองทำกิจกรรมที่เกี่ยวข้องกับศิลปะบำบัด ไม่ได้เป็นการช่วยบำบัดแต่อย่างใด</p>
+      <p>เว็บไซต์นี้เป็นเพียงการให้ความรู้และทดลองทำกิจกรรมที่เกี่ยวข้องกับศิลปะบำบัด ไม่ได้เป็นการช่วยบำบัดแต่อย่างใด
+      </p>
       <ul style="text-align: center;">
         "ขอให้ทุกท่านเพลิดเพลินกับเว็บไซต์ของเรา"
       </ul>
@@ -668,4 +718,5 @@
   </script>
   <!-- <script src="common/common.js"></script> -->
 </body>
+
 </html>

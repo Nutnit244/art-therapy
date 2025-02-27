@@ -21,6 +21,13 @@
             font-style: normal;
         }
 
+        @font-face {
+            font-family: "Noto Sans Thai";
+            src: url("assets/NotoSansThai-VariableFont_wdth,wght.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
             background: url('assets/img/bg.png') no-repeat center center/cover;
             background-size: cover;
@@ -151,26 +158,26 @@
         </div>
     </div>
     <script>
-         let isRedirecting = false;
+        let isRedirecting = false;
 
-window.addEventListener("scroll", function () {
-  if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
+        window.addEventListener("scroll", function () {
+            if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
 
-  // ถ้าอยู่ด้านบน (scrollY <= 0)
-  if (window.scrollY <= 0) {
-    isRedirecting = true;
-    setTimeout(() => {
-      window.location.href = "end.html";
-    }, 1000);
-  }
-  // ถ้าอยู่ด้านล่าง
-  else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
-    isRedirecting = true;
-    setTimeout(() => {
-      window.location.href = "member.html";
-    }, 1000);
-  }
-});
+            // ถ้าอยู่ด้านบน (scrollY <= 0)
+            if (window.scrollY <= 0) {
+                isRedirecting = true;
+                setTimeout(() => {
+                    window.location.href = "end.html";
+                }, 1000);
+            }
+            // ถ้าอยู่ด้านล่าง
+            else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+                isRedirecting = true;
+                setTimeout(() => {
+                    window.location.href = "member.html";
+                }, 1000);
+            }
+        });
     </script>
 
 </body>
