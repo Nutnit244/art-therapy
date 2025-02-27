@@ -12,6 +12,7 @@
       font-family: 'TORSILPCHILLCHILL';
       src: url('assets/TORSILPCHILLCHILL.TTF') format('truetype');
     }
+
     body {
       margin: 0;
       font-family: 'TorsilpChillChill';
@@ -23,7 +24,8 @@
 
     .container {
       text-align: center;
-      padding-top: 1vw;
+      padding-bottom: 5vh;
+      padding-top: 3vh;
     }
 
     .title {
@@ -211,14 +213,20 @@
     <div class="flowerm3"></div>
   </div>
   <script>
+    let isRedirecting = false;
+
     window.addEventListener("scroll", function () {
+      if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
+
+      // ถ้าอยู่ด้านบน (scrollY <= 0)
       if (window.scrollY <= 0) {
+        isRedirecting = true;
         setTimeout(() => {
-          // เปลี่ยนหน้าไปยัง end.html โดยมี anchor "#last-section"
           window.location.href = "end2.html";
         }, 1000);
       }
     });
+
   </script>
 </body>
 
