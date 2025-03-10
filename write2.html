@@ -8,7 +8,7 @@
   <title>ระบาย</title>
   <!-- <link rel="stylesheet" href="common/common.css"> -->
   <style>
-      @font-face {
+    @font-face {
       font-family: 'MN Tonkatsu Italic';
       src: url('assets/MN Tonkatsu Italic.ttf') format('truetype');
       font-weight: normal;
@@ -176,7 +176,6 @@
 </head>
 
 <body>
-  <!-- <div id="common-content"></div> -->
   <!-- ปุ่ม Go Back -->
   <button class="back-btn" onclick="goBack()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -195,22 +194,22 @@
     </div>
   </div>
   <script>
-  
-  function goBack() {
+
+    function submitText() {
+      const text = document.querySelector('.text-area').value.trim();
+      if (text === '') {
+        alert('กรุณากรอกข้อความก่อนกดเสร็จสิ้น');
+      } else {
+        localStorage.setItem('userMessage', text); // บันทึกข้อความ
+        window.location.href = "write3.html"; // ส่งไป write3.html
+      }
+    }
+
+    function goBack() {
       window.location.href = 'Drawing.html#line-animation';
     }
 
-    function submitText() {
-      const text = document.querySelector('.text-area').value;
-      if (text.trim() === '') {
-        alert('กรุณากรอกข้อความก่อนกดเสร็จสิ้น');
-      } else {
-        // เมื่อมีข้อความใน textarea ให้เปลี่ยนหน้าไปยัง write3.html
-        window.location.href = "write3.html";
-      }
-    }
   </script>
-  <!-- <script src="common/common.js"></script> -->
 </body>
 
 </html>

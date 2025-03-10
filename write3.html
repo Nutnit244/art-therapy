@@ -7,7 +7,7 @@
   <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
   <title>ระบาย</title>
   <style>
-      @font-face {
+    @font-face {
       font-family: 'MN Tonkatsu Italic';
       src: url('assets/MN Tonkatsu Italic.ttf') format('truetype');
       font-weight: normal;
@@ -140,6 +140,21 @@
     .share-btn img:hover {
       background-color: #f6f2f2;
     }
+
+    .encouragement-box {
+      position: absolute;
+      top: 50%;
+      left: 57%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 2vw;
+      border-radius: 1.5vw;
+      text-align: center;
+      font-size: 1.5vw;
+      color: #714937;
+      font-family: "MN Tonkatsu Italic", sans-serif;
+      box-shadow: 0 0.4vw 0.6vw rgba(0, 0, 0, 0.2);
+    }
   </style>
 </head>
 
@@ -151,92 +166,130 @@
     </svg>
   </button>
 
-  <div class="content-wrapper">
+  <div class="encouragement-box">
+    <p id="encouragement-message">กำลังโหลดข้อความให้กำลังใจ...</p>
+  </div>
+
+
+  <!-- <div class="content-wrapper">
     <div class="container">
       <img id="randomImage" src="" alt="Random Image">
     </div>
 
     <div class="action-buttons">
-      <!-- ปุ่มบันทึกด้วยไอคอน -->
       <button class="save-btn" onclick="saveImage()">
         <img src="assets/img/save.png" alt="บันทึก">
       </button>
-      <!-- ปุ่มแชร์ด้วยไอคอน -->
       <button class="share-btn" onclick="shareImage()">
         <img src="assets/img/share.png" alt="แชร์">
       </button>
-    </div>
+    </div> -->
   </div>
 
   <script>
+
+    const encouragementMessages = [
+      { keywords: ['เหนื่อย', 'ท้อ', 'หมดแรง'], message: "เหนื่อยได้แต่อย่ายอมแพ้นะ! ทุกความพยายามมีค่ามากกว่าที่คิด 💖" },
+      { keywords: ['เศร้า', 'เสียใจ', 'ร้องไห้'], message: "ทุกอย่างจะผ่านไปนะ เราอยู่ข้างๆ คุณเสมอ 🫂" },
+      { keywords: ['กังวล', 'กลัว', 'ไม่มั่นใจ'], message: "คุณเก่งกว่าที่คุณคิดนะ! เชื่อมั่นในตัวเอง 💪" },
+      { keywords: ['ความรัก', 'อกหัก', 'เสียความรู้สึก'], message: "ความรักไม่ใช่เรื่องง่าย แต่คุณจะผ่านมันไปได้ ✨" },
+      { keywords: ['สู้ๆ', 'พยายาม', 'ก้าวต่อไป'], message: "คุณทำได้แน่นอน! อย่าลืมภูมิใจในตัวเองนะ ❤️" },
+      { keywords: ['เหงา', 'เดียวดาย', 'ไม่มีใคร'], message: "คุณไม่ได้อยู่คนเดียวนะ ยังมีคนที่รักและห่วงใยคุณเสมอ 🤗" },
+      { keywords: ['ทำผิด', 'ล้มเหลว', 'พลาด'], message: "ความผิดพลาดคือบทเรียน ทุกก้าวที่เดินไปคือโอกาสใหม่ ✨" },
+      { keywords: ['เครียด', 'กดดัน', 'หนักใจ'], message: "หายใจลึกๆ แล้วค่อยๆ จัดการทีละอย่าง คุณทำได้! 🌱" },
+      { keywords: ['ดีใจ', 'สำเร็จ', 'มีความสุข'], message: "ดีใจกับคุณด้วย! คุณสมควรได้รับสิ่งดีๆ ในชีวิต 🎉" },
+      { keywords: ['ฝัน', 'เป้าหมาย', 'อนาคต'], message: "อย่าหยุดฝันและเดินตามเป้าหมายของตัวเองนะ! 🚀" },
+      { keywords: ['เริ่มต้นใหม่', 'โอกาส', 'เปลี่ยนแปลง'], message: "ทุกการเริ่มต้นใหม่เต็มไปด้วยความเป็นไปได้ ขอให้โชคดี! 🌈" },
+      { keywords: ['เบื่อ', 'หมดไฟ', 'ไร้แรงบันดาลใจ'], message: "บางครั้งการพักก็สำคัญนะ ให้เวลากับตัวเองหน่อย 💆‍♂️" }
+    ];
+
+    // ดึงข้อความของผู้ใช้จาก localStorage
+    const userMessage = localStorage.getItem('userMessage') || '';
+
+    // ฟังก์ชันเลือกข้อความให้กำลังใจ
+    function getEncouragementMessage(text) {
+      for (const item of encouragementMessages) {
+        if (item.keywords.some(keyword => text.includes(keyword))) {
+          return item.message;
+        }
+      }
+      return "คุณเป็นคนที่มีค่า และเราอยากให้คุณมีความสุขเสมอ 😊"; // ข้อความเริ่มต้นหากไม่มีคำที่ตรง
+    }
+
+    // แสดงข้อความให้กำลังใจ
+    document.addEventListener("DOMContentLoaded", function () {
+      const encouragementText = getEncouragementMessage(userMessage);
+      document.getElementById("encouragement-message").innerText = encouragementText;
+    });
+
     function goBack() {
       window.location.href = "Drawing.html#line-animation";
     }
 
-    const images = [
-      'assets/img/rabyewrite3_1.png',
-      'assets/img/rabyewrite3_2.png',
-      'assets/img/rabyewrite3_3.png',
-      'assets/img/rabyewrite3_4.png',
-      'assets/img/rabyewrite3_5.png',
-      'assets/img/rabyewrite3_6.png',
-      'assets/img/rabyewrite3_7.png',
-      'assets/img/rabyewrite3_8.png',
-      'assets/img/rabyewrite3_9.png'
-    ];
+    // const images = [
+    //   'assets/img/rabyewrite3_1.png',
+    //   'assets/img/rabyewrite3_2.png',
+    //   'assets/img/rabyewrite3_3.png',
+    //   'assets/img/rabyewrite3_4.png',
+    //   'assets/img/rabyewrite3_5.png',
+    //   'assets/img/rabyewrite3_6.png',
+    //   'assets/img/rabyewrite3_7.png',
+    //   'assets/img/rabyewrite3_8.png',
+    //   'assets/img/rabyewrite3_9.png'
+    // ];
 
-    function displayRandomImage() {
-      const randomIndex = Math.floor(Math.random() * images.length);
-      document.getElementById('randomImage').src = images[randomIndex];
-    }
-    displayRandomImage();
+    // function displayRandomImage() {
+    //   const randomIndex = Math.floor(Math.random() * images.length);
+    //   document.getElementById('randomImage').src = images[randomIndex];
+    // }
+    // displayRandomImage();
 
-    function saveImage() {
-      const imgSrc = document.getElementById('randomImage').src;
-      const a = document.createElement('a');
-      a.href = imgSrc;
-      const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
+    // function saveImage() {
+    //   const imgSrc = document.getElementById('randomImage').src;
+    //   const a = document.createElement('a');
+    //   a.href = imgSrc;
+    //   const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+    //   a.download = fileName;
+    //   document.body.appendChild(a);
+    //   a.click();
+    //   document.body.removeChild(a);
+    // }
 
-    async function shareImage() {
-      const imgElement = document.getElementById('randomImage');
-      const imgSrc = imgElement.src;
+    // async function shareImage() {
+    //   const imgElement = document.getElementById('randomImage');
+    //   const imgSrc = imgElement.src;
 
-      try {
-        const response = await fetch(imgSrc);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const blob = await response.blob();
-        const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-        const file = new File([blob], fileName, { type: blob.type });
+    //   try {
+    //     const response = await fetch(imgSrc);
+    //     if (!response.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //     const blob = await response.blob();
+    //     const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
+    //     const file = new File([blob], fileName, { type: blob.type });
 
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            files: [file],
-            title: 'ดูรูปนี้สิ!',
-            text: 'ฉันเจอรูปนี้และคิดว่าคุณน่าจะชอบ'
-          });
-          console.log('แชร์สำเร็จด้วยการแชร์ไฟล์');
-        } else if (navigator.share) {
-          await navigator.share({
-            title: 'ดูรูปนี้สิ!',
-            text: 'ฉันเจอรูปนี้และคิดว่าคุณน่าจะชอบ',
-            url: imgSrc
-          });
-          console.log('แชร์สำเร็จด้วย URL');
-        } else {
-          alert('เบราว์เซอร์ของคุณไม่รองรับการแชร์');
-        }
-      } catch (error) {
-        console.error('Error sharing:', error);
-        alert('เกิดข้อผิดพลาดในการแชร์รูป: ' + error.message);
-      }
-    }
+    //     if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    //       await navigator.share({
+    //         files: [file],
+    //         title: 'ดูรูปนี้สิ!',
+    //         text: 'ฉันเจอรูปนี้และคิดว่าคุณน่าจะชอบ'
+    //       });
+    //       console.log('แชร์สำเร็จด้วยการแชร์ไฟล์');
+    //     } else if (navigator.share) {
+    //       await navigator.share({
+    //         title: 'ดูรูปนี้สิ!',
+    //         text: 'ฉันเจอรูปนี้และคิดว่าคุณน่าจะชอบ',
+    //         url: imgSrc
+    //       });
+    //       console.log('แชร์สำเร็จด้วย URL');
+    //     } else {
+    //       alert('เบราว์เซอร์ของคุณไม่รองรับการแชร์');
+    //     }
+    //   } catch (error) {
+    //     console.error('Error sharing:', error);
+    //     alert('เกิดข้อผิดพลาดในการแชร์รูป: ' + error.message);
+    //   }
+    // }
   </script>
 </body>
 
