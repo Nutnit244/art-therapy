@@ -1,33 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
   <title>ระบาย</title>
+  
+  <!-- นำเข้าไลบรารี iro.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
   <style>
-     @font-face {
-      font-family: 'Noto Sans Thai';
-      src: url('assets/NotoSansThaiVariableFont_wdth.wght.ttf') format('truetype');
-      font-weight: 100 900;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: 'MN Tonkatsu Italic';
-      src: url('assets/MN Tonkatsu Italic.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family:'MN Tonkatsu Bold Italic'; 
-      src: url('assets/MN Tonkatsu Bold Italic.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -35,7 +17,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: url(assets/img/bg.png) no-repeat center center fixed;
+      background: url(assets/img/bg.PNG) no-repeat center center fixed;
       background-size: cover;
     }
     .container {
@@ -335,7 +317,7 @@
     /* ─────────────────────────────────────────────────────
        Eyedropper (ไอคอนดูดสี)
        ───────────────────────────────────────────────────── */
-    .eyedropper-icon {
+       .eyedropper-icon {
       background: url('assets/img/blend-tool.png') no-repeat center center;
       background-size: 2vw;
       cursor: pointer;
@@ -351,6 +333,7 @@
       background-color: #fff;
       font-family: 'Noto Sans Thai', sans-serif;
     }
+
 
     /* ไอคอนที่จะตามเมาส์ไป */
     #eyedropper-cursor {
