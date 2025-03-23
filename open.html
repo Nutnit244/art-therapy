@@ -466,7 +466,8 @@
       <h2>ก่อนเข้าชม</h2>
       <p><b>คำแนะนำ</b> : หมุนหน้าจอในแนวนอนเพื่ออรรถรส </p>
       <img src="assets/img/rotate.png" alt="Rotate Screen" style="display: block; width: 10%; margin: 0 auto;">
-      <p>เว็บไซต์นี้เป็นเพียงการให้ความรู้และทดลองทำกิจกรรมที่เกี่ยวข้องกับ <br>ศิลปะบำบัด ไม่ได้เป็นการช่วยบำบัดแต่อย่างใด<br><br>" ขอให้ทุกท่านเพลิดเพลินกับเว็บไซต์ของเรา "</p>
+      <p>เว็บไซต์นี้เป็นเพียงการให้ความรู้และทดลองทำกิจกรรมที่เกี่ยวข้องกับ <br>ศิลปะบำบัด
+        ไม่ได้เป็นการช่วยบำบัดแต่อย่างใด<br><br>" ขอให้ทุกท่านเพลิดเพลินกับเว็บไซต์ของเรา "</p>
 
       <button id="close-popup">ตกลง</button>
     </div>
@@ -674,18 +675,65 @@
       }
     }
 
+    // window.addEventListener('scroll', function () {
+    //   const scrollPos = window.scrollY;
+    //   const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+    //   if (scrollPos > 4500 && !videoContainer.style.display) {
+    //     videoContainer.style.display = "flex";
+    //     video.play();
+    //     hasScrolledToVideo = true;
+    //   }
+
+    //   if (videoContainer.style.display === "flex") {
+    //     const videoDuration = video.duration || 5;
+    //     const scrollFraction = scrollPos / maxScroll;
+    //     const videoTime = videoDuration * scrollFraction;
+    //     video.currentTime = videoTime;
+    //   } else {
+    //     updateSubtitle(scrollPos);
+    //   }
+
+    //   if (hasScrolledToVideo && scrollPos < 4500) {
+    //     subtitle.style.opacity = 0;
+    //     subtitle.style.visibility = 'hidden';
+    //   }
+    // });
+
+    // video.addEventListener('timeupdate', function () {
+    //   const videoTime = video.currentTime;
+    //   updateVideoSubtitle(videoTime);
+    // });
+
+    // video.addEventListener('pause', function () {
+    //   subtitle.style.opacity = 0;
+    //   subtitle.style.visibility = 'hidden';
+    // });
+
+    // video.addEventListener('ended', function () {
+    //   window.location.href = 'content2.html';
+    // });
+    
+    // กำหนดค่า threshold สำหรับวิดีโอ
+    let videoThreshold = 4500; // ค่า default สำหรับ desktop
+    if (window.innerWidth < 768) { // ถ้าเป็นมือถือ
+      videoThreshold = 1500; // ปรับค่าให้เหมาะสมกับมือถือ
+    }
+
     window.addEventListener('scroll', function () {
       const scrollPos = window.scrollY;
       const maxScroll = document.body.scrollHeight - window.innerHeight;
 
-      if (scrollPos > 4500 && !videoContainer.style.display) {
+      // แสดงวิดีโอเมื่อเลื่อนถึงตำแหน่งที่กำหนด
+      if (scrollPos > videoThreshold && videoContainer.style.display === "none") {
         videoContainer.style.display = "flex";
         video.play();
         hasScrolledToVideo = true;
       }
 
+      // ถ้าวิดีโอกำลังแสดงอยู่ ให้อัปเดตเวลาให้ตรงกับ scroll
       if (videoContainer.style.display === "flex") {
-        const videoDuration = video.duration || 5;
+        const videoDuration = video.duration || 5; // กำหนดค่า default 5 วินาที
         const scrollFraction = scrollPos / maxScroll;
         const videoTime = videoDuration * scrollFraction;
         video.currentTime = videoTime;
@@ -693,7 +741,8 @@
         updateSubtitle(scrollPos);
       }
 
-      if (hasScrolledToVideo && scrollPos < 4500) {
+      // ซ่อน subtitle หาก scroll กลับด้านบน
+      if (hasScrolledToVideo && scrollPos < videoThreshold) {
         subtitle.style.opacity = 0;
         subtitle.style.visibility = 'hidden';
       }
@@ -712,8 +761,8 @@
     video.addEventListener('ended', function () {
       window.location.href = 'content2.html';
     });
+
   </script>
-  <!-- <script src="common/common.js"></script> -->
 </body>
 
 </html>

@@ -221,8 +221,26 @@
                 };
             });
         }
+
+        function loadIframe(pageUrl) {
+            document.getElementById("content-frame").src = pageUrl;
+            // บันทึกหน้า iframe ลงใน hash โดยเข้ารหัสเพื่อความปลอดภัย
+            window.location.hash = 'iframe=' + encodeURIComponent(pageUrl);
+            const menu = document.getElementById('myMenu');
+            if (!menu.classList.contains('hidden')) {
+                toggleMenu();
+            }
+        }
+        window.addEventListener('load', function () {
+            var hash = window.location.hash;
+            if (hash && hash.startsWith('#iframe=')) {
+                var pageUrl = decodeURIComponent(hash.substring(8));
+                document.getElementById("content-frame").src = pageUrl;
+            }
+        });
+
+
     </script>
-    <!-- <script src="common/common.js"></script> -->
 </body>
 
 </html>
