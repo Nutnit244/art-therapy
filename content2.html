@@ -870,55 +870,76 @@
       }, 1000);
     });
 
-    let isScrolling = false;
-    const delayScroll = 1500; // หน่วงเวลา 1.5 วินาที
-    const scrollThreshold = 50; // ตรวจจับเมื่อ scroll ใกล้ขอบ 50px
+    let isRedirecting = false;
 
-    function smoothScroll(targetY) {
-      window.scrollTo({
-        top: targetY,
-        behavior: "smooth"
-      });
-    }
+    window.addEventListener("scroll", function () {
+      if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
 
-    function handleScroll(deltaY) {
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
-      if (isScrolling) return;
-
-      // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
-      if (deltaY > scrollThreshold && window.scrollY >= maxScroll - scrollThreshold) {
-        isScrolling = true;
-        smoothScroll(maxScroll);
-        setTimeout(() => {
-          window.location.href = "Drawing.html";
-        }, delayScroll);
-      }
-      // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
-      else if (deltaY < -scrollThreshold && window.scrollY <= scrollThreshold) {
-        isScrolling = true;
-        smoothScroll(0);
+      // ถ้าอยู่ด้านบน (scrollY <= 0)
+      if (window.scrollY <= 0) {
+        isRedirecting = true;
         setTimeout(() => {
           window.location.href = "open.html";
-        }, delayScroll);
+        }, 1000);
       }
-    }
-
-    // สำหรับเดสก์ท็อป (wheel event)
-    window.addEventListener("wheel", function (event) {
-      handleScroll(event.deltaY);
+      // ถ้าอยู่ด้านล่าง
+      else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+        isRedirecting = true;
+        setTimeout(() => {
+          window.location.href = "drawing.html";
+        }, 1000);
+      }
     });
 
-    // สำหรับอุปกรณ์ที่ใช้สัมผัส (touch events)
-    let touchStartY = 0;
-    window.addEventListener("touchstart", (e) => {
-      touchStartY = e.touches[0].clientY;
-    });
+    // let isScrolling = false;
+    // const delayScroll = 1500; // หน่วงเวลา 1.5 วินาที
+    // const scrollThreshold = 50; // ตรวจจับเมื่อ scroll ใกล้ขอบ 50px
 
-    window.addEventListener("touchend", (e) => {
-      let touchEndY = e.changedTouches[0].clientY;
-      let deltaY = touchStartY - touchEndY;
-      handleScroll(deltaY);
-    });
+    // function smoothScroll(targetY) {
+    //   window.scrollTo({
+    //     top: targetY,
+    //     behavior: "smooth"
+    //   });
+    // }
+
+    // function handleScroll(deltaY) {
+    //   const maxScroll = document.body.scrollHeight - window.innerHeight;
+    //   if (isScrolling) return;
+
+    //   // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
+    //   if (deltaY > scrollThreshold && window.scrollY >= maxScroll - scrollThreshold) {
+    //     isScrolling = true;
+    //     smoothScroll(maxScroll);
+    //     setTimeout(() => {
+    //       window.location.href = "Drawing.html";
+    //     }, delayScroll);
+    //   }
+    //   // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
+    //   else if (deltaY < -scrollThreshold && window.scrollY <= scrollThreshold) {
+    //     isScrolling = true;
+    //     smoothScroll(0);
+    //     setTimeout(() => {
+    //       window.location.href = "open.html";
+    //     }, delayScroll);
+    //   }
+    // }
+
+    // // สำหรับเดสก์ท็อป (wheel event)
+    // window.addEventListener("wheel", function (event) {
+    //   handleScroll(event.deltaY);
+    // });
+
+    // // สำหรับอุปกรณ์ที่ใช้สัมผัส (touch events)
+    // let touchStartY = 0;
+    // window.addEventListener("touchstart", (e) => {
+    //   touchStartY = e.touches[0].clientY;
+    // });
+
+    // window.addEventListener("touchend", (e) => {
+    //   let touchEndY = e.changedTouches[0].clientY;
+    //   let deltaY = touchStartY - touchEndY;
+    //   handleScroll(deltaY);
+    // });
 
     // จัดการเหตุการณ์ wheel สำหรับเปลี่ยนหน้า
     // let isScrolling = false;
