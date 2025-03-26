@@ -348,12 +348,13 @@
         left: 188vw;
         visibility: visible;
       }
+
       #flower-animation .vase {
-      position: absolute;
-      width: 70vw;
-      height: 90vh;
-      left: 50%;
-      bottom: 3vh;
+        position: absolute;
+        width: 70vw;
+        height: 90vh;
+        left: 50%;
+        bottom: 3vh;
       }
     }
 
@@ -949,64 +950,85 @@
       });
     }
 
-    window.addEventListener("wheel", function (event) {
-      if (isScrolling) return;
+    let isRedirecting = false;
 
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
+    window.addEventListener("scroll", function () {
+      if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
 
-      // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
-      if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
-        isScrolling = true;
-        smoothScroll(maxScroll);
+      // ถ้าอยู่ด้านบน (scrollY <= 0)
+      if (window.scrollY <= 0) {
+        isRedirecting = true;
         setTimeout(() => {
-          window.location.href = "end.html"; // เปลี่ยนไปหน้า end.html
-        }, delayScroll);
+          window.location.href = "content2.html";
+        }, 1000);
       }
-      // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
-      else if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
-        isScrolling = true;
-        smoothScroll(0);
+      // ถ้าอยู่ด้านล่าง
+      else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+        isRedirecting = true;
         setTimeout(() => {
-          window.location.href = "content2.html"; // เปลี่ยนไปหน้า color.html
-        }, delayScroll);
+          window.location.href = "end2.html";
+        }, 1000);
       }
     });
 
-    /****************** จัดการเหตุการณ์ Touch สำหรับ iPad/มือถือ ******************/
-    let touchStartY = 0;
-    let touchEndY = 0;
+    // window.addEventListener("wheel", function (event) {
+    //   if (isScrolling) return;
 
-    window.addEventListener("touchstart", (e) => {
-      touchStartY = e.changedTouches[0].clientY;
-    }, { passive: true });
+    //   const maxScroll = document.body.scrollHeight - window.innerHeight;
 
-    window.addEventListener("touchend", (e) => {
-      touchEndY = e.changedTouches[0].clientY;
-      handleSwipe();
-    }, { passive: true });
+    //   // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
+    //   if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
+    //     isScrolling = true;
+    //     smoothScroll(maxScroll);
+    //     setTimeout(() => {
+    //       window.location.href = "end.html"; // เปลี่ยนไปหน้า end.html
+    //     }, delayScroll);
+    //   }
+    //   // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
+    //   else if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
+    //     isScrolling = true;
+    //     smoothScroll(0);
+    //     setTimeout(() => {
+    //       window.location.href = "content2.html"; // เปลี่ยนไปหน้า color.html
+    //     }, delayScroll);
+    //   }
+    // });
 
-    function handleSwipe() {
-      const swipeThreshold = 50; // กำหนดระยะที่ต้องปัด (พิกเซล)
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
+    // /****************** จัดการเหตุการณ์ Touch สำหรับ iPad/มือถือ ******************/
+    // let touchStartY = 0;
+    // let touchEndY = 0;
 
-      if (touchStartY - touchEndY > swipeThreshold) {
-        // ปัดขึ้น (swipe up) ถ้าอยู่ใกล้ล่างสุด
-        if (window.scrollY >= maxScroll - scrollThreshold && !isScrolling) {
-          isScrolling = true;
-          setTimeout(() => {
-            window.location.href = "end.html";
-          }, delayScroll);
-        }
-      } else if (touchEndY - touchStartY > swipeThreshold) {
-        // ปัดลง (swipe down) ถ้าอยู่ใกล้บนสุด
-        if (window.scrollY <= scrollThreshold && !isScrolling) {
-          isScrolling = true;
-          setTimeout(() => {
-            window.location.href = "content2.html";
-          }, delayScroll);
-        }
-      }
-    }
+    // window.addEventListener("touchstart", (e) => {
+    //   touchStartY = e.changedTouches[0].clientY;
+    // }, { passive: true });
+
+    // window.addEventListener("touchend", (e) => {
+    //   touchEndY = e.changedTouches[0].clientY;
+    //   handleSwipe();
+    // }, { passive: true });
+
+    // function handleSwipe() {
+    //   const swipeThreshold = 50; // กำหนดระยะที่ต้องปัด (พิกเซล)
+    //   const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+    //   if (touchStartY - touchEndY > swipeThreshold) {
+    //     // ปัดขึ้น (swipe up) ถ้าอยู่ใกล้ล่างสุด
+    //     if (window.scrollY >= maxScroll - scrollThreshold && !isScrolling) {
+    //       isScrolling = true;
+    //       setTimeout(() => {
+    //         window.location.href = "end.html";
+    //       }, delayScroll);
+    //     }
+    //   } else if (touchEndY - touchStartY > swipeThreshold) {
+    //     // ปัดลง (swipe down) ถ้าอยู่ใกล้บนสุด
+    //     if (window.scrollY <= scrollThreshold && !isScrolling) {
+    //       isScrolling = true;
+    //       setTimeout(() => {
+    //         window.location.href = "content2.html";
+    //       }, delayScroll);
+    //     }
+    //   }
+    // }
 
   </script>
 </body>
