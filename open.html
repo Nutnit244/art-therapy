@@ -626,7 +626,7 @@
     const subtitles = [
       { scroll: 800, text: 'ในเมืองเล็กๆ ท่ามกลางภูเขาและแม่น้ำ มีสถานที่เงียบสงบ' },
       { scroll: 1000, text: 'บ้านหลังนี้ถูกโอบล้อมด้วยดอกไม้และธรรมชาติ' },
-      { scroll: 1400, text: 'ที่นี่ไม่มีใครคาดหวังความสมบูรณ์แบบ ทุกอย่างเกี่ยวกับการเป็นตัวเองและการแสดงออกผ่านศิลปะ' }
+      { scroll: 1200, text: 'ที่นี่ไม่มีใครคาดหวังความสมบูรณ์แบบ ทุกอย่างเกี่ยวกับการเป็นตัวเองและการแสดงออกผ่านศิลปะ' }
     ];
 
     const videoSubtitles = [
@@ -674,45 +674,6 @@
         }
       }
     }
-
-    // window.addEventListener('scroll', function () {
-    //   const scrollPos = window.scrollY;
-    //   const maxScroll = document.body.scrollHeight - window.innerHeight;
-
-    //   if (scrollPos > 4500 && !videoContainer.style.display) {
-    //     videoContainer.style.display = "flex";
-    //     video.play();
-    //     hasScrolledToVideo = true;
-    //   }
-
-    //   if (videoContainer.style.display === "flex") {
-    //     const videoDuration = video.duration || 5;
-    //     const scrollFraction = scrollPos / maxScroll;
-    //     const videoTime = videoDuration * scrollFraction;
-    //     video.currentTime = videoTime;
-    //   } else {
-    //     updateSubtitle(scrollPos);
-    //   }
-
-    //   if (hasScrolledToVideo && scrollPos < 4500) {
-    //     subtitle.style.opacity = 0;
-    //     subtitle.style.visibility = 'hidden';
-    //   }
-    // });
-
-    // video.addEventListener('timeupdate', function () {
-    //   const videoTime = video.currentTime;
-    //   updateVideoSubtitle(videoTime);
-    // });
-
-    // video.addEventListener('pause', function () {
-    //   subtitle.style.opacity = 0;
-    //   subtitle.style.visibility = 'hidden';
-    // });
-
-    // video.addEventListener('ended', function () {
-    //   window.location.href = 'content2.html';
-    // });
     
     // กำหนดค่า threshold สำหรับวิดีโอ
     let videoThreshold = 4500; // ค่า default สำหรับ desktop
