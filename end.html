@@ -26,7 +26,7 @@
       background: url('assets/img/bg.png') no-repeat center center/cover;
       overflow-y: scroll;
       /* คำนวณความสูงที่แท้จริงตาม viewport ปัจจุบัน */
-      min-height: calc(var(--vh) * 100 * 5);
+      min-height: calc(var(--vh) * 100 * 5.5);
       /* 5.5 เท่าของ viewport height */
       /* min-height: 550vh; */
       /* height: 550vh; เพิ่มพื้นที่เลื่อน */
@@ -211,7 +211,7 @@
 
     let currentIndex = 0;
     let lastScrollTop = 0;
-    const scrollThreshold = 500; // ระยะที่เลื่อนเพื่อเปลี่ยนเนื้อหา
+    const scrollThreshold = 400; // ระยะที่เลื่อนเพื่อเปลี่ยนเนื้อหา
 
     function updateContent(newIndex) {
       if (newIndex < 0 || newIndex >= contentData.length) return;
