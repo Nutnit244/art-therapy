@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -477,8 +478,8 @@
   <div class="door-text"><b>👆คลิกเพื่อเปิดประตูสิ</b></div>
   <div class="light-overlay"></div>
   <div class="video-container">
-    <!-- เพิ่ม playsinline และ webkit-playsinline เพื่อป้องกันให้เล่นแบบ inline -->
-    <video id="fullscreen-video" src="assets/img/withoutpro.mov" muted autoplay playsinline webkit-playsinline></video>
+    <!-- ลบ autoplay ออก -->
+    <video id="fullscreen-video" src="assets/img/withoutpro.mov" muted playsinline webkit-playsinline></video>
   </div>
   <div class="subtitle" id="subtitle"></div>
 
@@ -495,36 +496,23 @@
     const lightOverlay = document.querySelector('.light-overlay');
     const subtitle = document.getElementById('subtitle');
 
-    // ตัวอย่าง subtitle ที่จะแสดงตาม scroll
     const subtitles = [
       { scroll: 200, text: 'ในเมืองเล็กๆ ท่ามกลางภูเขาและแม่น้ำ มีสถานที่เงียบสงบ' },
       { scroll: 500, text: 'บ้านหลังนี้ถูกโอบล้อมด้วยดอกไม้และธรรมชาติ' },
       { scroll: 800, text: 'ที่นี่ไม่มีใครคาดหวังความสมบูรณ์แบบ...ทุกอย่างเกี่ยวกับการเป็นตัวเองและการแสดงออกผ่านศิลปะ' }
     ];
 
-    // subtitle สำหรับวิดีโอ
     const videoSubtitles = [
       { time: 0, text: 'เมื่อมาสถานที่นี้ให้ความรู้สึกเหมือนเวลาหยุด ปัญหาหลากหลายอย่างที่คุณได้พบเจอในชีวิตประจำวัน' },
       { time: 2, text: 'ความกดดันจากงาน ความสัมพันธ์ที่ซับซ้อน หรือความเครียดที่สะสม' },
       { time: 4, text: 'เสมือนกับว่าปัญหาเริ่มจางหายไป' }
     ];
 
-    let hasScrolledToVideo = false;
-
-    // ตรวจสอบว่ากำลังใช้งาน Chrome บนอุปกรณ์ iOS หรือไม่
-    const isChromeOniOS = /CriOS/.test(navigator.userAgent);
-    let videoThreshold;
-    if (window.innerWidth < 768) {
-      videoThreshold = 1500;
-    } else {
-      videoThreshold = isChromeOniOS ? 3000 : 4500;
-    }
-
+    // ไม่ให้วิดีโอเล่นจากการ scroll
     function updateSubtitle(scrollPos) {
       const factor = window.innerWidth < 768 ? 0.5 : 1;
       let currentText = null;
 
-      // ไล่จากท้ายสุดเพื่อหาข้อความล่าสุดที่ตรงกับ scroll
       for (let i = subtitles.length - 1; i >= 0; i--) {
         if (scrollPos >= subtitles[i].scroll * factor) {
           currentText = subtitles[i].text;
@@ -559,7 +547,9 @@
       }
     }
 
-    // ใช้ requestAnimationFrame สำหรับ scroll ให้ smooth
+    // กำหนดค่า threshold สำหรับวิดีโอ (ยังคงไว้ใช้กับการเลื่อนสำหรับการเปลี่ยนข้อความ)
+    let videoThreshold = window.innerWidth < 768 ? 1500 : 4500;
+
     let lastKnownScrollPosition = 0;
     let ticking = false;
 
@@ -576,36 +566,9 @@
 
     function handleScroll(scrollPos) {
       const maxScroll = document.body.scrollHeight - window.innerHeight;
+      updateSubtitle(scrollPos);
 
-      // รีเซ็ต flag เมื่อ scroll กลับขึ้นมาส่วนบน
-      if (scrollPos < videoThreshold - 100) {
-        hasScrolledToVideo = false;
-      }
-
-      if (window.innerWidth >= 768) {
-        if (scrollPos > videoThreshold && videoContainer.style.display === "none") {
-          videoContainer.style.display = "flex";
-          video.play();
-          hasScrolledToVideo = true;
-        } else {
-          updateSubtitle(scrollPos);
-        }
-      } else {
-        updateSubtitle(scrollPos);
-        if (scrollPos > videoThreshold && videoContainer.style.display !== "flex") {
-          videoContainer.style.display = "flex";
-          video.play();
-          hasScrolledToVideo = true;
-        }
-      }
-
-      if (videoContainer.style.display === "flex") {
-        const videoDuration = video.duration || 5;
-        const scrollFraction = scrollPos / maxScroll;
-        const videoTime = videoDuration * scrollFraction;
-        video.currentTime = videoTime;
-      }
-
+      // จัดการการเคลื่อนไหวขององค์ประกอบต่างๆ
       let cloudMove = Math.min(scrollPos * 0.2, 300);
       document.querySelector('.clouds').style.transform = `translateX(${cloudMove}px)`;
 
@@ -640,7 +603,6 @@
         doorText.style.opacity = 1;
 
         if (window.innerWidth < 768) {
-          // สำหรับมือถือ หาก scroll ถึงระดับ subtitle บรรทัดที่สอง
           if (scrollPos >= subtitles[1].scroll * 0.5) {
             house.style.transform = 'translateX(-50%) scale(1.2)';
             doorclose.style.transform = 'translateX(-50%) scale(1.2)';
@@ -687,6 +649,7 @@
       window.location.href = 'content2.html';
     });
 
+    // สั่งให้เล่นวิดีโอเมื่อคลิกเปิดประตู
     document.querySelector('.doorclose').addEventListener('click', function () {
       this.style.backgroundImage = "url('assets/img/door open.png')";
       setTimeout(() => {
@@ -698,10 +661,12 @@
           setTimeout(() => {
             lightOverlay.style.display = "none";
             videoContainer.style.display = "flex";
+            video.play();
           }, 800);
         }, 350);
       }, 350);
     });
   </script>
 </body>
+
 </html>
