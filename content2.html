@@ -37,8 +37,21 @@
     body {
       font-family: 'MN Tonkatsu Italic', sans-serif;
       overflow-y: auto;
+      /* background: url('assets/img/bg.png') no-repeat center center/cover;
+      background-attachment: fixed; */
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       background-attachment: fixed;
+      z-index: -1;
+      /* ให้อยู่ด้านหลังเนื้อหาทั้งหมด */
     }
 
     .section1,
@@ -592,6 +605,12 @@
 
       100% {
         transform: translateX(20vw);
+      }
+    }
+
+    @media screen and (max-width: 1179px) {
+      body::before {
+        background-attachment: scroll;
       }
     }
   </style>
