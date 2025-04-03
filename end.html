@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,7 +25,10 @@
       font-weight: n;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       overflow-y: scroll;
-      min-height: 550vh;
+      /* คำนวณความสูงที่แท้จริงตาม viewport ปัจจุบัน */
+      min-height: calc(var(--vh) * 100 * 5);
+      /* 5.5 เท่าของ viewport height */
+      /* min-height: 550vh; */
       /* height: 550vh; เพิ่มพื้นที่เลื่อน */
     }
 
@@ -41,7 +45,8 @@
     /* เปลี่ยนจากเปอร์เซ็นต์หรือ px เป็น vw */
     .cloud {
       position: absolute;
-      width: 50vw; /* จาก 70% */
+      width: 50vw;
+      /* จาก 70% */
       z-index: 1;
       transition: transform 0.5s ease, top 0.5s ease, left 0.5s ease;
       left: 4vw;
@@ -50,7 +55,8 @@
 
     .cloud2 {
       position: absolute;
-      width: 60vw; /* จาก 60% */
+      width: 60vw;
+      /* จาก 60% */
       z-index: 1;
       transition: transform 0.5s ease, top 0.5s ease, right 0.5s ease;
       right: 10vw;
@@ -66,11 +72,12 @@
 
     .content p {
       /* สมมติว่า 1rem = 16px ดังนั้น 2rem = 32px */
-      font-size: 2.5vw;  /* (32/1920)*100 ≈ 1.67vw (ปรับเป็น 2vw ตามที่ต้องการ) */
+      font-size: 2.5vw;
+      /* (32/1920)*100 ≈ 1.67vw (ปรับเป็น 2vw ตามที่ต้องการ) */
       color: #714937;
       font-weight: normal;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
-      
+
     }
 
     /* เปลี่ยน translateY จาก 20px เป็น vw: (20/1920)*100 ≈ 1.04vw (ปัดเป็น 1vw) */
@@ -106,10 +113,9 @@
     .flower.visible {
       opacity: 1;
     }
-
-    
   </style>
 </head>
+
 <body>
 
   <div id="ui-container">
@@ -209,7 +215,7 @@
 
     function updateContent(newIndex) {
       if (newIndex < 0 || newIndex >= contentData.length) return;
-      
+
       // ซ่อนเนื้อหาและดอกไม้ปัจจุบัน
       content.classList.remove('visible');
       content.classList.add('hidden');
@@ -249,6 +255,18 @@
         lastScrollTop = scrollTop;
       }
     });
+
+    // คำนวณค่าหน่วย vh ที่แม่นยำกับ viewport จริง
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+    window.addEventListener('resize', () => {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
+
+
   </script>
 </body>
+
 </html>
