@@ -13,6 +13,7 @@
       font-style: normal;
     }
 
+    /* ใช้ --vh เพื่อคำนวณความสูงของ viewport ที่แม่นยำ */
     body {
       margin: 0;
       padding: 0;
@@ -20,16 +21,8 @@
       font-weight: normal;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       overflow-y: scroll;
-      /* ใช้ vh ที่คำนวณจาก viewport */
-      min-height: calc(var(--vh) * 100 * 5);
-    }
-
-    /* เมื่ออยู่ในแนวนอนให้กำหนดความสูงคงที่เพื่อให้เลื่อนได้ครบ */
-    @media (orientation: landscape) {
-      body {
-        height: 550vh;
-        min-height: unset;
-      }
+      /* ตั้งความสูงทั้งหมดให้เท่ากับจำนวน section * หน้าจอ (แต่ละ section = หน้าจอเดียว) */
+      min-height: calc(var(--vh) * 100 * 6);
     }
 
     #ui-container {
@@ -108,52 +101,8 @@
   </style>
 </head>
 <body>
-  <div id="ui-container">
-    <!-- Clouds -->
-    <img src="assets/img/cloud1.PNG" alt="Cloud" class="cloud" id="cloud1" />
-    <img src="assets/img/cloud2.PNG" alt="Cloud2" class="cloud2" id="cloud2" />
-
-    <!-- Content -->
-    <div class="content visible" id="content">
-      <p id="line1">"ศิลปะ"</p>
-      <p id="line2">เป็นมากกว่าลายเส้นและสีสันบนกระดาษ</p>
-    </div>
-
-    <!-- Flowers -->
-    <div class="flower-container">
-      <img src="assets/img/flower3.png" alt="Flower3" class="flower" id="flower3" />
-      <img src="assets/img/flower2.png" alt="Flower2" class="flower" id="flower2" />
-      <img src="assets/img/flower1.png" alt="Flower1" class="flower" id="flower1" />
-    </div>
-  </div>
-
+  <!-- เนื่องจาก contentData ถูกใช้ใน JS redirect เราจึงประกาศไว้ก่อน -->
   <script>
-    let isRedirecting = false;
-    window.addEventListener("scroll", function () {
-      if (isRedirecting) return;
-      if (window.scrollY <= 0) {
-        isRedirecting = true;
-        setTimeout(() => {
-          window.location.href = "Drawing.html#line-animation";
-        }, 1000);
-      } else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
-        isRedirecting = true;
-        setTimeout(() => {
-          window.location.href = "end2.html";
-        }, 1000);
-      }
-    });
-
-    // องค์ประกอบต่าง ๆ
-    const content = document.getElementById('content');
-    const line1 = document.getElementById('line1');
-    const line2 = document.getElementById('line2');
-    const cloud1 = document.getElementById('cloud1');
-    const cloud2 = document.getElementById('cloud2');
-    const flower3 = document.getElementById('flower3');
-    const flower2 = document.getElementById('flower2');
-    const flower1 = document.getElementById('flower1');
-
     const contentData = [
       {
         line1: '"ศิลปะ"',
@@ -176,71 +125,133 @@
       {
         line1: '"ศิลปะ"',
         line2: 'ทำให้ผู้คนเฝ้าสังเกตสีสันและเห็นคุณค่าของสิ่งรอบตัว',
-        flowers: [flower3],
+        flowers: [], // ดอกไม้จะถูกเพิ่มภายหลัง
         clouds: { top1: '3%', left1: '4%', top2: '4%', right2: '4%' }
       },
       {
         line1: '"ศิลปะ"',
         line2: 'ทำให้ผู้คนมองเห็นความดี ความงดงาม และสัจธรรมของโลกใบนี้',
-        flowers: [flower3, flower2],
+        flowers: [], // ดอกไม้จะถูกเพิ่มภายหลัง
         clouds: { top1: '4%', left1: '2%', top2: '3%', right2: '3%' }
       },
       {
         line1: '..."ศิลปะ" จึงก้าวข้ามการเป็นเครื่องมือ',
         line2: 'เพื่อการนันทนาการ สู่พื้นที่ของการบำบัด...',
-        flowers: [flower3, flower2, flower1],
+        flowers: [], // ดอกไม้จะถูกเพิ่มภายหลัง
         clouds: { top1: '5%', left1: '1%', top2: '2%', right2: '2%' }
       }
     ];
+  </script>
+
+  <div id="ui-container">
+    <!-- Clouds -->
+    <img src="assets/img/cloud1.PNG" alt="Cloud" class="cloud" id="cloud1" />
+    <img src="assets/img/cloud2.PNG" alt="Cloud2" class="cloud2" id="cloud2" />
+
+    <!-- Content -->
+    <div class="content visible" id="content">
+      <p id="line1">"ศิลปะ"</p>
+      <p id="line2">เป็นมากกว่าลายเส้นและสีสันบนกระดาษ</p>
+    </div>
+
+    <!-- Flowers -->
+    <div class="flower-container">
+      <img src="assets/img/flower3.png" alt="Flower3" class="flower" id="flower3" />
+      <img src="assets/img/flower2.png" alt="Flower2" class="flower" id="flower2" />
+      <img src="assets/img/flower1.png" alt="Flower1" class="flower" id="flower1" />
+    </div>
+  </div>
+
+  <script>
+    // นำ flower elements ไปใส่ใน contentData ตามลำดับ
+    contentData[3].flowers.push(document.getElementById('flower3'));
+    contentData[4].flowers.push(document.getElementById('flower3'), document.getElementById('flower2'));
+    contentData[5].flowers.push(document.getElementById('flower3'), document.getElementById('flower2'), document.getElementById('flower1'));
+
+    let isRedirecting = false;
+    // ฟังก์ชันคำนวณค่า --vh จาก window.innerHeight
+    function setVh() {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      // ตั้ง min-height ของ body ให้เท่ากับจำนวน section * ความสูงหน้าจอ
+      document.body.style.minHeight = `${window.innerHeight * contentData.length}px`;
+    }
+
+    // จัดการ redirect เมื่อ scroll ถึงขอบบนหรือขอบล่าง
+    window.addEventListener("scroll", function () {
+      if (isRedirecting) return;
+      
+      // Redirect เมื่ออยู่ด้านบน
+      if (window.scrollY <= 0) {
+        isRedirecting = true;
+        setTimeout(() => {
+          window.location.href = "Drawing.html#line-animation";
+        }, 1000);
+        return;
+      }
+      
+      // ถ้าอยู่ใน section สุดท้าย ให้เพิ่ม extraOffset (เช่น 50% ของความสูงหน้าจอ)
+      let extraOffset = (currentIndex === contentData.length - 1) ? window.innerHeight * 1 : 0;
+      
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1 - extraOffset) {
+        isRedirecting = true;
+        setTimeout(() => {
+          window.location.href = "end2.html";
+        }, 2000);
+      }
+    });
+
+
+    // องค์ประกอบต่าง ๆ
+    const content = document.getElementById('content');
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    const cloud1 = document.getElementById('cloud1');
+    const cloud2 = document.getElementById('cloud2');
 
     let currentIndex = 0;
-    let lastScrollTop = 0;
-    const scrollThreshold = 500;
+    
+    // เปลี่ยนเนื้อหาตาม index ใหม่
     function updateContent(newIndex) {
       if (newIndex < 0 || newIndex >= contentData.length) return;
       content.classList.remove('visible');
       content.classList.add('hidden');
-      flower3.classList.remove('visible');
-      flower2.classList.remove('visible');
-      flower1.classList.remove('visible');
-
+      
+      // รีเซ็ตดอกไม้ (flower elements) 
+      document.getElementById('flower3').classList.remove('visible');
+      document.getElementById('flower2').classList.remove('visible');
+      document.getElementById('flower1').classList.remove('visible');
+      
       setTimeout(() => {
         const currentData = contentData[newIndex];
         line1.textContent = currentData.line1;
         line2.textContent = currentData.line2;
-
+        
         cloud1.style.top = currentData.clouds.top1;
         cloud1.style.left = currentData.clouds.left1;
         cloud2.style.top = currentData.clouds.top2;
         cloud2.style.right = currentData.clouds.right2;
-
+        
         currentData.flowers.forEach(flower => {
           flower.classList.add('visible');
         });
-
+        
         content.classList.remove('hidden');
         content.classList.add('visible');
       }, 500);
     }
 
+    // อัพเดท index เมื่อ scroll โดยใช้ความสูงของหน้าจอเป็นตัวแบ่ง section
     window.addEventListener('scroll', () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      if (Math.abs(scrollTop - lastScrollTop) > scrollThreshold) {
-        if (scrollTop > lastScrollTop && currentIndex < contentData.length - 1) {
-          currentIndex++;
-        } else if (scrollTop < lastScrollTop && currentIndex > 0) {
-          currentIndex--;
-        }
-        updateContent(currentIndex);
-        lastScrollTop = scrollTop;
+      let sectionHeight = window.innerHeight;
+      let newIndex = Math.floor(window.scrollY / sectionHeight);
+      newIndex = Math.min(newIndex, contentData.length - 1);
+      if (newIndex !== currentIndex) {
+         currentIndex = newIndex;
+         updateContent(currentIndex);
       }
     });
 
-    // คำนวณค่า vh ตามขนาด viewport ที่แท้จริง
-    function setVh() {
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
     setVh();
     window.addEventListener('resize', setVh);
   </script>
