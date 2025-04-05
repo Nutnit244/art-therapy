@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png" />
   <title>ระบาย</title>
-  <!-- <link rel="stylesheet" href="common/common.css" /> -->
   <style>
     @font-face {
       font-family: 'MN Tonkatsu Italic';
@@ -15,21 +13,23 @@
       font-style: normal;
     }
 
-
-    /* ปรับเปลี่ยนหน่วยจาก px ให้เป็น vw โดยอิงจาก design width 1920px */
-
     body {
       margin: 0;
       padding: 0;
       font-family: 'MN Tonkatsu Italic', sans-serif;
-      font-weight: n;
+      font-weight: normal;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       overflow-y: scroll;
-      /* คำนวณความสูงที่แท้จริงตาม viewport ปัจจุบัน */
-      min-height: calc(var(--vh) * 100 * 5.5);
-      /* 5.5 เท่าของ viewport height */
-      /* min-height: 550vh; */
-      /* height: 550vh; เพิ่มพื้นที่เลื่อน */
+      /* ใช้ vh ที่คำนวณจาก viewport */
+      min-height: calc(var(--vh) * 100 * 5);
+    }
+
+    /* เมื่ออยู่ในแนวนอนให้กำหนดความสูงคงที่เพื่อให้เลื่อนได้ครบ */
+    @media (orientation: landscape) {
+      body {
+        height: 550vh;
+        min-height: unset;
+      }
     }
 
     #ui-container {
@@ -42,11 +42,9 @@
       align-items: center;
     }
 
-    /* เปลี่ยนจากเปอร์เซ็นต์หรือ px เป็น vw */
     .cloud {
       position: absolute;
       width: 50vw;
-      /* จาก 70% */
       z-index: 1;
       transition: transform 0.5s ease, top 0.5s ease, left 0.5s ease;
       left: 4vw;
@@ -56,7 +54,6 @@
     .cloud2 {
       position: absolute;
       width: 60vw;
-      /* จาก 60% */
       z-index: 1;
       transition: transform 0.5s ease, top 0.5s ease, right 0.5s ease;
       right: 10vw;
@@ -71,16 +68,12 @@
     }
 
     .content p {
-      /* สมมติว่า 1rem = 16px ดังนั้น 2rem = 32px */
       font-size: 2.5vw;
-      /* (32/1920)*100 ≈ 1.67vw (ปรับเป็น 2vw ตามที่ต้องการ) */
       color: #714937;
       font-weight: normal;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
-
     }
 
-    /* เปลี่ยน translateY จาก 20px เป็น vw: (20/1920)*100 ≈ 1.04vw (ปัดเป็น 1vw) */
     .hidden {
       opacity: 0;
       transform: translateY(1vw);
@@ -93,7 +86,6 @@
 
     .flower-container {
       position: absolute;
-      /* เปลี่ยนจาก -6.77vw เป็น -10vw เพื่อเลื่อน flower ลงมากขึ้น */
       bottom: -20vw;
       left: 0;
       width: 100%;
@@ -115,9 +107,7 @@
     }
   </style>
 </head>
-
 <body>
-
   <div id="ui-container">
     <!-- Clouds -->
     <img src="assets/img/cloud1.PNG" alt="Cloud" class="cloud" id="cloud1" />
@@ -138,21 +128,15 @@
   </div>
 
   <script>
-
     let isRedirecting = false;
-
     window.addEventListener("scroll", function () {
-      if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
-
-      // ถ้าอยู่ด้านบน (scrollY <= 0)
+      if (isRedirecting) return;
       if (window.scrollY <= 0) {
         isRedirecting = true;
         setTimeout(() => {
           window.location.href = "Drawing.html#line-animation";
         }, 1000);
-      }
-      // ถ้าอยู่ด้านล่าง
-      else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+      } else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
         isRedirecting = true;
         setTimeout(() => {
           window.location.href = "end2.html";
@@ -160,7 +144,7 @@
       }
     });
 
-    // ตัวแปรสำหรับการเปลี่ยนแปลงเนื้อหาเมื่อเลื่อน
+    // องค์ประกอบต่าง ๆ
     const content = document.getElementById('content');
     const line1 = document.getElementById('line1');
     const line2 = document.getElementById('line2');
@@ -211,12 +195,9 @@
 
     let currentIndex = 0;
     let lastScrollTop = 0;
-    const scrollThreshold = 400; // ระยะที่เลื่อนเพื่อเปลี่ยนเนื้อหา
-
+    const scrollThreshold = 500;
     function updateContent(newIndex) {
       if (newIndex < 0 || newIndex >= contentData.length) return;
-
-      // ซ่อนเนื้อหาและดอกไม้ปัจจุบัน
       content.classList.remove('visible');
       content.classList.add('hidden');
       flower3.classList.remove('visible');
@@ -233,7 +214,6 @@
         cloud2.style.top = currentData.clouds.top2;
         cloud2.style.right = currentData.clouds.right2;
 
-        // แสดงดอกไม้ที่เกี่ยวข้อง
         currentData.flowers.forEach(flower => {
           flower.classList.add('visible');
         });
@@ -256,17 +236,13 @@
       }
     });
 
-    // คำนวณค่าหน่วย vh ที่แม่นยำกับ viewport จริง
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-    window.addEventListener('resize', () => {
+    // คำนวณค่า vh ตามขนาด viewport ที่แท้จริง
+    function setVh() {
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
-    });
-
-
+    }
+    setVh();
+    window.addEventListener('resize', setVh);
   </script>
 </body>
-
 </html>
