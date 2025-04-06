@@ -257,7 +257,27 @@
       flex-direction: column;
     }
 
-    .Texts3 {
+    .section3 .Texts3 {
+      font-size: 2.1vw;
+      /* ประมาณ 30px */
+      text-align: center;
+      margin-top: 2.78vw;
+      z-index: 2;
+      font-family: TorsilpChillChill;
+      font-weight: normal;
+      color: #714937;
+      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .frame-large {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('assets/img/frame.png') no-repeat center center/contain;
+      z-index: 2;
+    }
+
+    /* .Texts3 {
       font-size: 2.1vw;
       text-align: center;
       margin-top: 3vw;
@@ -274,7 +294,7 @@
       height: 100%;
       background: url('assets/img/frame.png') no-repeat center center/contain;
       z-index: 2;
-    }
+    } */
 
     .cards-container {
       display: grid;
@@ -362,6 +382,19 @@
       height: 80%;
       background: url('assets/img/cloud1.png') no-repeat center center/contain;
       z-index: 1;
+    }
+
+
+    /* Media query สำหรับอุปกรณ์มือถือแนวนอน */
+    @media screen and (max-width: 600px) and (orientation: landscape) {
+      .section3 .frame-large {
+        width: 120%;
+        height: 120%;
+        top: -10%;
+        left: -10%;
+        background-size: contain;
+        /* ปรับขนาดภาพในกรอบให้เหมาะสม */
+      }
     }
 
     /* Section 4 */

@@ -7,14 +7,14 @@
     <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png">
     <title>ระบาย</title>
     <style>
-       
         @font-face {
             font-family: 'MN Tonkatsu Bold Italic';
             src: url('assets/MN Tonkatsu Bold Italic.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
-         @font-face {
+
+        @font-face {
             font-family: 'MN Tonkatsu Italic';
             src: url('assets/MN Tonkatsu Italic.ttf') format('truetype');
             font-weight: normal;
@@ -150,26 +150,78 @@
         </div>
     </div>
     <script>
+        // let isRedirecting = false;
+
+        // window.addEventListener("scroll", function () {
+        //     if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
+
+        //     // ถ้าอยู่ด้านบน (scrollY <= 0)
+        //     if (window.scrollY <= 0) {
+        //         isRedirecting = true;
+        //         setTimeout(() => {
+        //             window.location.href = "end.html";
+        //         }, 1000);
+        //     }
+
+
+        //     // ถ้าอยู่ด้านล่าง
+        //     else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+        //         isRedirecting = true;
+        //         setTimeout(() => {
+        //             window.location.href = "member.html";
+        //         }, 2000);
+        //     }
+        // });
+
         let isRedirecting = false;
+        let touchStartY = null;
 
-        window.addEventListener("scroll", function () {
-            if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
+        function redirect(url, delay) {
+            if (isRedirecting) return;
+            isRedirecting = true;
+            setTimeout(() => {
+                window.location.href = url;
+            }, delay);
+        }
 
-            // ถ้าอยู่ด้านบน (scrollY <= 0)
-            if (window.scrollY <= 0) {
-                isRedirecting = true;
-                setTimeout(() => {
-                    window.location.href = "end.html";
-                }, 1000);
-            }
-            // ถ้าอยู่ด้านล่าง
-            else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
-                isRedirecting = true;
-                setTimeout(() => {
-                    window.location.href = "member.html";
-                }, 1000);
+        // สำหรับเมาส์ (wheel event)
+        window.addEventListener("wheel", function (e) {
+            if (isRedirecting) return;
+
+            if (e.deltaY < 0) { // scroll ขึ้น
+                redirect("end.html", 1000);
+            } else if (e.deltaY > 0) { // scroll ลง
+                redirect("member.html", 2000);
             }
         });
+
+        // สำหรับอุปกรณ์สัมผัส (touch events)
+        window.addEventListener("touchstart", function (e) {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        window.addEventListener("touchmove", function (e) {
+            if (isRedirecting || touchStartY === null) return;
+            let touchCurrentY = e.touches[0].clientY;
+            let diffY = touchStartY - touchCurrentY;
+
+            // ถ้าปัดขึ้น (swipe up) มากกว่า 50px
+            if (diffY > 50) {
+                redirect("end.html", 1000);
+                touchStartY = null;
+            }
+            // ถ้าปัดลง (swipe down) มากกว่า 50px
+            else if (diffY < -50) {
+                redirect("member.html", 2000);
+                touchStartY = null;
+            }
+        });
+
+        window.addEventListener("touchend", function () {
+            touchStartY = null;
+        });
+
+
     </script>
 
 </body>

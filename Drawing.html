@@ -429,7 +429,7 @@
     /* CSS override เฉพาะสำหรับ Android */
     .android #flower-animation .flower-left {
       /* ปรับตำแหน่ง left สำหรับ Android ให้เหมาะสม (ปรับค่าได้ตามต้องการ) */
-      left: 150% !important;
+      left: 155% !important;
     }
 
     .android #flower-animation .flower-right {
@@ -437,9 +437,20 @@
       left: 175% !important;
     }
 
+    .android #flower-animation .flower-left.slide-left {
+      left: 150% !important;
+      /* เมื่อมีคลาส slide ให้เลื่อนเข้ามา */
+      visibility: visible;
+    }
+
+    .android #flower-animation .flower-right.slide-right {
+      left: 180% !important;
+      visibility: visible;
+    }
+
     .android #flower-animation .vase {
       /* ปรับตำแหน่งของแจกันให้เหมาะสม (ปรับค่า left, transform ตามต้องการ) */
-      left: 42% !important;
+      left: 45% !important;
       transform: translateX(-48%) !important;
     }
 
