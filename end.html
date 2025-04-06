@@ -12,19 +12,20 @@
       font-weight: normal;
       font-style: normal;
     }
-
-    /* ใช้ --vh เพื่อคำนวณความสูงของ viewport ที่แม่นยำ */
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch; /* ช่วยให้เลื่อนนุ่มนวลใน iOS */
+    }
+    body {
       font-family: 'MN Tonkatsu Italic', sans-serif;
       font-weight: normal;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       overflow-y: scroll;
-      /* ตั้งความสูงทั้งหมดให้เท่ากับจำนวน section * หน้าจอ (แต่ละ section = หน้าจอเดียว) */
-      min-height: calc(var(--vh) * 100 * 6);
+      /* min-height จะถูกเซ็ตใน JavaScript */
     }
-
     #ui-container {
       position: fixed;
       width: 100vw;
@@ -34,7 +35,6 @@
       justify-content: center;
       align-items: center;
     }
-
     .cloud {
       position: absolute;
       width: 50vw;
@@ -42,8 +42,8 @@
       transition: transform 0.5s ease, top 0.5s ease, left 0.5s ease;
       left: 4vw;
       top: 1vw;
+      will-change: transform, top, left;
     }
-
     .cloud2 {
       position: absolute;
       width: 60vw;
@@ -51,32 +51,29 @@
       transition: transform 0.5s ease, top 0.5s ease, right 0.5s ease;
       right: 10vw;
       top: 2vw;
+      will-change: transform, top, right;
     }
-
     .content {
       position: absolute;
       text-align: center;
       z-index: 2;
       transition: opacity 0.5s ease, transform 0.5s ease;
+      will-change: opacity, transform;
     }
-
     .content p {
       font-size: 2.5vw;
       color: #714937;
       font-weight: normal;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
-
     .hidden {
       opacity: 0;
       transform: translateY(1vw);
     }
-
     .visible {
       opacity: 1;
       transform: translateY(0);
     }
-
     .flower-container {
       position: absolute;
       bottom: -20vw;
@@ -86,22 +83,20 @@
       justify-content: center;
       align-items: flex-end;
       z-index: 1;
-      opacity: 80;
+      opacity: 0.8;  /* ค่า opacity ถูกต้องอยู่ในช่วง 0-1 */
     }
-
     .flower {
       position: absolute;
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
-
     .flower.visible {
       opacity: 1;
     }
   </style>
 </head>
 <body>
-  <!-- เนื่องจาก contentData ถูกใช้ใน JS redirect เราจึงประกาศไว้ก่อน -->
+  <!-- contentData ใช้สำหรับ redirect และเปลี่ยนเนื้อหา -->
   <script>
     const contentData = [
       {
@@ -125,19 +120,19 @@
       {
         line1: '"ศิลปะ"',
         line2: 'ทำให้ผู้คนเฝ้าสังเกตสีสันและเห็นคุณค่าของสิ่งรอบตัว',
-        flowers: [], // ดอกไม้จะถูกเพิ่มภายหลัง
+        flowers: [],
         clouds: { top1: '3%', left1: '4%', top2: '4%', right2: '4%' }
       },
       {
         line1: '"ศิลปะ"',
         line2: 'ทำให้ผู้คนมองเห็นความดี ความงดงาม และสัจธรรมของโลกใบนี้',
-        flowers: [], // ดอกไม้จะถูกเพิ่มภายหลัง
+        flowers: [],
         clouds: { top1: '4%', left1: '2%', top2: '3%', right2: '3%' }
       },
       {
         line1: '..."ศิลปะ" จึงก้าวข้ามการเป็นเครื่องมือ',
         line2: 'เพื่อการนันทนาการ สู่พื้นที่ของการบำบัด...',
-        flowers: [], // ดอกไม้จะถูกเพิ่มภายหลัง
+        flowers: [],
         clouds: { top1: '5%', left1: '1%', top2: '2%', right2: '2%' }
       }
     ];
@@ -163,26 +158,30 @@
   </div>
 
   <script>
-    // นำ flower elements ไปใส่ใน contentData ตามลำดับ
+    // เพิ่ม flower elements ให้กับ contentData ตามลำดับ
     contentData[3].flowers.push(document.getElementById('flower3'));
     contentData[4].flowers.push(document.getElementById('flower3'), document.getElementById('flower2'));
     contentData[5].flowers.push(document.getElementById('flower3'), document.getElementById('flower2'), document.getElementById('flower1'));
 
     let isRedirecting = false;
-    // ฟังก์ชันคำนวณค่า --vh จาก window.innerHeight
+    let currentIndex = 0;
+    let isTicking = false;
+
+    // ฟังก์ชันคำนวณค่า --vh โดยใช้ window.visualViewport (ถ้ามี) เพื่อความแม่นยำ
     function setVh() {
-      let vh = window.innerHeight * 0.01;
+      const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      let vh = viewportHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
-      // ตั้ง min-height ของ body ให้เท่ากับจำนวน section * ความสูงหน้าจอ
-      document.body.style.minHeight = `${window.innerHeight * contentData.length}px`;
+      document.body.style.minHeight = `${viewportHeight * contentData.length}px`;
     }
 
-    // จัดการ redirect เมื่อ scroll ถึงขอบบนหรือขอบล่าง
-    window.addEventListener("scroll", function () {
+    // ฟังก์ชันจัดการ scroll ทั้งหมด
+    function handleScroll() {
       if (isRedirecting) return;
-      
+      let scrollY = window.scrollY;
+
       // Redirect เมื่ออยู่ด้านบน
-      if (window.scrollY <= 0) {
+      if (scrollY <= 0) {
         isRedirecting = true;
         setTimeout(() => {
           window.location.href = "Drawing.html#line-animation";
@@ -190,34 +189,49 @@
         return;
       }
       
-      // ถ้าอยู่ใน section สุดท้าย ให้เพิ่ม extraOffset (เช่น 50% ของความสูงหน้าจอ)
-      let extraOffset = (currentIndex === contentData.length - 1) ? window.innerHeight * 1 : 0;
-      
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1 - extraOffset) {
+      // Redirect เมื่อถึงด้านล่าง (เพิ่ม extraOffset ใน section สุดท้าย)
+      let extraOffset = (currentIndex === contentData.length - 1) ? window.innerHeight : 0;
+      if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 1 - extraOffset) {
         isRedirecting = true;
         setTimeout(() => {
           window.location.href = "end2.html";
         }, 3000);
       }
+
+      // อัพเดท index ตามการเลื่อนหน้าจอ
+      let sectionHeight = window.innerHeight;
+      let newIndex = Math.floor(scrollY / sectionHeight);
+      newIndex = Math.min(newIndex, contentData.length - 1);
+      if (newIndex !== currentIndex) {
+         currentIndex = newIndex;
+         updateContent(currentIndex);
+      }
+    }
+
+    // ใช้ requestAnimationFrame เพื่อให้ scroll handler ทำงานได้ราบรื่นขึ้น
+    window.addEventListener('scroll', () => {
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          isTicking = false;
+        });
+        isTicking = true;
+      }
     });
 
-
-    // องค์ประกอบต่าง ๆ
-    const content = document.getElementById('content');
-    const line1 = document.getElementById('line1');
-    const line2 = document.getElementById('line2');
-    const cloud1 = document.getElementById('cloud1');
-    const cloud2 = document.getElementById('cloud2');
-
-    let currentIndex = 0;
-    
     // เปลี่ยนเนื้อหาตาม index ใหม่
     function updateContent(newIndex) {
       if (newIndex < 0 || newIndex >= contentData.length) return;
+      const content = document.getElementById('content');
+      const line1 = document.getElementById('line1');
+      const line2 = document.getElementById('line2');
+      const cloud1 = document.getElementById('cloud1');
+      const cloud2 = document.getElementById('cloud2');
+      
       content.classList.remove('visible');
       content.classList.add('hidden');
       
-      // รีเซ็ตดอกไม้ (flower elements) 
+      // รีเซ็ตการแสดงผลของดอกไม้
       document.getElementById('flower3').classList.remove('visible');
       document.getElementById('flower2').classList.remove('visible');
       document.getElementById('flower1').classList.remove('visible');
@@ -240,17 +254,6 @@
         content.classList.add('visible');
       }, 500);
     }
-
-    // อัพเดท index เมื่อ scroll โดยใช้ความสูงของหน้าจอเป็นตัวแบ่ง section
-    window.addEventListener('scroll', () => {
-      let sectionHeight = window.innerHeight;
-      let newIndex = Math.floor(window.scrollY / sectionHeight);
-      newIndex = Math.min(newIndex, contentData.length - 1);
-      if (newIndex !== currentIndex) {
-         currentIndex = newIndex;
-         updateContent(currentIndex);
-      }
-    });
 
     setVh();
     window.addEventListener('resize', setVh);

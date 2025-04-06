@@ -426,6 +426,24 @@
       }
     }
 
+    /* CSS override เฉพาะสำหรับ Android */
+    .android #flower-animation .flower-left {
+      /* ปรับตำแหน่ง left สำหรับ Android ให้เหมาะสม (ปรับค่าได้ตามต้องการ) */
+      left: 150% !important;
+    }
+
+    .android #flower-animation .flower-right {
+      /* ปรับตำแหน่ง left สำหรับ Android ให้เหมาะสม (ปรับค่าได้ตามต้องการ) */
+      left: 175% !important;
+    }
+
+    .android #flower-animation .vase {
+      /* ปรับตำแหน่งของแจกันให้เหมาะสม (ปรับค่า left, transform ตามต้องการ) */
+      left: 42% !important;
+      transform: translateX(-48%) !important;
+    }
+
+
     /* Section 3: Interactive Animation */
     #interactive-animation {
       height: 102vh;
@@ -970,6 +988,10 @@
         }, 1000);
       }
     });
+
+    if (/Android/i.test(navigator.userAgent)) {
+      document.documentElement.classList.add('android');
+    }
 
     // window.addEventListener("wheel", function (event) {
     //   if (isScrolling) return;
