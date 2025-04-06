@@ -91,12 +91,20 @@
     }
 
     /* ---------------------- สไตล์ใหม่ของ Section 1 (แบบ absolute overlay) ---------------------- */
-    .sections-container {
+    /* .sections-container {
       position: relative;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
+    } */
+
+    .sections-container {
+      position: relative;
+      width: 100vw;
+      height: calc(var(--vh, 1vh) * 100);
+      overflow: hidden;
     }
+
 
     .section {
       position: absolute;
@@ -257,30 +265,11 @@
       flex-direction: column;
     }
 
-    .section3 .Texts3 {
+    .Texts3 {
       font-size: 2.1vw;
       /* ประมาณ 30px */
       text-align: center;
       margin-top: 2.78vw;
-      z-index: 2;
-      font-family: TorsilpChillChill;
-      font-weight: normal;
-      color: #714937;
-      text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
-    }
-
-    .frame-large {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: url('assets/img/frame.png') no-repeat center center/contain;
-      z-index: 2;
-    }
-
-    /* .Texts3 {
-      font-size: 2.1vw;
-      text-align: center;
-      margin-top: 3vw;
       z-index: 2;
       font-family: 'MN Tonkatsu Italic', sans-serif;
       font-weight: normal;
@@ -294,7 +283,7 @@
       height: 100%;
       background: url('assets/img/frame.png') no-repeat center center/contain;
       z-index: 2;
-    } */
+    }
 
     .cards-container {
       display: grid;
@@ -384,7 +373,6 @@
       z-index: 1;
     }
 
-
     /* Media query สำหรับอุปกรณ์มือถือแนวนอน */
     @media screen and (max-width: 600px) and (orientation: landscape) {
       .section3 .frame-large {
@@ -396,6 +384,7 @@
         /* ปรับขนาดภาพในกรอบให้เหมาะสม */
       }
     }
+
 
     /* Section 4 */
     .section4 {
@@ -1040,6 +1029,14 @@
       });
     }, { threshold: 0.5 });
     section7Observer.observe(section7);
+
+    function setVh() {
+      // คำนวณค่า vh ตามความสูงของหน้าจอจริง
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    setVh();
+    window.addEventListener('resize', setVh);
 
   </script>
 </body>
