@@ -97,6 +97,7 @@
       font-size: 1.5vw;
       /* 20px */
       margin-top: 0.5208vw;
+      margin-bottom: 0.5208vw;
       /* 10px */
       z-index: 1;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
@@ -278,6 +279,22 @@
         height: 80vw;
       }
     }
+
+    /*  Footer  */
+    .footer {
+      background-color: #ff97cb;
+      color: #000000;
+      text-align: center;
+      padding: 20px 0px;
+      /* ตั้งค่า position และ z-index เพื่อให้ footer อยู่บนสุด */
+      position: relative;
+      z-index: 9999;
+    }
+
+    .footer p {
+      margin: 5px 0;
+      line-height: 1.5;
+    }
   </style>
 </head>
 
@@ -288,15 +305,15 @@
     <div class="members">
       <div class="member">
         <div class="profile-pic" style="background-image: url('assets/img/ชพ.PNG');"></div>
-        <div class="name">กนกวรรณ เปรมจิตร<br> 64080500201 </div>
+        <div class="name">กนกวรรณ เปรมจิตร<br> "ชมพู่" </div>
       </div>
       <div class="member">
         <div class="profile-pic" style="background-image: url('assets/img/ต.PNG');"></div>
-        <div class="name">วรรวดี เกิดศิลป์<br> 64080500234 </div>
+        <div class="name">วรรวดี เกิดศิลป์<br>"แตม" </div>
       </div>
       <div class="member">
         <div class="profile-pic" style="background-image: url('assets/img/ข.png');"></div>
-        <div class="name">ณัฎฐนิช จันทร์ฉาย <br> 64080500244 </div>
+        <div class="name">ณัฎฐนิช จันทร์ฉาย <br> "ขวัญ"  </div>
       </div>
     </div>
 
@@ -307,6 +324,13 @@
     </div>
     <div class="flowerm1"></div>
     <div class="flowerm3"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>เว็บไซต์นี้เป็นส่วนหนึ่งในโครงงานวิจัยของนักศึกษาชั้นปีที่ 4 สาขาวิชาคอมพิวเตอร์และเทคโนโลยีสารสนเทศ</p>
+      <p>คณะครุศาสตร์อุตสาหกรรมและเทคโนโลยี มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</p>
+      <p>Copyright © 2025 RABYE</p>
+    </footer>
   </div>
   <script>
     let isRedirecting = false;
