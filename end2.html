@@ -173,11 +173,10 @@
         //     }
         // });
 
-        let isRedirecting = false;
         let touchStartY = null;
+        let isRedirecting = false;
 
         function redirect(url, delay) {
-            if (isRedirecting) return;
             isRedirecting = true;
             setTimeout(() => {
                 window.location.href = url;
@@ -188,9 +187,9 @@
         window.addEventListener("wheel", function (e) {
             if (isRedirecting) return;
 
-            if (e.deltaY < 0) { // scroll ขึ้น
+            if (e.deltaY < 0) {
                 redirect("end.html", 1000);
-            } else if (e.deltaY > 0) { // scroll ลง
+            } else if (e.deltaY > 0) {
                 redirect("member.html", 2000);
             }
         });
@@ -198,24 +197,24 @@
         // สำหรับอุปกรณ์สัมผัส (touch events)
         window.addEventListener("touchstart", function (e) {
             touchStartY = e.touches[0].clientY;
-        });
+        }, { passive: true });
 
         window.addEventListener("touchmove", function (e) {
             if (isRedirecting || touchStartY === null) return;
+
             let touchCurrentY = e.touches[0].clientY;
             let diffY = touchStartY - touchCurrentY;
 
-            // ถ้าปัดขึ้น (swipe up) มากกว่า 50px
-            if (diffY > 50) {
-                redirect("end.html", 1000);
+            if (Math.abs(diffY) > 50) {
+                e.preventDefault(); // ป้องกันการ scroll ปกติ
+                if (diffY > 50) {
+                    redirect("end.html", 1000); // ปัดขึ้น
+                } else if (diffY < -50) {
+                    redirect("member.html", 2000); // ปัดลง
+                }
                 touchStartY = null;
             }
-            // ถ้าปัดลง (swipe down) มากกว่า 50px
-            else if (diffY < -50) {
-                redirect("member.html", 2000);
-                touchStartY = null;
-            }
-        });
+        }, { passive: false });
 
         window.addEventListener("touchend", function () {
             touchStartY = null;
