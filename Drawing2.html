@@ -6,7 +6,6 @@
   <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
   <title>ระบาย</title>
   
-  <!-- นำเข้าไลบรารี iro.js -->
   <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
   <style>
@@ -37,7 +36,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      /* height: 100vh; */
       min-height: 100vh;
       background: url(assets/img/bg.png) no-repeat center center fixed;
       background-size: cover;
@@ -82,7 +80,7 @@
     .color.active {
       border: 0.2vw solid black;
     }
-    /* ปรับสไตล์ของวงกลม color preview ให้มีข้อความและจัดกึ่งกลาง */
+
     #color-preview {
       width: 4vw;
       height: 4vw;
@@ -358,8 +356,6 @@
       font-family: 'Noto Sans Thai', sans-serif;
     }
 
-
-    /* ไอคอนที่จะตามเมาส์ไป */
     #eyedropper-cursor {
       position: absolute;
       width: 3vw;
@@ -870,7 +866,7 @@
         }
       });
 
-      // กำหนดสีเริ่มต้นของวงกลม preview
+      // สีเริ่มต้นของวงกลม preview
       colorPreview.style.backgroundColor = brushColor;
     });
   </script>

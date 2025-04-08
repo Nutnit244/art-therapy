@@ -44,7 +44,6 @@
             font-family: "MN Tonkatsu Bold Italic", sans-serif;
         }
 
-        /* ปรับการ์ดให้มีขนาดเท่ากัน */
         .cards-wrapper {
             display: flex;
             justify-content: center;
@@ -153,9 +152,9 @@
         let isRedirecting = false;
 
         window.addEventListener("scroll", function () {
-            if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
+            if (isRedirecting) return; 
 
-            // ถ้าอยู่ด้านบน (scrollY <= 0)
+            
             if (window.scrollY <= 0) {
                 isRedirecting = true;
                 setTimeout(() => {
@@ -163,8 +162,6 @@
                 }, 1000);
             }
 
-
-            // ถ้าอยู่ด้านล่าง
             else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
                 isRedirecting = true;
                 setTimeout(() => {
@@ -172,54 +169,6 @@
                 }, 2500);
             }
         });
-
-        // let touchStartY = null;
-        // let isRedirecting = false;
-
-        // function redirect(url, delay) {
-        //     isRedirecting = true;
-        //     setTimeout(() => {
-        //         window.location.href = url;
-        //     }, delay);
-        // }
-
-        // // สำหรับเมาส์ (wheel event)
-        // window.addEventListener("wheel", function (e) {
-        //     if (isRedirecting) return;
-
-        //     if (e.deltaY < 0) {
-        //         redirect("end.html", 1000);
-        //     } else if (e.deltaY > 0) {
-        //         redirect("member.html", 2000);
-        //     }
-        // });
-
-        // // สำหรับอุปกรณ์สัมผัส (touch events)
-        // window.addEventListener("touchstart", function (e) {
-        //     touchStartY = e.touches[0].clientY;
-        // }, { passive: true });
-
-        // window.addEventListener("touchmove", function (e) {
-        //     if (isRedirecting || touchStartY === null) return;
-
-        //     let touchCurrentY = e.touches[0].clientY;
-        //     let diffY = touchStartY - touchCurrentY;
-
-        //     if (Math.abs(diffY) > 50) {
-        //         e.preventDefault(); // ป้องกันการ scroll ปกติ
-        //         if (diffY > 50) {
-        //             redirect("end.html", 1000); // ปัดขึ้น
-        //         } else if (diffY < -50) {
-        //             redirect("member.html", 2000); // ปัดลง
-        //         }
-        //         touchStartY = null;
-        //     }
-        // }, { passive: false });
-
-        // window.addEventListener("touchend", function () {
-        //     touchStartY = null;
-        // });
-
 
     </script>
 

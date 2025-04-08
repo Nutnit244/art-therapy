@@ -110,7 +110,6 @@
       fill: white;
     }
 
-    /* จัดวางปุ่มไอคอนในแนวตั้ง */
     .action-buttons {
       display: flex;
       flex-direction: column;
@@ -127,7 +126,6 @@
       padding: 0;
     }
 
-    /* กำหนดขนาดให้กับไอคอนในแต่ละปุ่ม */
     .save-btn img,
     .share-btn img {
       background-color: #fff;
@@ -171,20 +169,6 @@
     <p id="encouragement-message">กำลังโหลดข้อความให้กำลังใจ...</p>
   </div>
 
-
-  <!-- <div class="content-wrapper">
-    <div class="container">
-      <img id="randomImage" src="" alt="Random Image">
-    </div>
-
-    <div class="action-buttons">
-      <button class="save-btn" onclick="saveImage()">
-        <img src="assets/img/save.png" alt="บันทึก">
-      </button>
-      <button class="share-btn" onclick="shareImage()">
-        <img src="assets/img/share.png" alt="แชร์">
-      </button>
-    </div> -->
   </div>
 
   <script>
@@ -209,14 +193,13 @@
     // ดึงข้อความของผู้ใช้จาก localStorage
     const userMessage = localStorage.getItem('userMessage') || '';
 
-    // ฟังก์ชันเลือกข้อความให้กำลังใจ
     function getEncouragementMessage(text) {
       for (const item of encouragementMessages) {
         if (item.keywords.some(keyword => text.includes(keyword))) {
           return item.message;
         }
       }
-      return "คุณเป็นคนที่มีค่า และเราอยากให้คุณมีความสุขเสมอ 😊"; // ข้อความเริ่มต้นหากไม่มีคำที่ตรง
+      return "คุณเป็นคนที่มีค่า และเราอยากให้คุณมีความสุขเสมอ 😊"; 
     }
 
     // แสดงข้อความให้กำลังใจ
@@ -229,70 +212,6 @@
       window.location.href = "Drawing.html#line-animation";
     }
 
-    // const images = [
-    //   'assets/img/rabyewrite3_1.png',
-    //   'assets/img/rabyewrite3_2.png',
-    //   'assets/img/rabyewrite3_3.png',
-    //   'assets/img/rabyewrite3_4.png',
-    //   'assets/img/rabyewrite3_5.png',
-    //   'assets/img/rabyewrite3_6.png',
-    //   'assets/img/rabyewrite3_7.png',
-    //   'assets/img/rabyewrite3_8.png',
-    //   'assets/img/rabyewrite3_9.png'
-    // ];
-
-    // function displayRandomImage() {
-    //   const randomIndex = Math.floor(Math.random() * images.length);
-    //   document.getElementById('randomImage').src = images[randomIndex];
-    // }
-    // displayRandomImage();
-
-    // function saveImage() {
-    //   const imgSrc = document.getElementById('randomImage').src;
-    //   const a = document.createElement('a');
-    //   a.href = imgSrc;
-    //   const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-    //   a.download = fileName;
-    //   document.body.appendChild(a);
-    //   a.click();
-    //   document.body.removeChild(a);
-    // }
-
-    // async function shareImage() {
-    //   const imgElement = document.getElementById('randomImage');
-    //   const imgSrc = imgElement.src;
-
-    //   try {
-    //     const response = await fetch(imgSrc);
-    //     if (!response.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //     const blob = await response.blob();
-    //     const fileName = imgSrc.substring(imgSrc.lastIndexOf('/') + 1);
-    //     const file = new File([blob], fileName, { type: blob.type });
-
-    //     if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    //       await navigator.share({
-    //         files: [file],
-    //         title: 'ดูรูปนี้สิ!',
-    //         text: 'ฉันเจอรูปนี้และคิดว่าคุณน่าจะชอบ'
-    //       });
-    //       console.log('แชร์สำเร็จด้วยการแชร์ไฟล์');
-    //     } else if (navigator.share) {
-    //       await navigator.share({
-    //         title: 'ดูรูปนี้สิ!',
-    //         text: 'ฉันเจอรูปนี้และคิดว่าคุณน่าจะชอบ',
-    //         url: imgSrc
-    //       });
-    //       console.log('แชร์สำเร็จด้วย URL');
-    //     } else {
-    //       alert('เบราว์เซอร์ของคุณไม่รองรับการแชร์');
-    //     }
-    //   } catch (error) {
-    //     console.error('Error sharing:', error);
-    //     alert('เกิดข้อผิดพลาดในการแชร์รูป: ' + error.message);
-    //   }
-    // }
   </script>
 </body>
 

@@ -39,7 +39,6 @@
       min-height: 100vh;
     }
 
-    /* Header with buttons on both sides */
     .header {
       display: flex;
       align-items: center;
@@ -127,7 +126,6 @@
       pointer-events: none;
     }
 
-    /* ปุ่ม Idea (REF) อยู่ที่มุมซ้ายบนของ vase-area */
     #ref-btn {
       position: absolute;
       top: 1vw;
@@ -149,7 +147,6 @@
       height: 2vw;
     }
 
-    /* ปุ่ม Undo/Redo อยู่ที่มุมขวาบนของ vase-area เรียงแนวตั้ง */
     .undo-redo-container {
       position: absolute;
       top: 0.5vw;
@@ -247,7 +244,6 @@
       font-family: 'MN Tonkatsu Italic', sans-serif;
     }
 
-    /* Action buttons container */
     .action-buttons {
       position: absolute;
       bottom: -4vw;
@@ -257,7 +253,6 @@
       gap: 1.2vw;
     }
 
-    /* Save button */
     .save-button {
       display: inline-flex;
       align-items: center;
@@ -480,7 +475,6 @@
       }
     }
 
-    /* Modal styles สำหรับ Reference */
     .modal {
       display: none;
       position: fixed;
@@ -498,7 +492,6 @@
       left: 50%;
       transform: translate(-50%, -50%);
       max-width: 70vw;
-      /* เปลี่ยนจาก 60vw เป็น 80vw เพื่อให้รูปใหญ่ขึ้น */
       width: 70vw;
     }
 
@@ -519,7 +512,6 @@
       padding: 0.2vw 0.5vw;
     }
 
-    /* Modal styles สำหรับ Flower Meaning */
     #meaning-btn {
       position: absolute;
       top: 0vw;
@@ -549,7 +541,6 @@
 </head>
 
 <body>
-  <!-- ปุ่ม Go Back -->
   <button class="back-btn" onclick="goBack()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
       <path
@@ -563,7 +554,6 @@
     <button class="bbtn">งานแต่ง</button>
   </div>
   <div class="container">
-    <!-- พื้นที่แจกัน -->
     <div class="vase-area" id="vaseArea">
       <div class="vase"></div>
       <div class="flower-container" id="flower-container"></div>
@@ -689,7 +679,6 @@
     };
 
     const flowerContainer = document.getElementById('flower-container');
-    // เพิ่ม event ให้กับดอกไม้ทุกดอก
     document.querySelectorAll('.flower').forEach(flower => {
       flower.addEventListener('click', () => {
         createFlowerClone(flower);
@@ -712,21 +701,17 @@
       clone.style.top = topPercent + '%';
       clone.style.width = flowerSizes[originalId] || "12vw";
       clone.id = `${originalId}-${Date.now()}`;
-      // เมื่อคลิกที่ clone ให้ลบออก และอัพเดท addedFlowers ให้ตรงกัน
       clone.addEventListener('click', () => {
-        // ลบ clone จาก addedFlowers ถ้ามี
         addedFlowers = addedFlowers.filter(item => item !== clone);
         clone.remove();
       });
       flowerContainer.appendChild(clone);
-      // บันทึก clone ที่เพิ่มเข้าไปใน addedFlowers
       addedFlowers.push(clone);
     }
 
     function undoFlower() {
       if (addedFlowers.length > 0) {
         const lastFlower = addedFlowers.pop();
-        // นำ flower ที่ถูก undo ไปเก็บไว้ใน removedFlowers เพื่อให้สามารถ redo ได้
         removedFlowers.push(lastFlower);
         lastFlower.remove();
       }
@@ -735,7 +720,6 @@
     function redoFlower() {
       if (removedFlowers.length > 0) {
         const flowerToRedo = removedFlowers.pop();
-        // คืน flower กลับมาที่ flowerContainer
         flowerContainer.appendChild(flowerToRedo);
         addedFlowers.push(flowerToRedo);
       }
@@ -760,7 +744,6 @@
       logo.style.position = "absolute";
 
       if (window.matchMedia("(max-width: 1024px)").matches) {
-        // สำหรับอุปกรณ์ที่มีความกว้างหน้าจอไม่เกิน 1024px
         logo.style.top = "1.5vw";
         logo.style.right = "9vw";
         logo.style.width = "5vw";
@@ -783,7 +766,6 @@
         scale: window.devicePixelRatio || 2,
         useCORS: true
       }).then(canvas => {
-        // กำหนดค่า crop (ปรับเป็นพิกเซลตามที่เหมาะสม)
         const cropPixels = 5;
         const croppedCanvas = document.createElement('canvas');
         const ctx = croppedCanvas.getContext('2d');
@@ -815,11 +797,9 @@
       const refBtn = document.getElementById('ref-btn');
       const undoRedoContainer = document.querySelector('.undo-redo-container');
       
-      // ซ่อนปุ่ม ref และ undo/redo
       refBtn.style.display = "none";
       undoRedoContainer.style.display = "none";
       
-      // เพิ่มโลโก้เข้าไปใน vaseArea
       const logo = document.createElement('img');
       logo.src = "assets/img/Tinylogo.png";
       logo.style.position = "absolute";

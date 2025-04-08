@@ -7,7 +7,6 @@
   <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png" />
   <title>ระบาย</title>
   <style>
-    /* โดยอิงจาก 1920px: 1px = (100/1920)vw ≈ 0.05208vw */
     @font-face {
       font-family: 'MN Tonkatsu Italic';
       src: url('assets/MN Tonkatsu Italic.ttf') format('truetype');
@@ -26,18 +25,14 @@
 
     .container {
       text-align: center;
-      /* padding-bottom: 5vh; */
       padding-top: 3vh;
     }
 
     .title {
       font-size: 2vw;
-      /* 36px */
       text-shadow: 0.1042vw 0.1042vw white;
-      /* 2px offset */
       font-weight: bold;
       margin-bottom: 1.5625vw;
-      /* 30px */
       z-index: 1;
     }
 
@@ -46,7 +41,6 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 2.6042vw;
-      /* 50px */
       z-index: 1;
     }
 
@@ -57,17 +51,13 @@
 
     .profile-pic {
       width: 11vw;
-      /* 120px */
       height: 11vw;
-      /* 120px */
       border-radius: 50%;
       background-size: cover;
       background-position: center;
       margin-bottom: 0.5208vw;
-      /* 10px */
       z-index: 1;
       box-shadow: 0.1563vw 0.1563vw 0.2604vw #333;
-      /* 3px 3px 5px */
     }
 
     .name {
@@ -87,18 +77,15 @@
 
     .advisor .profile-pic {
       width: 11vw;
-      /* 140px */
       height: 11vw;
-      /* 140px */
+
       z-index: 1;
     }
 
     .advisor .name {
       font-size: 1.5vw;
-      /* 20px */
       margin-top: 0.5208vw;
       margin-bottom: 0.5208vw;
-      /* 10px */
       z-index: 1;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
     }
@@ -130,15 +117,12 @@
     /* Media Query สำหรับอุปกรณ์ที่มีความกว้างหน้าจอ <= 1024px (เช่น iPad Air) */
     @media screen and (max-width: 1180px) {
 
-      /* ปรับ padding-top ให้ใหญ่ขึ้นเพื่อความสมดุล */
       .container {
         padding-top: 5vw;
       }
 
-      /* เพิ่มขนาดตัวอักษรและช่องว่างให้เหมาะสมกับหน้าจอเล็ก */
       .title {
         font-size: 3vw;
-        /* ขนาดเพิ่มขึ้นเพื่อให้ดูเด่นบนหน้าจอขนาดเล็ก */
         margin-bottom: 3vw;
       }
 
@@ -148,16 +132,12 @@
 
       .profile-pic {
         width: 15vw;
-        /* กำหนดขนาดรูปโปรไฟล์ */
         height: 15vw;
         margin-bottom: 1vw;
         box-shadow: 0.3vw 0.3vw 0.5vw #333;
         object-fit: cover;
-        /* ทำให้รูปเต็มพื้นที่ของกล่อง */
         background-color: white;
-        /* กำหนดพื้นหลังเป็นสีขาว */
         border-radius: 50%;
-        /* ถ้าต้องการให้เป็นวงกลม */
       }
 
 
@@ -179,7 +159,6 @@
         margin-top: 1vw;
       }
 
-      /* ปรับขนาดของภาพพื้นดอกไม้ (ถ้าจำเป็น) */
       .flowerm1,
       .flowerm3 {
         height: 60vw;
@@ -286,7 +265,6 @@
       color: #000000;
       text-align: center;
       padding: 20px 0px;
-      /* ตั้งค่า position และ z-index เพื่อให้ footer อยู่บนสุด */
       position: relative;
       z-index: 9999;
     }
@@ -336,9 +314,8 @@
     let isRedirecting = false;
 
     window.addEventListener("scroll", function () {
-      if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
+      if (isRedirecting) return; 
 
-      // ถ้าอยู่ด้านบน (scrollY <= 0)
       if (window.scrollY <= 0) {
         isRedirecting = true;
         setTimeout(() => {

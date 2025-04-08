@@ -480,9 +480,9 @@
   <div class="door-text"><b>👆คลิกเพื่อเปิดประตูสิ</b></div>
   <div class="light-overlay"></div>
   <div class="video-container">
-    <!-- ลบ autoplay ออก -->
     <video id="fullscreen-video" src="assets/img/withoutpro.mov" muted playsinline webkit-playsinline></video>
   </div>
+  
   <div class="subtitle" id="subtitle"></div>
 
   <script>
@@ -549,7 +549,7 @@
       }
     }
 
-    // กำหนดค่า threshold สำหรับวิดีโอ (ยังคงไว้ใช้กับการเลื่อนสำหรับการเปลี่ยนข้อความ)
+    // กำหนดค่า threshold สำหรับวิดีโอ 
     let videoThreshold = window.innerWidth < 768 ? 1500 : 4500;
 
     let lastKnownScrollPosition = 0;

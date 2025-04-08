@@ -12,7 +12,6 @@
       font-family: 'Noto Sans Thai';
       src: url('assets/NotoSansThaiVariableFont_wdth.wght.ttf') format('truetype');
       font-weight: 100 900;
-      /* หากเป็น Variable Font */
       font-style: normal;
     }
 
@@ -24,7 +23,6 @@
     }
 
 
-    /* ป้องกันไม่ให้เลื่อนไปด้านขวา */
     html,
     body {
       overflow-x: hidden;
@@ -37,8 +35,6 @@
     body {
       font-family: 'MN Tonkatsu Italic', sans-serif;
       overflow-y: auto;
-      /* background: url('assets/img/bg.png') no-repeat center center/cover;
-      background-attachment: fixed; */
     }
 
     body::before {
@@ -51,7 +47,6 @@
       background: url('assets/img/bg.png') no-repeat center center/cover;
       background-attachment: fixed;
       z-index: -1;
-      /* ให้อยู่ด้านหลังเนื้อหาทั้งหมด */
     }
 
     .section1,
@@ -90,13 +85,6 @@
       transform: translateY(0);
     }
 
-    /* ---------------------- สไตล์ใหม่ของ Section 1 (แบบ absolute overlay) ---------------------- */
-    /* .sections-container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    } */
 
     .sections-container {
       position: relative;
@@ -134,7 +122,6 @@
     .pcolor {
       position: absolute;
       bottom: 0vw;
-      /* เปลี่ยนจาก -9.7vw เป็น 0 เพื่อให้แสดงส่วนท้ายเต็ม */
       left: 50%;
       transform: translateX(-50%);
       opacity: 0;
@@ -145,7 +132,6 @@
 
     .pcolor.show {
       opacity: 1;
-      /* ลบ translateY ที่ดันขึ้นไป เพราะตอนนี้เราแสดงเต็มแล้ว */
       transform: translateX(-50%);
     }
 
@@ -206,7 +192,7 @@
       }
     }
 
-    /* ---------------------- ส่วน CSS ของ Section 2 - 8 (คงเดิม) ---------------------- */
+    /* ---------------------- ส่วน CSS ของ Section 2 - 8  ---------------------- */
     /* Section 2 */
     .section2 {
       display: flex;
@@ -268,7 +254,6 @@
 
     .Texts3 {
       font-size: 2.1vw;
-      /* ประมาณ 30px */
       text-align: center;
       margin-top: 2.78vw;
       z-index: 2;
@@ -290,7 +275,6 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2.78vw;
-      /* margin-top: 0.69vw; */
       position: relative;
       z-index: 2;
     }
@@ -382,7 +366,6 @@
         top: -10%;
         left: -10%;
         background-size: contain;
-        /* ปรับขนาดภาพในกรอบให้เหมาะสม */
       }
     }
 
@@ -550,7 +533,7 @@
       left: 40%;
       top: 10%;
       height: 100%;
-      background: url(assets/img/cloud1.png) no-repeat center center;
+      background: url('assets/img/cloud1.png') no-repeat center center;
       z-index: 1;
     }
 
@@ -560,7 +543,7 @@
       bottom: 40%;
       height: 80%;
       right: 22%;
-      background: url('assets/img/cloud1.PNG') no-repeat center center;
+      background: url('assets/img/cloud1.png') no-repeat center center;
       z-index: 0;
     }
 
@@ -573,7 +556,6 @@
       transition: opacity 1s ease, transform 1s ease;
       z-index: 2;
       width: 110vw;
-      /* ปรับความกว้างตามที่ต้องการ */
     }
 
     .people.show {

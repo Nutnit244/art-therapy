@@ -32,23 +32,19 @@
   display: none;
 }
 
-/* ถ้า li มีคลาส .open => โชว์เมนูย่อย */
 .has-submenu.open .submenu {
   display: block;
 }
 
-/* สไตล์ li */
 .floating-menu li {
   border-bottom: 0.05vw solid #eee; /* 1px */
   padding: 0.42vw 0.63vw;          
 }
 
-/* เอาเส้นขอบล่างรายการสุดท้ายออก */
 .floating-menu li:last-child {
   border-bottom: none;
 }
 
-/* ลิงก์ในเมนู */
 .floating-menu li a {
   text-decoration: none;
   color: #000;
@@ -63,22 +59,18 @@
   margin: 0.1vw;
 }
 
-/* hover เปลี่ยนพื้นหลัง */
 .floating-menu li:hover {
   background-color: #f2f2f2;
 }
 
-/* เมนูย่อยเยื้องขวาเล็กน้อย */
 .submenu li {
   padding-left: 1.25vw;  
 }
 
-/* ลูกศรข้าง Workshops */
 .arrow {
   margin-left: 0.26vw;     
 }
 
-/* คลาสสำหรับ "ซ่อน" เมนู (display: none) */
 .hidden {
   display: none !important;
 }

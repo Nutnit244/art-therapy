@@ -17,15 +17,15 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
-      -webkit-overflow-scrolling: touch; /* ช่วยให้เลื่อนนุ่มนวลใน iOS */
+      -webkit-overflow-scrolling: touch; 
     }
     body {
       font-family: 'MN Tonkatsu Italic', sans-serif;
       font-weight: normal;
       background: url('assets/img/bg.png') no-repeat center center/cover;
       overflow-y: scroll;
-      /* min-height จะถูกเซ็ตใน JavaScript */
     }
+    
     #ui-container {
       position: fixed;
       width: 100vw;
@@ -83,7 +83,7 @@
       justify-content: center;
       align-items: flex-end;
       z-index: 1;
-      opacity: 0.8;  /* ค่า opacity ถูกต้องอยู่ในช่วง 0-1 */
+      opacity: 0.8;  
     }
     .flower {
       position: absolute;
@@ -96,7 +96,6 @@
   </style>
 </head>
 <body>
-  <!-- contentData ใช้สำหรับ redirect และเปลี่ยนเนื้อหา -->
   <script>
     const contentData = [
       {
@@ -167,7 +166,6 @@
     let currentIndex = 0;
     let isTicking = false;
 
-    // ฟังก์ชันคำนวณค่า --vh โดยใช้ window.visualViewport (ถ้ามี) เพื่อความแม่นยำ
     function setVh() {
       const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
       let vh = viewportHeight * 0.01;
@@ -175,12 +173,10 @@
       document.body.style.minHeight = `${viewportHeight * contentData.length}px`;
     }
 
-    // ฟังก์ชันจัดการ scroll ทั้งหมด
     function handleScroll() {
       if (isRedirecting) return;
       let scrollY = window.scrollY;
 
-      // Redirect เมื่ออยู่ด้านบน
       if (scrollY <= 0) {
         isRedirecting = true;
         setTimeout(() => {
@@ -189,7 +185,6 @@
         return;
       }
       
-      // Redirect เมื่อถึงด้านล่าง (เพิ่ม extraOffset ใน section สุดท้าย)
       let extraOffset = (currentIndex === contentData.length - 1) ? window.innerHeight : 0;
       if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 1 - extraOffset) {
         isRedirecting = true;
@@ -198,7 +193,6 @@
         }, 4000);
       }
 
-      // อัพเดท index ตามการเลื่อนหน้าจอ
       let sectionHeight = window.innerHeight;
       let newIndex = Math.floor(scrollY / sectionHeight);
       newIndex = Math.min(newIndex, contentData.length - 1);
@@ -208,7 +202,6 @@
       }
     }
 
-    // ใช้ requestAnimationFrame เพื่อให้ scroll handler ทำงานได้ราบรื่นขึ้น
     window.addEventListener('scroll', () => {
       if (!isTicking) {
         window.requestAnimationFrame(() => {
@@ -219,7 +212,6 @@
       }
     });
 
-    // เปลี่ยนเนื้อหาตาม index ใหม่
     function updateContent(newIndex) {
       if (newIndex < 0 || newIndex >= contentData.length) return;
       const content = document.getElementById('content');
@@ -231,7 +223,6 @@
       content.classList.remove('visible');
       content.classList.add('hidden');
       
-      // รีเซ็ตการแสดงผลของดอกไม้
       document.getElementById('flower3').classList.remove('visible');
       document.getElementById('flower2').classList.remove('visible');
       document.getElementById('flower1').classList.remove('visible');

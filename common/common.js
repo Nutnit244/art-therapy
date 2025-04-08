@@ -1,6 +1,6 @@
 
 if (!window.scriptLoaded) {
-    window.scriptLoaded = true; // ป้องกันโหลดซ้ำ
+    window.scriptLoaded = true; 
 
     document.addEventListener("DOMContentLoaded", function() {
         console.log("common.js loaded");
