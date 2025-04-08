@@ -7,9 +7,13 @@
   <link rel="icon" href="assets/img/Tinylogo.png" type="image/png">
   <title>ระบาย</title>
   <style>
+    /* ปรับ @font-face ของฟอนต์ให้ใช้งานเหมือนหน้าที่ใช้ CDN */
     @font-face {
       font-family: 'Noto Sans Thai';
-      src: url('assets/NotoSansThaiVariableFont_wdth.wght.ttf') format('truetype');
+      src: url('assets/NotoSansThai-VariableFont_wdth,wght.woff2') format('woff2'),
+           url('assets/NotoSansThai-VariableFont_wdth,wght.woff') format('woff'),
+           url('assets/NotoSansThai-VariableFont_wdth,wght.ttf') format('truetype');
+      /* หากฟอนต์เป็น Variable ให้ระบุช่วง weight ด้วย */
       font-weight: 100 900;
       font-style: normal;
     }
@@ -299,7 +303,6 @@
       transition: opacity 1s ease-in-out;
       will-change: opacity;
       font-family: 'Noto Sans Thai', sans-serif;
-
     }
 
     #flower-animation .button-container.active {
@@ -325,12 +328,10 @@
     }
 
     /* สำหรับมือถือ (max-width: 768px) */
-    /* สำหรับมือถือทั่วไป (max-width: 768px) – ค่าเดิมที่มีอยู่ */
     @media (max-width: 768px) {
       #flower-animation .flower-left {
         top: 45%;
         left: 170vw;
-        /* ค่าเดิม */
         width: 311vw;
         visibility: hidden;
       }
@@ -361,29 +362,24 @@
       }
     }
 
-    /* สำหรับ iPhone 12, 15, XR (max-width: 428px)
-   ปรับให้ตำแหน่งในสถานะ hidden อยู่ใกล้กับตำแหน่งที่แสดงมากขึ้น */
+    /* สำหรับ iPhone (max-width: 428px) */
     @media (max-width: 428px) {
       #flower-animation .flower-left {
         top: 45%;
         left: 150vw;
-        /* ปรับเพิ่มเล็กน้อยเพื่อให้ตำแหน่ง hidden ใกล้กับ slide */
         width: 420vw;
-        /* ปรับขนาดให้เหมาะสมกับหน้าจอเล็ก */
         visibility: hidden;
       }
 
       #flower-animation .flower-right {
         top: 45%;
         left: 160vw;
-        /* ปรับให้ตรงกับดีไซน์ */
         width: 420vw;
         visibility: hidden;
       }
 
       #flower-animation .flower-left.slide-left {
         left: 142vw;
-        /* ค่าแสดงผล เมื่อมีคลาส slide */
         visibility: visible;
       }
 
@@ -391,11 +387,9 @@
         left: 168vw;
         visibility: visible;
       }
-
     }
 
-    /* สำหรับ iPad Pro (min-width: 1025px ถึง max-width: 1366px)
-   ปรับตำแหน่งในสถานะ hidden และตำแหน่งแสดงผลให้เหมาะสมกับหน้าจอขนาดใหญ่ */
+    /* สำหรับ iPad Pro (min-width: 1025px ถึง max-width: 1366px) */
     @media (min-width: 1025px) and (max-width: 1366px) {
       #flower-animation .flower-left {
         top: 50%;
@@ -413,7 +407,6 @@
 
       #flower-animation .flower-left.slide-left {
         left: 127vw;
-        /* เมื่อมีคลาส slide ให้เลื่อนเข้ามา */
         visibility: visible;
       }
 
@@ -429,20 +422,17 @@
       }
     }
 
-    /* CSS override เฉพาะสำหรับ Android */
+    /* CSS override สำหรับ Android */
     .android #flower-animation .flower-left {
-      /* ปรับตำแหน่ง left สำหรับ Android ให้เหมาะสม (ปรับค่าได้ตามต้องการ) */
       left: 155% !important;
     }
 
     .android #flower-animation .flower-right {
-      /* ปรับตำแหน่ง left สำหรับ Android ให้เหมาะสม (ปรับค่าได้ตามต้องการ) */
       left: 175% !important;
     }
 
     .android #flower-animation .flower-left.slide-left {
       left: 150% !important;
-      /* เมื่อมีคลาส slide ให้เลื่อนเข้ามา */
       visibility: visible;
     }
 
@@ -452,11 +442,9 @@
     }
 
     .android #flower-animation .vase {
-      /* ปรับตำแหน่งของแจกันให้เหมาะสม (ปรับค่า left, transform ตามต้องการ) */
       left: 47% !important;
       transform: translateX(-48%) !important;
     }
-
 
     /* Section 3: Interactive Animation */
     #interactive-animation {
@@ -755,14 +743,10 @@
       left: 50%;
       padding: 18px;
       border: 1px solid #282828;
-      ;
       border-radius: 25px;
       background-color: rgba(215, 215, 215, 0.1);
-      /* พื้นหลังเบลอ ๆ */
       backdrop-filter: blur(2px);
-      /* เบลอพื้นหลัง */
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      /* เงาเบา ๆ */
       z-index: 10;
     }
 
@@ -798,13 +782,11 @@
     }
 
     @keyframes arrowBounce {
-
       0%,
       100% {
         transform: translateY(0) rotate(45deg);
         opacity: 0.8;
       }
-
       50% {
         transform: translateY(8px) rotate(45deg);
         opacity: 0.4;
@@ -1085,23 +1067,17 @@
       }
     });
 
-
     if (/Android/i.test(navigator.userAgent)) {
       document.documentElement.classList.add('android');
     }
 
     // ลูกศรแสดงเลื่อนลง
-
     document.addEventListener("DOMContentLoaded", () => {
       const arrow = document.querySelector('.arrow-wrapper');
-
       setTimeout(() => {
         arrow.classList.add('hidden'); // ซ่อนลูกศร
-      }, 3000);
+      }, 4000);
     });
-
-
-
   </script>
 </body>
 
