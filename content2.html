@@ -167,7 +167,6 @@
       border-radius: 2vw;
       box-shadow: 0 0.28vw 0.42vw rgba(0, 0, 0, 0.2);
       z-index: 100;
-      font-weight: bold;
       font-family: 'Noto Sans Thai', sans-serif;
     }
 
@@ -618,6 +617,65 @@
         background-attachment: scroll;
       }
     }
+
+    /* ลูกศรเลื่อนลง */
+    .arrow-wrapper {
+      position: fixed;
+      transform: translateX(-50%);
+      bottom: 35px;
+      left: 50%;
+      padding: 18px;
+      border: 1px solid #282828;
+      ;
+      border-radius: 25px;
+      background-color: rgba(215, 215, 215, 0.1);
+      /* พื้นหลังเบลอ ๆ */
+      backdrop-filter: blur(2px);
+      /* เบลอพื้นหลัง */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      /* เงาเบา ๆ */
+      z-index: 10;
+    }
+
+    .scroll-down-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .scroll-down-arrow span {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-bottom: 2px solid #282828;
+      border-right: 2px solid #282828;
+      transform: rotate(45deg);
+      animation: arrowBounce 1.5s infinite;
+      opacity: 0.8;
+    }
+
+    .scroll-down-arrow span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .scroll-down-arrow span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes arrowBounce {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: translateY(8px) rotate(45deg);
+        opacity: 0.4;
+      }
+    }
   </style>
 </head>
 
@@ -631,6 +689,15 @@
       <img src="assets/img/brush4.PNG" alt="pcolor" class="pcolor" id="pcolor">
       <img src="assets/img/clouds.png" alt="clouds" class="clouds">
       <button class="skipbutton" onclick="window.location.href='Drawing.html'">ข้าม</button>
+
+      <div class="arrow-wrapper">
+        <div class="scroll-down-arrow">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
     </section>
   </div>
 
@@ -894,20 +961,55 @@
       }, 1000);
     });
 
+    // let isRedirecting = false;
+
+    // window.addEventListener("scroll", function () {
+    //   if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
+
+    //   // ถ้าอยู่ด้านบน (scrollY <= 0)
+    //   if (window.scrollY <= 0) {
+    //     isRedirecting = true;
+    //     setTimeout(() => {
+    //       window.location.href = "open.html";
+    //     }, 1000);
+    //   }
+    //   // ถ้าอยู่ด้านล่าง
+    //   else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+    //     isRedirecting = true;
+    //     setTimeout(() => {
+    //       window.location.href = "Drawing.html";
+    //     }, 2500);
+    //   }
+    // });
+
     let isRedirecting = false;
+    let topTimeout = null;
 
     window.addEventListener("scroll", function () {
-      if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
+      if (isRedirecting) return;
 
-      // ถ้าอยู่ด้านบน (scrollY <= 0)
+      // ถ้าอยู่ด้านบนสุด
       if (window.scrollY <= 0) {
-        isRedirecting = true;
-        setTimeout(() => {
-          window.location.href = "open.html";
-        }, 1000);
+        if (!topTimeout) {
+          // เริ่มจับเวลาถ้าอยู่บนสุดต่อเนื่อง
+          topTimeout = setTimeout(() => {
+            isRedirecting = true;
+            window.location.href = "open.html";
+          }, 3000);
+        }
+      } else {
+        // ถ้าเลื่อนออกจากบนสุดก่อนครบเวลา ให้ยกเลิก timeout
+        if (topTimeout) {
+          clearTimeout(topTimeout);
+          topTimeout = null;
+        }
       }
-      // ถ้าอยู่ด้านล่าง
-      else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+
+      // ถ้าอยู่ด้านล่างสุด
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 1
+      ) {
         isRedirecting = true;
         setTimeout(() => {
           window.location.href = "Drawing.html";
@@ -915,92 +1017,7 @@
       }
     });
 
-    // let isScrolling = false;
-    // const delayScroll = 1500; // หน่วงเวลา 1.5 วินาที
-    // const scrollThreshold = 50; // ตรวจจับเมื่อ scroll ใกล้ขอบ 50px
 
-    // function smoothScroll(targetY) {
-    //   window.scrollTo({
-    //     top: targetY,
-    //     behavior: "smooth"
-    //   });
-    // }
-
-    // function handleScroll(deltaY) {
-    //   const maxScroll = document.body.scrollHeight - window.innerHeight;
-    //   if (isScrolling) return;
-
-    //   // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
-    //   if (deltaY > scrollThreshold && window.scrollY >= maxScroll - scrollThreshold) {
-    //     isScrolling = true;
-    //     smoothScroll(maxScroll);
-    //     setTimeout(() => {
-    //       window.location.href = "Drawing.html";
-    //     }, delayScroll);
-    //   }
-    //   // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
-    //   else if (deltaY < -scrollThreshold && window.scrollY <= scrollThreshold) {
-    //     isScrolling = true;
-    //     smoothScroll(0);
-    //     setTimeout(() => {
-    //       window.location.href = "open.html";
-    //     }, delayScroll);
-    //   }
-    // }
-
-    // // สำหรับเดสก์ท็อป (wheel event)
-    // window.addEventListener("wheel", function (event) {
-    //   handleScroll(event.deltaY);
-    // });
-
-    // // สำหรับอุปกรณ์ที่ใช้สัมผัส (touch events)
-    // let touchStartY = 0;
-    // window.addEventListener("touchstart", (e) => {
-    //   touchStartY = e.touches[0].clientY;
-    // });
-
-    // window.addEventListener("touchend", (e) => {
-    //   let touchEndY = e.changedTouches[0].clientY;
-    //   let deltaY = touchStartY - touchEndY;
-    //   handleScroll(deltaY);
-    // });
-
-    // จัดการเหตุการณ์ wheel สำหรับเปลี่ยนหน้า
-    // let isScrolling = false;
-    // const delayScroll = 1500; // หน่วงเวลา 1.5 วินาที
-    // const scrollThreshold = 50; // ตรวจจับเมื่อ scroll อยู่ใกล้ขอบ (50px)
-
-    // function smoothScroll(targetY) {
-    //   window.scrollTo({
-    //     top: targetY,
-    //     behavior: "smooth",
-    //   });
-    // }
-
-    // window.addEventListener("wheel", function (event) {
-    //   if (isScrolling) return;
-
-    //   const maxScroll = document.body.scrollHeight - window.innerHeight;
-
-    //   // เมื่อเลื่อนลงและอยู่ใกล้ด้านล่างของหน้า
-    //   if (event.deltaY > 0 && window.scrollY >= maxScroll - scrollThreshold) {
-    //     isScrolling = true;
-    //     smoothScroll(maxScroll);
-    //     setTimeout(() => {
-    //       window.location.href = "Drawing.html"; // เปลี่ยนไปหน้า end.html
-    //     }, delayScroll);
-    //   }
-    //   // เมื่อเลื่อนขึ้นและอยู่ใกล้ด้านบนของหน้า
-    //   else if (event.deltaY < 0 && window.scrollY <= scrollThreshold) {
-    //     isScrolling = true;
-    //     smoothScroll(0);
-    //     setTimeout(() => {
-    //       window.location.href = "open.html"; // เปลี่ยนไปหน้า color.html
-    //     }, delayScroll);
-    //   }
-    // });
-
-    // ตัวอย่างเพิ่ม class show ให้กับ .people เมื่อ Section 7 ปรากฏ
     const section7 = document.querySelector('.section7');
     const peopleImage = document.getElementById('people7');
     const section7Observer = new IntersectionObserver((entries, observer) => {
@@ -1020,6 +1037,22 @@
     }
     setVh();
     window.addEventListener('resize', setVh);
+
+    // ลูกศรแสดงเลื่อนลง
+
+    const arrow = document.querySelector('.arrow-wrapper');
+    const section1 = document.getElementById('section1');
+
+    window.addEventListener('scroll', () => {
+      const sectionRect = section1.getBoundingClientRect();
+
+      // เช็กว่า section1 ยังแสดงอยู่บนจอไหม
+      if (sectionRect.bottom <= 0 || sectionRect.top >= window.innerHeight) {
+        arrow.classList.add('hidden'); // ซ่อนลูกศร
+      } else {
+        arrow.classList.remove('hidden'); // แสดงลูกศร
+      }
+    });
 
   </script>
 </body>

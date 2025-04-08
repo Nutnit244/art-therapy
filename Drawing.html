@@ -746,6 +746,70 @@
       transition: transform 0.6s ease;
       cursor: pointer;
     }
+
+    /* ลูกศรเลื่อนลง */
+    .arrow-wrapper {
+      position: fixed;
+      transform: translateX(-50%);
+      bottom: 35px;
+      left: 50%;
+      padding: 18px;
+      border: 1px solid #282828;
+      ;
+      border-radius: 25px;
+      background-color: rgba(215, 215, 215, 0.1);
+      /* พื้นหลังเบลอ ๆ */
+      backdrop-filter: blur(2px);
+      /* เบลอพื้นหลัง */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      /* เงาเบา ๆ */
+      z-index: 10;
+    }
+
+    .arrow-wrapper.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .scroll-down-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .scroll-down-arrow span {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-bottom: 2px solid #282828;
+      border-right: 2px solid #282828;
+      transform: rotate(45deg);
+      animation: arrowBounce 1.5s infinite;
+      opacity: 0.8;
+    }
+
+    .scroll-down-arrow span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .scroll-down-arrow span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes arrowBounce {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: translateY(8px) rotate(45deg);
+        opacity: 0.4;
+      }
+    }
   </style>
 </head>
 
@@ -772,6 +836,15 @@
         <button class="draw-button">ลองมาวาดรูปกับเราดูสิ👈🏼</button>
       </a>
     </div>
+
+    <div class="arrow-wrapper">
+      <div class="scroll-down-arrow">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
   </section>
 
   <section id="flower-animation">
@@ -967,8 +1040,8 @@
 
     // จัดการเหตุการณ์ wheel สำหรับเปลี่ยนหน้า
     let isScrolling = false;
-    const delayScroll = 1500; 
-    const scrollThreshold = 50; 
+    const delayScroll = 1500;
+    const scrollThreshold = 50;
 
     function smoothScroll(targetY) {
       window.scrollTo({
@@ -978,29 +1051,55 @@
     }
 
     let isRedirecting = false;
+    let topTimeout = null;
 
     window.addEventListener("scroll", function () {
-      if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
+      if (isRedirecting) return;
 
-      // ถ้าอยู่ด้านบน (scrollY <= 0)
+      // ถ้าอยู่ด้านบนสุด
       if (window.scrollY <= 0) {
-        isRedirecting = true;
-        setTimeout(() => {
-          window.location.href = "content2.html";
-        }, 1000);
+        if (!topTimeout) {
+          // เริ่มจับเวลาถ้าอยู่บนสุดต่อเนื่อง
+          topTimeout = setTimeout(() => {
+            isRedirecting = true;
+            window.location.href = "content2.html";
+          }, 3000);
+        }
+      } else {
+        // ถ้าเลื่อนออกจากบนสุดก่อนครบเวลา ให้ยกเลิก timeout
+        if (topTimeout) {
+          clearTimeout(topTimeout);
+          topTimeout = null;
+        }
       }
-      // ถ้าอยู่ด้านล่าง
-      else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+
+      // ถ้าอยู่ด้านล่างสุด
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 1
+      ) {
         isRedirecting = true;
         setTimeout(() => {
           window.location.href = "end.html";
-        }, 1000);
+        }, 1500);
       }
     });
+
 
     if (/Android/i.test(navigator.userAgent)) {
       document.documentElement.classList.add('android');
     }
+
+    // ลูกศรแสดงเลื่อนลง
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const arrow = document.querySelector('.arrow-wrapper');
+
+      setTimeout(() => {
+        arrow.classList.add('hidden'); // ซ่อนลูกศร
+      }, 3000);
+    });
+
 
 
   </script>

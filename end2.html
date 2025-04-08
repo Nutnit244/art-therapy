@@ -149,26 +149,68 @@
         </div>
     </div>
     <script>
+        // let isRedirecting = false;
+
+        // window.addEventListener("scroll", function () {
+        //     if (isRedirecting) return; 
+
+
+        //     if (window.scrollY <= 0) {
+        //         isRedirecting = true;
+        //         setTimeout(() => {
+        //             window.location.href = "end.html";
+        //         }, 1000);
+        //     }
+
+        //     else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
+        //         isRedirecting = true;
+        //         setTimeout(() => {
+        //             window.location.href = "member.html";
+        //         }, 2500);
+        //     }
+        // });
+
         let isRedirecting = false;
+        let topTimeout = null;
+        let bottomTimeout = null;
 
         window.addEventListener("scroll", function () {
-            if (isRedirecting) return; 
+            if (isRedirecting) return;
 
-            
+            // ตรวจว่าด้านบนสุด
             if (window.scrollY <= 0) {
-                isRedirecting = true;
-                setTimeout(() => {
-                    window.location.href = "end.html";
-                }, 1000);
+                if (!topTimeout) {
+                    topTimeout = setTimeout(() => {
+                        isRedirecting = true;
+                        window.location.href = "end.html";
+                    }, 1500); 
+                }
+            } else {
+                if (topTimeout) {
+                    clearTimeout(topTimeout);
+                    topTimeout = null;
+                }
             }
 
-            else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
-                isRedirecting = true;
-                setTimeout(() => {
-                    window.location.href = "member.html";
-                }, 2500);
+            // ตรวจว่าด้านล่างสุด
+            if (
+                window.innerHeight + window.scrollY >=
+                document.documentElement.scrollHeight - 1
+            ) {
+                if (!bottomTimeout) {
+                    bottomTimeout = setTimeout(() => {
+                        isRedirecting = true;
+                        window.location.href = "member.html";
+                    }, 3000); 
+                }
+            } else {
+                if (bottomTimeout) {
+                    clearTimeout(bottomTimeout);
+                    bottomTimeout = null;
+                }
             }
         });
+
 
     </script>
 
