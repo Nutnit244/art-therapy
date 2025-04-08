@@ -7,13 +7,16 @@
   <link rel="icon" href="assets/img/Tinylogo.PNG" type="image/png" />
   <title>ระบาย</title>
   <style>
+    /* แก้ไข @font-face สำหรับ Noto Sans Thai ให้รองรับฟอร์แมตหลายแบบ */
     @font-face {
       font-family: 'Noto Sans Thai';
-      src: url('assets/NotoSansThaiVariableFont_wdth.wght.ttf') format('truetype');
+      src: url('assets/NotoSansThai-VariableFont_wdth,wght.woff2') format('woff2'),
+           url('assets/NotoSansThai-VariableFont_wdth,wght.woff') format('woff'),
+           url('assets/NotoSansThai-VariableFont_wdth,wght.ttf') format('truetype');
       font-weight: 100 900;
       font-style: normal;
     }
-
+    
     @font-face {
       font-family: 'MN Tonkatsu Italic';
       src: url('assets/MN Tonkatsu Italic.ttf') format('truetype');
@@ -298,7 +301,7 @@
     /* Responsive สำหรับ Mobile */
     @media (max-width: 480px) {
       #popup {
-        width: 60vw;
+        width: 70vw;
         padding: 2vw;
         border-radius: 1vw;
       }

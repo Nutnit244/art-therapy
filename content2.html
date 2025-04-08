@@ -8,9 +8,12 @@
   <title>ระบาย</title>
   <link rel="stylesheet" href="common/common.css" />
   <style>
+    /* ปรับ @font-face ของฟอนต์ Noto Sans Thai ให้รองรับหลายฟอร์แมต */
     @font-face {
       font-family: 'Noto Sans Thai';
-      src: url('assets/NotoSansThaiVariableFont_wdth.wght.ttf') format('truetype');
+      src: url('assets/NotoSansThai-VariableFont_wdth,wght.woff2') format('woff2'),
+           url('assets/NotoSansThai-VariableFont_wdth,wght.woff') format('woff'),
+           url('assets/NotoSansThai-VariableFont_wdth,wght.ttf') format('truetype');
       font-weight: 100 900;
       font-style: normal;
     }
@@ -21,7 +24,6 @@
       font-weight: normal;
       font-style: normal;
     }
-
 
     html,
     body {
@@ -85,14 +87,12 @@
       transform: translateY(0);
     }
 
-
     .sections-container {
       position: relative;
       width: 100vw;
       height: calc(var(--vh, 1vh) * 100);
       overflow: hidden;
     }
-
 
     .section {
       position: absolute;
@@ -149,7 +149,6 @@
       0% {
         left: 5.56vw;
       }
-
       100% {
         left: 100vw;
       }
@@ -367,7 +366,6 @@
         background-size: contain;
       }
     }
-
 
     /* Section 4 */
     .section4 {
@@ -957,27 +955,6 @@
       }, 1000);
     });
 
-    // let isRedirecting = false;
-
-    // window.addEventListener("scroll", function () {
-    //   if (isRedirecting) return; // ถ้า redirect แล้ว ไม่ให้เรียกซ้ำ
-
-    //   // ถ้าอยู่ด้านบน (scrollY <= 0)
-    //   if (window.scrollY <= 0) {
-    //     isRedirecting = true;
-    //     setTimeout(() => {
-    //       window.location.href = "open.html";
-    //     }, 1000);
-    //   }
-    //   // ถ้าอยู่ด้านล่าง
-    //   else if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1) {
-    //     isRedirecting = true;
-    //     setTimeout(() => {
-    //       window.location.href = "Drawing.html";
-    //     }, 2500);
-    //   }
-    // });
-
     let isRedirecting = false;
     let topTimeout = null;
 
@@ -1013,7 +990,6 @@
       }
     });
 
-
     const section7 = document.querySelector('.section7');
     const peopleImage = document.getElementById('people7');
     const section7Observer = new IntersectionObserver((entries, observer) => {
@@ -1035,7 +1011,6 @@
     window.addEventListener('resize', setVh);
 
     // ลูกศรแสดงเลื่อนลง
-
     const arrow = document.querySelector('.arrow-wrapper');
     const section1 = document.getElementById('section1');
 
@@ -1049,7 +1024,6 @@
         arrow.classList.remove('hidden'); // แสดงลูกศร
       }
     });
-
   </script>
 </body>
 
