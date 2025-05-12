@@ -38,8 +38,8 @@
 
     /* ใช้ vw สำหรับความกว้างของ container พร้อม aspect-ratio (890:700) */
     .frame-container {
-      width: 80vw;
-      max-width: 890px;
+      width: 70vw;
+      max-width: 1920px;
       /* เพื่อจำกัดความกว้างสูงสุด */
       aspect-ratio: 890 / 700;
       margin: 0 auto;
@@ -181,7 +181,6 @@
 </head>
 
 <body>
-  <!-- ปุ่ม Go Back -->
   <button class="back-btn" onclick="goBack()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
       <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 
@@ -204,7 +203,6 @@
       window.location.href = 'Drawing.html#interactive-animation';
     }
 
-    // ฟังก์ชันสุ่มสีแบบ Hex (ไม่รวมสีขาว)
     function getRandomColor() {
       let color;
       do {
